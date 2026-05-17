@@ -1,0 +1,591 @@
+<!doctype html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>Competitive Intelligence — GEARVN ngành màn hình | 2026</title>
+  <meta name="description" content="Phân tích cạnh tranh ngành màn hình gaming VN cho GEARVN: Porter 5 Forces, SWOT, Positioning Matrix vs Phong Vũ, CellphoneS, An Phát, Hacom.">
+  <meta property="og:title" content="Competitive Intelligence — GEARVN ngành màn hình | 2026">
+  <meta property="og:description" content="Phân tích cạnh tranh GEARVN vs Phong Vũ / CellphoneS / An Phát / Hacom với Porter 5 Forces + SWOT + Positioning.">
+  <meta property="og:type" content="article">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['system-ui', 'ui-sans-serif', 'sans-serif'] } } } };
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+    @media print {
+      .no-print { display: none !important; }
+      body { color: #000; background: #fff; }
+      a { color: inherit; text-decoration: underline; }
+      details { display: block; } details > summary { display: none; }
+    }
+    details > summary { cursor: pointer; user-select: none; }
+    details > summary::marker { content: "▸ "; }
+    details[open] > summary::marker { content: "▾ "; }
+    .toc a { display: block; padding: .2rem 0; opacity: .6; transition: opacity .15s; font-size: 13px; }
+    .toc a:hover, .toc a.active { opacity: 1; }
+    .toc a.active { font-weight: 500; }
+
+    .threat-high { background: rgba(239,68,68,0.10); border-left: 3px solid #ef4444; }
+    .threat-med { background: rgba(245,158,11,0.10); border-left: 3px solid #f59e0b; }
+    .threat-low { background: rgba(16,185,129,0.10); border-left: 3px solid #10b981; }
+
+    .dark table.dataTable, .dark table.dataTable th, .dark table.dataTable td { color: #e4e4e7; }
+    .dark .dataTables_wrapper .dataTables_filter input,
+    .dark .dataTables_wrapper .dataTables_length select {
+      background: #18181b; border: 1px solid #3f3f46; color: #e4e4e7; padding: 0.25rem 0.5rem; border-radius: 0.25rem;
+    }
+    .dark .dataTables_wrapper .dataTables_info,
+    .dark .dataTables_wrapper .dataTables_paginate { color: #a1a1aa; }
+    .dark table.dataTable tbody tr { background: transparent; }
+    .dark table.dataTable.stripe tbody tr.odd { background: rgba(255,255,255,0.02); }
+    .dark .dataTables_wrapper .dataTables_paginate .paginate_button { color: #a1a1aa !important; }
+    .dark .dataTables_wrapper .dataTables_paginate .paginate_button.current { color: #fff !important; background: #3f3f46 !important; border-color: #52525b !important; }
+
+    .stat-card { background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08)); }
+    .dark .stat-card { background: linear-gradient(135deg, rgba(99,102,241,0.15), rgba(168,85,247,0.15)); }
+    .swot-strengths { background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.3); }
+    .swot-weaknesses { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.3); }
+    .swot-opportunities { background: rgba(59,130,246,0.08); border: 1px solid rgba(59,130,246,0.3); }
+    .swot-threats { background: rgba(245,158,11,0.08); border: 1px solid rgba(245,158,11,0.3); }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans antialiased">
+
+<div class="fixed top-4 right-4 z-50 flex gap-2 no-print">
+  <button id="theme-toggle" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800">☼ / ☾</button>
+  <button onclick="window.print()" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800">print</button>
+</div>
+
+<div class="max-w-6xl mx-auto px-6 py-12 lg:grid lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-10">
+
+  <nav class="toc lg:sticky lg:top-12 self-start mb-8 lg:mb-0 no-print">
+    <div class="font-semibold mb-2 text-zinc-500 uppercase tracking-wider text-xs">Nội dung</div>
+    <a href="#summary">Executive summary</a>
+    <a href="#market">1. Market overview</a>
+    <a href="#competitors">2. Đối thủ chính</a>
+    <a href="#porter">3. Porter 5 Forces</a>
+    <a href="#swot">4. SWOT GEARVN</a>
+    <a href="#positioning">5. Positioning matrix</a>
+    <a href="#whitespace">6. White space</a>
+    <a href="#strategy">7. Strategic plays</a>
+    <a href="#threats">8. Threats & monitoring</a>
+    <a href="#nextsteps">9. Next steps</a>
+  </nav>
+
+  <main class="min-w-0">
+
+    <header class="mb-12">
+      <p class="text-sm text-zinc-500 mb-2">COMPETITIVE INTELLIGENCE • <time>2026-05-17</time></p>
+      <h1 class="text-4xl font-bold tracking-tight mb-3">GEARVN — Ngành màn hình gaming VN</h1>
+      <p class="text-lg text-zinc-600 dark:text-zinc-400">Phân tích cạnh tranh với Phong Vũ, CellphoneS, An Phát, Hacom — Porter 5 Forces, SWOT, Positioning Matrix.</p>
+      <div class="mt-2 inline-block px-3 py-1 text-xs rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-200">
+        Demo analysis — đánh giá định tính dựa trên kiến thức ngành, không phải số liệu nội bộ công bố
+      </div>
+    </header>
+
+    <section id="summary" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">Executive Summary</h2>
+      <div class="grid md:grid-cols-3 gap-4 mb-6">
+        <div class="stat-card rounded-xl p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase text-zinc-500">Competitive intensity</div>
+          <div class="text-2xl font-bold mt-1 text-red-500">HIGH</div>
+          <div class="text-xs text-zinc-500 mt-1">5/5 retailer cạnh tranh trực diện</div>
+        </div>
+        <div class="stat-card rounded-xl p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase text-zinc-500">Position GEARVN</div>
+          <div class="text-2xl font-bold mt-1">Specialist Leader</div>
+          <div class="text-xs text-zinc-500 mt-1">Niche gaming gear — brand mạnh</div>
+        </div>
+        <div class="stat-card rounded-xl p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase text-zinc-500">Threat #1</div>
+          <div class="text-2xl font-bold mt-1 text-amber-500">CellphoneS</div>
+          <div class="text-xs text-zinc-500 mt-1">Aggressive pricing + reach mass market</div>
+        </div>
+      </div>
+      <p class="text-zinc-700 dark:text-zinc-300 mb-3">
+        Thị trường màn hình gaming VN tăng trưởng 18% YoY (Q1/2026), nhưng cũng <strong>red ocean</strong> với 5+ retailer lớn tranh giành miếng bánh. GEARVN giữ <strong>vị trí specialist</strong> nhờ DNA gaming gear (sponsor esports, cộng đồng game thủ trung thành), nhưng đang chịu áp lực 2 phía: <strong>CellphoneS phá giá</strong> ở phân khúc 4–7tr và <strong>An Phát/Hacom</strong> chiếm phía Bắc.
+      </p>
+      <p class="text-zinc-700 dark:text-zinc-300 mb-3">
+        <strong>Khuyến nghị positioning</strong>: <em>Niche Specialist – Premium tier</em>. Củng cố vị trí "địa chỉ số 1 cho gamer & content creator" thay vì cạnh tranh giá với CellphoneS. Tập trung 3 hướng: (1) phân khúc 8tr+ (QHD 240Hz, OLED), (2) chuỗi nội dung review/setup chuyên sâu, (3) trải nghiệm tư vấn pro tại showroom — những thứ CellphoneS không làm được.
+      </p>
+      <div class="rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 p-4">
+        <div class="text-xs uppercase font-semibold text-indigo-700 dark:text-indigo-300 mb-1">Key finding</div>
+        <p class="text-sm text-zinc-700 dark:text-zinc-300">CellphoneS đang "ăn" phân khúc entry-level 4–6tr với chiến lược loss-leader để pull traffic. GEARVN không nên đối đầu trực diện ở đây — thay vào đó <strong>cắm cờ ở 8–22tr (QHD/OLED)</strong> nơi margin cao + đúng tệp khách core gamer/streamer.</p>
+      </div>
+    </section>
+
+    <section id="market" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">1. Market Overview</h2>
+      <div class="grid md:grid-cols-4 gap-3 mb-4">
+        <div class="rounded-lg p-3 border border-zinc-200 dark:border-zinc-800"><div class="text-xs text-zinc-500">Sản lượng Q1/26</div><div class="text-xl font-bold">142K units</div></div>
+        <div class="rounded-lg p-3 border border-zinc-200 dark:border-zinc-800"><div class="text-xs text-zinc-500">Doanh thu Q1/26</div><div class="text-xl font-bold">948 tỷ</div></div>
+        <div class="rounded-lg p-3 border border-zinc-200 dark:border-zinc-800"><div class="text-xs text-zinc-500">Growth YoY</div><div class="text-xl font-bold text-emerald-500">▲ 18.4%</div></div>
+        <div class="rounded-lg p-3 border border-zinc-200 dark:border-zinc-800"><div class="text-xs text-zinc-500">ASP</div><div class="text-xl font-bold">6.67tr</div></div>
+      </div>
+      <ul class="list-disc ml-6 space-y-1 text-zinc-700 dark:text-zinc-300">
+        <li><strong>Stage</strong>: Growth — sản lượng tăng 18% YoY, doanh thu tăng 22% YoY (ASP đẩy lên do shift sang QHD/240Hz).</li>
+        <li><strong>Fragmentation</strong>: Moderately concentrated — top 5 retailer (GEARVN, Phong Vũ, CellphoneS, An Phát, Hacom) chiếm ước <strong>~70%</strong> doanh thu offline+online của ngành.</li>
+        <li><strong>Trend chính</strong>: shift sang <strong>165Hz+ (71% sản lượng)</strong>, QHD ăn dần FHD, OLED giảm giá tạo cửa cho phân khúc 15–22tr.</li>
+        <li><strong>Channel mix</strong>: ~55% offline (showroom), 45% online — online tăng nhanh hơn nhờ social commerce.</li>
+        <li>Tham khảo đầy đủ data: <a href="2026-05-17-vietnam-gaming-monitor-q1-2026.html" class="underline text-indigo-600 dark:text-indigo-400">Report thị trường Q1/2026</a></li>
+      </ul>
+    </section>
+
+    <section id="competitors" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">2. Top 4 Đối thủ trực tiếp</h2>
+      <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-3">Click vào cột để sort. Threat level 1-10 (10 = nguy hiểm nhất).</p>
+      <div class="overflow-x-auto">
+      <table id="compTable" class="display stripe w-full text-sm">
+        <thead>
+          <tr>
+            <th>Đối thủ</th>
+            <th>DNA</th>
+            <th>Mạnh nhất ở</th>
+            <th>Yếu ở</th>
+            <th>Region</th>
+            <th>Price tier</th>
+            <th>Threat</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>CellphoneS</strong></td><td>Mobile retailer mở rộng PC</td><td>Pricing, marketing reach, chi nhánh đông</td><td>Chuyên môn gaming gear, tư vấn deep</td><td>Toàn quốc</td><td>Low–Mid</td><td>9</td></tr>
+          <tr><td><strong>Phong Vũ</strong></td><td>Lâu đời, system builder PC</td><td>Brand trust, B2B, supply chain</td><td>UX online cũ, ít gen Z</td><td>Toàn quốc</td><td>Mid</td><td>7</td></tr>
+          <tr><td><strong>An Phát</strong></td><td>Computer specialist HN</td><td>Phân khúc enthusiast, build PC</td><td>Online experience, miền Nam yếu</td><td>HN dominant</td><td>Mid</td><td>6</td></tr>
+          <tr><td><strong>Hacom</strong></td><td>PC custom builder</td><td>Giá tốt, build PC sâu, miền Bắc</td><td>Brand awareness mass market, miền Nam</td><td>HN/HP/HCM</td><td>Mid–Low</td><td>6</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 mt-6">
+        <details class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 threat-high">
+          <summary class="font-semibold">CellphoneS — Threat 9/10 <span class="text-xs font-normal text-zinc-500 ml-2">[click mở rộng]</span></summary>
+          <div class="mt-3 text-sm space-y-2">
+            <p><strong>Chiến lược</strong>: Loss-leader pricing — bán màn hình entry-level (4–6tr) giá thấp hơn thị trường 3–5% để pull traffic, upsell phụ kiện. Marketing aggressive trên Facebook/TikTok.</p>
+            <p><strong>Strengths</strong>: (1) Reach mass market cực mạnh nhờ data từ mảng smartphone, (2) Chuỗi 100+ chi nhánh, (3) Tốc độ ship + COD tốt, (4) Mạnh promo combo điện thoại + màn hình.</p>
+            <p><strong>Weaknesses</strong>: (1) Sales chưa chuyên sâu gaming (đào tạo còn smartphone-centric), (2) Selection màn hình cao cấp (OLED, ultrawide) hẹp, (3) Không có DNA gaming/esports, (4) Cộng đồng game thủ ít trust.</p>
+            <p><strong>Threat to GEARVN</strong>: Trực tiếp ở phân khúc 4–7tr (chiếm ~60% volume thị trường). Có thể tăng share nhanh bằng chiến dịch promo. NHƯNG khó "ăn" tệp khách trên 8tr.</p>
+          </div>
+        </details>
+
+        <details class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 threat-med">
+          <summary class="font-semibold">Phong Vũ — Threat 7/10</summary>
+          <div class="mt-3 text-sm space-y-2">
+            <p><strong>Chiến lược</strong>: Full-service IT retailer — PC build + laptop + linh kiện. B2B (doanh nghiệp, net cafe) là lợi thế lớn.</p>
+            <p><strong>Strengths</strong>: (1) Brand trust 25+ năm, (2) B2B kênh net cafe gaming — bán sỉ màn hình số lượng lớn, (3) Showroom rộng, (4) Tài chính mạnh.</p>
+            <p><strong>Weaknesses</strong>: (1) Website/UX cũ kém GEARVN, (2) Content gaming yếu, (3) Gen Z ít gắn, (4) Speed shipping/promo phản ứng chậm.</p>
+            <p><strong>Threat to GEARVN</strong>: Mạnh ở B2B (net cafe), nhưng B2C gaming chỉ là segment con. Không tấn công trực tiếp tệp core GEARVN.</p>
+          </div>
+        </details>
+
+        <details class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 threat-med">
+          <summary class="font-semibold">An Phát Computer — Threat 6/10</summary>
+          <div class="mt-3 text-sm space-y-2">
+            <p><strong>Chiến lược</strong>: Specialist PC/gaming ở Hà Nội — focus enthusiast, build PC cao cấp. Đã có TPHCM nhưng nhỏ.</p>
+            <p><strong>Strengths</strong>: (1) Hệ khách enthusiast trung thành ở HN, (2) Forum/community PC riêng, (3) Tư vấn build sâu, (4) Quan hệ tốt với một số hãng (gear cao cấp).</p>
+            <p><strong>Weaknesses</strong>: (1) Online experience kém, (2) Marketing yếu, (3) Phía Nam chưa scale, (4) Speed/logistics không bằng GEARVN.</p>
+            <p><strong>Threat to GEARVN</strong>: Chủ yếu ở HN — nơi GEARVN còn yếu hơn. KHÔNG threat lớn ở HCM/miền Nam.</p>
+          </div>
+        </details>
+
+        <details class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-4 threat-med">
+          <summary class="font-semibold">Hacom — Threat 6/10</summary>
+          <div class="mt-3 text-sm space-y-2">
+            <p><strong>Chiến lược</strong>: Giá tốt, deep build PC. Lan rộng ra HCM nhưng chưa mạnh.</p>
+            <p><strong>Strengths</strong>: (1) Pricing cạnh tranh, (2) Build PC sâu, custom theo budget, (3) Khách hàng loyal ở miền Bắc, (4) Linh kiện đa dạng.</p>
+            <p><strong>Weaknesses</strong>: (1) Brand mass-market yếu, (2) Showroom HCM còn ít, (3) Content marketing kém, (4) UX online trung bình.</p>
+            <p><strong>Threat to GEARVN</strong>: Tương tự An Phát — chủ yếu miền Bắc, focus enthusiast/builder. Threat trung bình.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="mt-6 p-4 rounded-lg bg-zinc-50 dark:bg-zinc-900/40 border border-zinc-200 dark:border-zinc-800 text-sm">
+        <p class="font-semibold mb-1">Indirect competitors & substitutes (cần monitor)</p>
+        <ul class="list-disc ml-6 space-y-1 text-zinc-700 dark:text-zinc-300">
+          <li><strong>Shopee/Lazada Mall</strong> — flagship store của Samsung/LG/ASUS bán trực tiếp giá tốt, ăn vào phân khúc savvy buyer</li>
+          <li><strong>Tiki Trading</strong> — niche nhưng đôi khi flash sale rất sâu</li>
+          <li><strong>Cá nhân/group Facebook</strong> — hàng xách tay, 2nd-hand, target gamer budget thấp</li>
+          <li><strong>Đại lý ủy quyền hãng</strong> — Samsung Brand Store, LG Center có thể direct sale</li>
+          <li><strong>Cloud gaming</strong> (GeForce Now, Xbox Cloud) — long-term có thể giảm nhu cầu màn hình cao cấp ở segment casual (5–10 năm nữa)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="porter" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">3. Porter's Five Forces</h2>
+      <div class="grid lg:grid-cols-2 gap-6 items-start">
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <h3 class="text-sm uppercase font-semibold text-zinc-500 mb-2">Threat radar</h3>
+          <div class="relative h-80"><canvas id="chartForces"></canvas></div>
+          <p class="text-xs text-zinc-500 mt-2">Thang điểm 1–10. Càng xa tâm = áp lực càng cao = bất lợi.</p>
+        </div>
+        <div class="space-y-3">
+          <div class="rounded-lg p-3 threat-low">
+            <div class="flex justify-between items-baseline"><strong>1. New entrants</strong><span class="text-xs">LOW · 3/10</span></div>
+            <p class="text-sm mt-1">Vốn lớn, brand trust, supply chain với hãng = rào cản cao. Khó có retailer mới phá vỡ top 5 trong 2-3 năm tới.</p>
+          </div>
+          <div class="rounded-lg p-3 threat-med">
+            <div class="flex justify-between items-baseline"><strong>2. Supplier power</strong><span class="text-xs">MED · 6/10</span></div>
+            <p class="text-sm mt-1">Samsung/LG/ASUS có power do brand → set giá sàn, áp KPI. Bù lại có 8+ brand alternative (Gigabyte, MSI, Acer, Dell, AOC, KTC, Xiaomi…) giảm phụ thuộc.</p>
+          </div>
+          <div class="rounded-lg p-3 threat-high">
+            <div class="flex justify-between items-baseline"><strong>3. Buyer power</strong><span class="text-xs">HIGH · 8/10</span></div>
+            <p class="text-sm mt-1">Khách compare giá 3-5 trang trước khi mua, switching cost = 0. Đặc biệt gamer trẻ rất sensitive với promo. Margin retailer mỏng.</p>
+          </div>
+          <div class="rounded-lg p-3 threat-med">
+            <div class="flex justify-between items-baseline"><strong>4. Substitutes</strong><span class="text-xs">MED · 5/10</span></div>
+            <p class="text-sm mt-1">Hãng bán trực tiếp (Shopee Mall, Brand Store), hàng xách tay, 2nd-hand, cloud gaming (xa). Chưa thay thế hoàn toàn nhưng sẽ tăng dần.</p>
+          </div>
+          <div class="rounded-lg p-3 threat-high">
+            <div class="flex justify-between items-baseline"><strong>5. Competitive rivalry</strong><span class="text-xs">HIGH · 9/10</span></div>
+            <p class="text-sm mt-1">5+ retailer lớn, thị trường tăng trưởng nhưng promo war thường xuyên, margin bị bào mòn. Mọi player phải race to bottom hoặc differentiate.</p>
+          </div>
+        </div>
+      </div>
+      <div class="mt-4 p-4 rounded-lg bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 text-sm">
+        <strong>Market attractiveness: Moderately Attractive.</strong> Thị trường vẫn tăng, rào cản entry cao bảo vệ top 5, nhưng rivalry + buyer power siết margin. Player nào tạo được <em>moat khác biệt</em> (brand, content, service) sẽ thắng.
+      </div>
+    </section>
+
+    <section id="swot" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">4. SWOT — GEARVN ngành màn hình</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="swot-strengths rounded-xl p-4">
+          <div class="text-xs uppercase font-bold text-emerald-700 dark:text-emerald-300 mb-2">Strengths</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li><strong>Brand gaming số 1</strong> — sponsor esports, cộng đồng game thủ trust</li>
+            <li><strong>Selection chuyên sâu</strong> — đủ dòng từ entry-level đến OLED cao cấp</li>
+            <li><strong>UX website tốt nhất ngành</strong> — checkout nhanh, filter chuyên gaming</li>
+            <li><strong>Content marketing chất</strong> — review, setup guide, YouTube channel</li>
+            <li><strong>Showroom HCM mạnh</strong> — trải nghiệm thực tế cho khách</li>
+            <li><strong>Stack data hiện đại</strong> — PIM/CDP/BigQuery → có thể dùng AI tự động hóa</li>
+          </ul>
+        </div>
+        <div class="swot-weaknesses rounded-xl p-4">
+          <div class="text-xs uppercase font-bold text-red-700 dark:text-red-300 mb-2">Weaknesses</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li><strong>Giá cao hơn CellphoneS</strong> ở segment 4-6tr (3-5%)</li>
+            <li><strong>Miền Bắc yếu hơn</strong> An Phát/Hacom — chi nhánh HN còn ít</li>
+            <li><strong>B2B kênh net cafe</strong> chưa khai thác (Phong Vũ thống trị)</li>
+            <li><strong>Stock màn hình thấp tier</strong> 24" FHD đôi khi không sẵn bằng đối thủ</li>
+            <li><strong>Phân khúc văn phòng/đồ họa</strong> chưa mạnh — chỉ tập trung gaming</li>
+          </ul>
+        </div>
+        <div class="swot-opportunities rounded-xl p-4">
+          <div class="text-xs uppercase font-bold text-blue-700 dark:text-blue-300 mb-2">Opportunities</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li><strong>OLED & 240Hz+ đang bùng nổ</strong> — segment 12-22tr margin cao, đối thủ chưa mạnh</li>
+            <li><strong>Content creator/streamer</strong> — segment mới, cần monitor 27" QHD HDR — chưa retailer nào "own"</li>
+            <li><strong>Console gaming</strong> (PS5/Xbox) — đẩy nhu cầu 4K 120Hz, HDMI 2.1</li>
+            <li><strong>AI/automation</strong> — anh có stack data, có thể làm pricing dynamic + report cho hãng tự động → ăn KPI hãng</li>
+            <li><strong>Northern expansion</strong> — đầu tư showroom HN có thể chiếm share của An Phát/Hacom</li>
+            <li><strong>Subscribe/trade-in</strong> — chưa retailer VN nào làm chương trình đổi cũ lấy mới</li>
+          </ul>
+        </div>
+        <div class="swot-threats rounded-xl p-4">
+          <div class="text-xs uppercase font-bold text-amber-700 dark:text-amber-300 mb-2">Threats</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li><strong>CellphoneS aggressive expansion</strong> vào gaming gear — đe doạ phân khúc entry</li>
+            <li><strong>Hãng bán direct</strong> (Shopee Mall, Samsung Brand Store) — disintermediation</li>
+            <li><strong>Promo war ăn margin</strong> — race to bottom nếu không thoát ra hướng khác</li>
+            <li><strong>Cloud gaming dài hạn</strong> — có thể giảm nhu cầu màn hình premium ở casual segment</li>
+            <li><strong>Tỉ giá USD</strong> tăng → giá vốn nhập tăng → margin co</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="positioning" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">5. Competitive Positioning Matrix</h2>
+      <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+        <h3 class="text-sm uppercase font-semibold text-zinc-500 mb-2">Price vs Gaming-Specialty Depth</h3>
+        <div class="relative h-96"><canvas id="chartPosition"></canvas></div>
+        <p class="text-xs text-zinc-500 mt-2">Trục X: Price tier (1 = rẻ nhất, 10 = premium). Trục Y: Gaming specialty depth (1 = retailer tổng quát, 10 = chuyên gaming).</p>
+      </div>
+      <div class="mt-4 p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 text-sm">
+        <p class="font-semibold mb-1">Insight</p>
+        <p>GEARVN đang chiếm vùng <strong>"high specialty / mid-premium price"</strong> — đúng tệp core gamer. CellphoneS ngược lại — low price / low specialty. <strong>Vùng trống đáng chú ý</strong>: <em>"high specialty / premium price"</em> (góc trên phải) — chưa ai chiếm rõ — phù hợp cho GEARVN đẩy dòng OLED, ultrawide, pro creator.</p>
+      </div>
+    </section>
+
+    <section id="whitespace" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">6. White Space Opportunities</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <div class="text-xs uppercase font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Gap #1</div>
+          <h4 class="font-semibold mb-2">Premium OLED / Ultrawide</h4>
+          <p class="text-sm">Phân khúc 15-25tr đang tăng (sản lượng OLED gấp 3x YoY) nhưng không retailer nào có content/showcase chuyên sâu. GEARVN có sẵn brand gaming + showroom — easy win.</p>
+        </div>
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <div class="text-xs uppercase font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Gap #2</div>
+          <h4 class="font-semibold mb-2">Content creator setup</h4>
+          <p class="text-sm">Streamer/YouTuber cần 27" QHD HDR + arm + light. Chưa retailer nào package theo bundle "creator kit". Cross-sell rất cao, margin tốt.</p>
+        </div>
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <div class="text-xs uppercase font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Gap #3</div>
+          <h4 class="font-semibold mb-2">Trade-in / Subscribe</h4>
+          <p class="text-sm">Chưa retailer VN nào làm chương trình đổi màn hình cũ → mới (như Apple trade-in). Có thể tạo lock-in + recurring revenue + image bền vững.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="strategy" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">7. Strategic Plays — 3 hướng đề xuất</h2>
+
+      <div class="space-y-4">
+        <div class="border-l-4 border-indigo-500 pl-4">
+          <h3 class="font-semibold text-lg">Play 1 — "Premium Gaming Authority"</h3>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Positioning: <em>Nơi gamer & creator nghiêm túc đến để chọn màn hình</em></p>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li>Dồn lực marketing vào segment 8-22tr (OLED, 240Hz QHD, ultrawide)</li>
+            <li>Sản xuất content review chuyên sâu — YouTube + landing page so sánh — định hình "default search result" cho từ khoá "màn hình gaming 27 inch QHD"</li>
+            <li>Tổ chức "GEARVN Display Showcase" — sự kiện trải nghiệm OLED tại showroom</li>
+            <li>Pricing không phá đáy CellphoneS — giữ premium 5-8% nhưng bundle service (giao + lắp + tư vấn) để justify</li>
+          </ul>
+        </div>
+
+        <div class="border-l-4 border-pink-500 pl-4">
+          <h3 class="font-semibold text-lg">Play 2 — "Creator Bundle Pioneer"</h3>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Positioning: <em>Đối tác setup đầu tiên cho streamer/YouTuber VN</em></p>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li>Tạo "Creator Kit" — combo màn hình 27" QHD + arm + key light + mic + giảm giá 8-10%</li>
+            <li>Partner với 10-15 streamer/YouTuber mid-tier (50K-500K subs) để showcase</li>
+            <li>Landing page "/creator" có persona builder (streamer / video editor / 3D artist)</li>
+            <li>Tận dụng CDP để retarget khách đã mua chuột/bàn phím gaming nhưng chưa upgrade màn hình</li>
+          </ul>
+        </div>
+
+        <div class="border-l-4 border-emerald-500 pl-4">
+          <h3 class="font-semibold text-lg">Play 3 — "Data-Driven Hãng Partnership"</h3>
+          <p class="text-sm text-zinc-600 dark:text-zinc-400 mb-2">Positioning với hãng: <em>Retailer có khả năng phân tích & report tốt nhất VN</em> → unlock budget MDF, exclusive launch, hợp tác sâu</p>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li>Tận dụng stack <code>pimv3 + cdp-postgres + n8n-bigquery</code> để build auto-report sell-out cho từng hãng (Samsung, LG, ASUS) — gửi hàng tuần qua HTML link (skill html-report đã sẵn sàng)</li>
+            <li>Đề xuất hãng exclusive bundle/launch sớm 1-2 tuần → tạo "buzz first place" — kéo traffic vượt CellphoneS</li>
+            <li>Dùng AI/MCP automate proposal MKT cho hãng → giảm cost, tăng số đề xuất → tăng MDF unlock</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="threats" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">8. Top 3 Threats & Monitoring Plan</h2>
+      <div class="space-y-3">
+        <div class="rounded-lg p-4 threat-high">
+          <div class="flex justify-between items-start mb-2">
+            <strong>Threat 1: CellphoneS price war ở 4-6tr</strong>
+            <span class="text-xs">Likelihood: HIGH · Impact: SEVERE</span>
+          </div>
+          <p class="text-sm mb-2"><strong>Early warning</strong>: CellphoneS launch banner màn hình ở homepage, promo combo điện thoại + màn hình, KOL gaming tier 2 bắt đầu review.</p>
+          <p class="text-sm"><strong>Mitigation</strong>: Không đua giá. Push content + bundle service ở 4-6tr (lắp đặt miễn phí, tư vấn pro). Đẩy mạnh segment 8tr+ nơi không trực tiếp đụng.</p>
+        </div>
+        <div class="rounded-lg p-4 threat-med">
+          <div class="flex justify-between items-start mb-2">
+            <strong>Threat 2: Samsung/LG flagship store trên Shopee Mall</strong>
+            <span class="text-xs">Likelihood: MED · Impact: MODERATE</span>
+          </div>
+          <p class="text-sm mb-2"><strong>Early warning</strong>: Flagship store launch model mới sớm hơn retailer; voucher 10-15% từ hãng.</p>
+          <p class="text-sm"><strong>Mitigation</strong>: Đàm phán hãng cho exclusive bundle (gear, voucher) chỉ có ở GEARVN. Build trust qua content/service mà hãng không làm được.</p>
+        </div>
+        <div class="rounded-lg p-4 threat-med">
+          <div class="flex justify-between items-start mb-2">
+            <strong>Threat 3: An Phát mở rộng vào HCM</strong>
+            <span class="text-xs">Likelihood: MED · Impact: MODERATE</span>
+          </div>
+          <p class="text-sm mb-2"><strong>Early warning</strong>: An Phát công bố mở showroom HCM size lớn; tuyển sale lead Saigon.</p>
+          <p class="text-sm"><strong>Mitigation</strong>: Củng cố vị trí enthusiast PC build segment ở HCM. Đầu tư showroom HN sớm để tấn công ngược.</p>
+        </div>
+      </div>
+
+      <details class="mt-6 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+        <summary class="font-semibold">Competitive monitoring plan (quarterly)</summary>
+        <div class="mt-3 text-sm space-y-2">
+          <p><strong>Hằng tuần</strong>: Auto-crawl giá top 50 SKU màn hình từ Phong Vũ, CellphoneS, An Phát, Hacom (anh đã có mục tiêu này trong CLAUDE.md) → dashboard pricing gap.</p>
+          <p><strong>Hằng tháng</strong>: Audit landing page + content mới của đối thủ, theo dõi promo lớn.</p>
+          <p><strong>Hằng quý</strong>: Update report Porter + positioning, đánh giá lại threat scoring, win/loss khách hàng (sale survey).</p>
+          <p><strong>Owner</strong>: anh Nono + team PM ngành màn hình.</p>
+        </div>
+      </details>
+    </section>
+
+    <section id="nextsteps" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">9. Immediate Next Steps</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="rounded-lg p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase font-bold text-emerald-600 mb-2">Tuần này</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li>Approve 1 trong 3 strategic plays (1, 2, hay 3 — em recommend làm <strong>Play 3 trước</strong> vì ROI nhanh nhất với stack data sẵn có)</li>
+            <li>Crawl giá 50 SKU top từ 4 đối thủ → baseline</li>
+            <li>Set Google Alerts cho 4 brand đối thủ</li>
+          </ul>
+        </div>
+        <div class="rounded-lg p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase font-bold text-emerald-600 mb-2">Tháng này</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li>Build auto-report sell-out cho 1 hãng (vd: Samsung) — test loop hàng tuần</li>
+            <li>Tổ chức audit content marketing — gap với top 5 từ khóa SEO</li>
+            <li>Phỏng vấn 10 khách mua màn hình tháng vừa rồi: vì sao chọn GEARVN/đối thủ?</li>
+          </ul>
+        </div>
+        <div class="rounded-lg p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase font-bold text-emerald-600 mb-2">Quý này</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li>Launch "GEARVN Display Showcase" event tại showroom</li>
+            <li>Hoàn thiện "Creator Kit" bundle landing page</li>
+            <li>Đàm phán 1 exclusive launch với hãng (Samsung Odyssey hoặc LG OLED) cho Q3</li>
+            <li>Re-run skill này quý sau với data thực — so sánh shift</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-6 p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 text-sm">
+        <strong>Next StratArts skill recommend</strong>: <code>stratarts-pricing-strategy-architect</code> để thiết kế khung giá premium-gaming cho phân khúc 8-22tr (Van Westendorp PSM), hoặc <code>stratarts-customer-persona-builder</code> để chính thức hoá 3 persona Esports / AAA / Creator dùng cho Play 2.
+      </div>
+    </section>
+
+    <footer class="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-sm text-zinc-500">
+      by Tunglee
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const dark = document.documentElement.classList.toggle('dark');
+    localStorage.theme = dark ? 'dark' : 'light';
+    rebuildCharts();
+  });
+
+  const tocLinks = document.querySelectorAll('.toc a');
+  const sections = [...tocLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if (sections.length) {
+    const onScroll = () => {
+      const y = window.scrollY + 100;
+      let active = sections[0];
+      for (const s of sections) if (s.offsetTop <= y) active = s;
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active.id));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  let chartInstances = [];
+  function isDark() { return document.documentElement.classList.contains('dark'); }
+  function gridColor() { return isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'; }
+  function tickColor() { return isDark() ? '#a1a1aa' : '#52525b'; }
+
+  function buildForces() {
+    const ctx = document.getElementById('chartForces');
+    const chart = new Chart(ctx, {
+      type: 'radar',
+      data: {
+        labels: ['New Entrants', 'Supplier Power', 'Buyer Power', 'Substitutes', 'Rivalry'],
+        datasets: [{
+          label: 'Pressure on retailer (1-10)',
+          data: [3, 6, 8, 5, 9],
+          backgroundColor: 'rgba(239,68,68,0.25)',
+          borderColor: '#ef4444',
+          pointBackgroundColor: '#ef4444'
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          r: {
+            beginAtZero: true, max: 10,
+            angleLines: { color: gridColor() },
+            grid: { color: gridColor() },
+            pointLabels: { color: tickColor(), font: { size: 12 } },
+            ticks: { color: tickColor(), backdropColor: 'transparent' }
+          }
+        },
+        plugins: { legend: { labels: { color: tickColor() } } }
+      }
+    });
+    chartInstances.push({ build: buildForces, instance: chart });
+  }
+
+  function buildPosition() {
+    const ctx = document.getElementById('chartPosition');
+    const palette = ['#6366f1','#ec4899','#f59e0b','#10b981','#06b6d4'];
+    const players = [
+      { label: 'GEARVN',      x: 6.5, y: 9.0, r: 14 },
+      { label: 'CellphoneS',  x: 3.0, y: 3.0, r: 14 },
+      { label: 'Phong Vũ',    x: 5.5, y: 5.5, r: 14 },
+      { label: 'An Phát',     x: 5.0, y: 7.5, r: 12 },
+      { label: 'Hacom',       x: 4.0, y: 7.0, r: 12 }
+    ];
+    const chart = new Chart(ctx, {
+      type: 'bubble',
+      data: {
+        datasets: players.map((p, i) => ({
+          label: p.label,
+          data: [{ x: p.x, y: p.y, r: p.r }],
+          backgroundColor: palette[i] + '99',
+          borderColor: palette[i],
+          borderWidth: 2
+        }))
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          x: {
+            min: 0, max: 10,
+            title: { display: true, text: 'Price tier (1 = budget · 10 = premium)', color: tickColor() },
+            ticks: { color: tickColor() }, grid: { color: gridColor() }
+          },
+          y: {
+            min: 0, max: 10,
+            title: { display: true, text: 'Gaming-specialty depth (1 = generalist · 10 = pure gaming)', color: tickColor() },
+            ticks: { color: tickColor() }, grid: { color: gridColor() }
+          }
+        },
+        plugins: {
+          legend: { labels: { color: tickColor() } },
+          tooltip: { callbacks: { label: c => `${c.dataset.label}: Price ${c.raw.x}, Specialty ${c.raw.y}` } }
+        }
+      }
+    });
+    chartInstances.push({ build: buildPosition, instance: chart });
+  }
+
+  function rebuildCharts() {
+    chartInstances.forEach(c => c.instance.destroy());
+    chartInstances = [];
+    buildForces();
+    buildPosition();
+  }
+
+  buildForces();
+  buildPosition();
+
+  $(document).ready(function() {
+    $('#compTable').DataTable({
+      pageLength: 10,
+      order: [[6, 'desc']],
+      language: {
+        search: 'Tìm:',
+        lengthMenu: 'Hiển thị _MENU_ dòng',
+        info: 'Hiển thị _START_–_END_ / _TOTAL_',
+        zeroRecords: 'Không tìm thấy',
+        paginate: { first: '«', last: '»', next: '›', previous: '‹' }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
