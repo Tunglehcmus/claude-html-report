@@ -1,0 +1,839 @@
+<!doctype html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>GIGABYTE 40 — Born to Push Limits | Campaign Proposal</title>
+  <meta name="description" content="Proposal campaign GIGABYTE 40 năm tại GEARVN — 4 tuần — 5 phần: Sale Promotion, Offline Event, Media & PR, Partnership, POSM.">
+  <meta property="og:title" content="GIGABYTE 40 — Born to Push Limits | Campaign Proposal">
+  <meta property="og:description" content="Proposal campaign 40 năm GIGABYTE, 4 tuần, flagship event tại HCM showroom GEARVN, target gaming/esports.">
+  <meta property="og:type" content="article">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['system-ui', 'ui-sans-serif', 'sans-serif'] } } } };
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/2.0.8/js/dataTables.min.js"></script>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+    @media print {
+      .no-print { display: none !important; }
+      body { color: #000; background: #fff; }
+      a { color: inherit; text-decoration: underline; }
+      details { display: block; } details > summary { display: none; }
+    }
+    details > summary { cursor: pointer; user-select: none; }
+    details > summary::marker { content: "▸ "; }
+    details[open] > summary::marker { content: "▾ "; }
+    .toc a { display: block; padding: .25rem 0; opacity: .6; transition: opacity .15s; font-size: 13px; }
+    .toc a:hover, .toc a.active { opacity: 1; }
+    .toc a.active { font-weight: 600; color: #f97316; }
+
+    .tabs > input[type="radio"] { display: none; }
+    .tabs > label { cursor: pointer; padding: .5rem 1rem; border-bottom: 2px solid transparent; display: inline-block; font-size: 14px; }
+    .tabs > input:checked + label { border-color: #f97316; font-weight: 600; color: #f97316; }
+    .tabs > .tab-panel { display: none; padding-top: 1rem; }
+    .tabs > input:nth-of-type(1):checked ~ .tab-panel:nth-of-type(1),
+    .tabs > input:nth-of-type(2):checked ~ .tab-panel:nth-of-type(2),
+    .tabs > input:nth-of-type(3):checked ~ .tab-panel:nth-of-type(3),
+    .tabs > input:nth-of-type(4):checked ~ .tab-panel:nth-of-type(4) { display: block; }
+
+    .hero-gradient { background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #0a0a0a 100%); color: #fff; }
+    .accent-orange { color: #f97316; }
+    .bg-accent { background: #f97316; }
+    .stat-card { background: linear-gradient(135deg, rgba(249,115,22,0.10), rgba(239,68,68,0.10)); border: 1px solid rgba(249,115,22,0.3); }
+    .phase-card { border-left: 4px solid; padding-left: 1rem; }
+    .phase-1 { border-color: #06b6d4; }
+    .phase-2 { border-color: #6366f1; }
+    .phase-3 { border-color: #ec4899; }
+    .phase-4 { border-color: #f97316; }
+    .tier-1 { background: rgba(249,115,22,0.10); border: 1px solid rgba(249,115,22,0.4); }
+    .tier-2 { background: rgba(99,102,241,0.10); border: 1px solid rgba(99,102,241,0.4); }
+    .tier-3 { background: rgba(16,185,129,0.10); border: 1px solid rgba(16,185,129,0.4); }
+    .tier-4 { background: rgba(168,85,247,0.10); border: 1px solid rgba(168,85,247,0.4); }
+    .assumption { background: rgba(245,158,11,0.10); border-left: 4px solid #f59e0b; padding: 0.75rem 1rem; }
+
+    .dark table.dataTable, .dark table.dataTable th, .dark table.dataTable td { color: #e4e4e7; }
+    .dark .dataTables_wrapper .dataTables_filter input,
+    .dark .dataTables_wrapper .dataTables_length select {
+      background: #18181b; border: 1px solid #3f3f46; color: #e4e4e7; padding: 0.25rem 0.5rem; border-radius: 0.25rem;
+    }
+    .dark .dataTables_wrapper .dataTables_info,
+    .dark .dataTables_wrapper .dataTables_paginate { color: #a1a1aa; }
+    .dark table.dataTable tbody tr { background: transparent; }
+    .dark table.dataTable.stripe tbody tr.odd { background: rgba(255,255,255,0.02); }
+    .dark .dataTables_wrapper .dataTables_paginate .paginate_button { color: #a1a1aa !important; }
+    .dark .dataTables_wrapper .dataTables_paginate .paginate_button.current { color: #fff !important; background: #f97316 !important; border-color: #f97316 !important; }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans antialiased">
+
+<div class="fixed top-4 right-4 z-50 flex gap-2 no-print">
+  <button id="theme-toggle" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800">☼ / ☾</button>
+  <button onclick="window.print()" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800">print</button>
+</div>
+
+<!-- Hero -->
+<section class="hero-gradient py-20 px-6">
+  <div class="max-w-6xl mx-auto">
+    <p class="text-sm uppercase tracking-widest text-orange-400 mb-3">Campaign Proposal • 2026</p>
+    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
+      GIGABYTE <span class="accent-orange">40</span> — Born to Push Limits
+    </h1>
+    <p class="text-xl text-zinc-300 max-w-3xl">Chiến dịch kỷ niệm 40 năm GIGABYTE tại GEARVN — 4 tuần — chốt bằng <span class="accent-orange font-semibold">"GIGABYTE 40 Night"</span> tại flagship showroom HCM.</p>
+    <div class="mt-8 flex flex-wrap gap-4 text-sm">
+      <div class="px-4 py-2 rounded-md bg-white/10 backdrop-blur"><span class="text-zinc-400">Thời gian:</span> <strong>4 tuần</strong></div>
+      <div class="px-4 py-2 rounded-md bg-white/10 backdrop-blur"><span class="text-zinc-400">Target:</span> <strong>Gaming / Esports</strong></div>
+      <div class="px-4 py-2 rounded-md bg-white/10 backdrop-blur"><span class="text-zinc-400">Flagship:</span> <strong>1 event HCM</strong></div>
+      <div class="px-4 py-2 rounded-md bg-white/10 backdrop-blur"><span class="text-zinc-400">Budget tier đề xuất:</span> <strong class="accent-orange">M (600–900tr)</strong></div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-6xl mx-auto px-6 py-12 lg:grid lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-10">
+
+  <nav class="toc lg:sticky lg:top-12 self-start mb-8 lg:mb-0 no-print">
+    <div class="font-semibold mb-2 text-zinc-500 uppercase tracking-wider text-xs">Nội dung</div>
+    <a href="#overview">Campaign Overview</a>
+    <a href="#timeline">Timeline 4 tuần</a>
+    <a href="#part1">1 · Sale Promotion</a>
+    <a href="#part2">2 · Offline Event</a>
+    <a href="#part3">3 · Media & PR</a>
+    <a href="#part4">4 · Partnership</a>
+    <a href="#part5">5 · POSM Checklist</a>
+    <a href="#kpi">KPI & Budget</a>
+    <a href="#risk">Risk & Owner</a>
+    <a href="#next">Next steps</a>
+  </nav>
+
+  <main class="min-w-0">
+
+    <section id="overview" class="mb-12">
+      <h2 class="text-3xl font-bold mb-4">Campaign Overview</h2>
+      <div class="assumption mb-4 text-sm">
+        <strong>Assumptions cần anh confirm</strong> (em đang giả định để build draft — anh chỉnh nếu khác):
+        <ul class="list-disc ml-5 mt-1">
+          <li>Campaign đại diện cho <strong>GEARVN-led</strong>, đề xuất với GIGABYTE để unlock MDF + co-fund</li>
+          <li>Ngày bắt đầu cụ thể: <em>TBD</em> — em dùng "Tuần 1 → Tuần 4"</li>
+          <li>Showroom HCM flagship: showroom chính 78-80 Hoàng Hoa Thám / hoặc địa điểm GEARVN chốt</li>
+          <li>Brand guideline GIGABYTE/AORUS: dùng tone đen + cam #F97316 + đỏ (placeholder, hãng sẽ supply)</li>
+        </ul>
+      </div>
+
+      <div class="grid md:grid-cols-4 gap-3 mb-6">
+        <div class="stat-card rounded-xl p-4">
+          <div class="text-xs uppercase text-zinc-500">Reach mục tiêu</div>
+          <div class="text-2xl font-bold mt-1">5M+</div>
+          <div class="text-xs text-zinc-500 mt-1">Social + PR + KOL</div>
+        </div>
+        <div class="stat-card rounded-xl p-4">
+          <div class="text-xs uppercase text-zinc-500">Foot traffic event</div>
+          <div class="text-2xl font-bold mt-1">150-200</div>
+          <div class="text-xs text-zinc-500 mt-1">Khách dự HCM showroom</div>
+        </div>
+        <div class="stat-card rounded-xl p-4">
+          <div class="text-xs uppercase text-zinc-500">Sale uplift ngành GIGA</div>
+          <div class="text-2xl font-bold mt-1">+35%</div>
+          <div class="text-xs text-zinc-500 mt-1">vs tháng trước</div>
+        </div>
+        <div class="stat-card rounded-xl p-4">
+          <div class="text-xs uppercase text-zinc-500">Database growth</div>
+          <div class="text-2xl font-bold mt-1">5,000+</div>
+          <div class="text-xs text-zinc-500 mt-1">Lead mới (event + spin)</div>
+        </div>
+      </div>
+
+      <h3 class="font-semibold mb-2">Big idea</h3>
+      <p class="text-zinc-700 dark:text-zinc-300 mb-3">
+        <strong>GIGABYTE 40 — Born to Push Limits</strong>: kể câu chuyện 40 năm GIGABYTE không chỉ là <em>heritage</em> mà là <em>liên tục push giới hạn</em> — từ những chiếc main đầu tiên đến laptop AORUS RTX 5090 hôm nay. Campaign 4 tuần dẫn dắt khách đi qua hành trình đó, kết bằng đêm event nơi khách <strong>chạm tay vào tương lai</strong>.
+      </p>
+      <p class="text-zinc-700 dark:text-zinc-300">
+        <strong>Vai trò GEARVN</strong>: đại lý gaming gear số 1 VN — host chính, channel chính trên kênh online + showroom HCM. Tận dụng DNA gaming + cộng đồng để biến campaign thành <em>moment văn hoá</em> chứ không chỉ là campaign sale.
+      </p>
+    </section>
+
+    <section id="timeline" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Timeline 4 tuần</h2>
+      <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4 mb-4">
+        <div class="relative h-72"><canvas id="chartTimeline"></canvas></div>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-3 text-sm">
+        <div class="phase-card phase-1 py-2">
+          <strong class="text-cyan-500">Tuần 1 — TEASING</strong>
+          <p class="text-zinc-700 dark:text-zinc-300 mt-1">Mystery video 15s "40 năm đã qua. 4 tuần sắp tới." · Countdown banner social · Video lịch sử GIGABYTE phần 1 (1986 → 2000) · Hashtag #GIGA40 launch</p>
+        </div>
+        <div class="phase-card phase-2 py-2">
+          <strong class="text-indigo-500">Tuần 2 — AWARENESS</strong>
+          <p class="text-zinc-700 dark:text-zinc-300 mt-1">Video lịch sử phần 2 (2000 → 2026 + AORUS era) · Q&A interview rep GIGABYTE · KOL teaser reveal SP mới · Mở pre-order/đăng ký event</p>
+        </div>
+        <div class="phase-card phase-3 py-2">
+          <strong class="text-pink-500">Tuần 3 — ACTIVATION</strong>
+          <p class="text-zinc-700 dark:text-zinc-300 mt-1">KOL review 4-5 SP flagship · TikTok challenge "AORUS Setup Showdown" UGC · Customer testimonial videos · Push sale 24/7 cùng banner full site</p>
+        </div>
+        <div class="phase-card phase-4 py-2">
+          <strong class="text-orange-500">Tuần 4 — CLIMAX</strong>
+          <p class="text-zinc-700 dark:text-zinc-300 mt-1">Final teaser event · <strong>GIGABYTE 40 Night</strong> tại HCM showroom + livestream · PR recap báo chí · Flash sale "40 phút" mỗi ngày · UGC roundup, finale promo</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 1: SALE PROMOTION -->
+    <section id="part1" class="mb-14">
+      <div class="flex items-baseline gap-3 mb-4">
+        <div class="text-4xl font-extrabold accent-orange">01</div>
+        <h2 class="text-3xl font-bold">Sale Promotion</h2>
+      </div>
+      <p class="text-zinc-600 dark:text-zinc-400 mb-4">CTKM ngành PC + linh kiện + gear. Hai cơ chế chính: <strong>giảm giá trực tiếp</strong> và <strong>tặng quà</strong>. Tập trung SKU GIGABYTE/AORUS.</p>
+
+      <div class="overflow-x-auto">
+      <table id="promoTable" class="display stripe w-full text-sm">
+        <thead>
+          <tr>
+            <th>Ngành / SKU</th>
+            <th>Cơ chế</th>
+            <th>Mức ưu đãi</th>
+            <th>Quà tặng kèm</th>
+            <th>Phase</th>
+            <th>Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>AORUS Laptop (RTX 50 series)</td><td>Pre-order + Giảm giá</td><td>−5% + voucher 500K</td><td>Deskmat AORUS limited, balo gaming</td><td>W2-W4</td><td>PM Laptop</td></tr>
+          <tr><td>Main board GIGABYTE Z890/X870</td><td>Combo + Giảm giá</td><td>Combo với CPU Intel/AMD −8%</td><td>Tản nhiệt nước AIO trial 30 ngày</td><td>W1-W4</td><td>PM Linh kiện</td></tr>
+          <tr><td>VGA AORUS RTX 50 series</td><td>Giảm giá</td><td>−3% (theo MDF Nvidia)</td><td>Game key (Cyberpunk DLC / TBD)</td><td>W3-W4</td><td>PM VGA</td></tr>
+          <tr><td>Màn hình GIGABYTE M27Q / FO27Q3 OLED</td><td>Combo + Trade-in</td><td>Trade-in màn cũ → giảm 1-2tr</td><td>Tay cầm chuột AORUS, deskmat</td><td>W2-W4</td><td>PM Màn hình (anh Nono)</td></tr>
+          <tr><td>SSD / RAM AORUS</td><td>Combo PC build</td><td>−10% khi mua kèm main GIGA</td><td>Sticker pack + keychain</td><td>W1-W4</td><td>PM Linh kiện</td></tr>
+          <tr><td>Case PC AORUS</td><td>Bundle</td><td>−15% khi mua cùng 2+ SP GIGA</td><td>LED fan miễn phí (1 cái)</td><td>W2-W4</td><td>PM PC</td></tr>
+          <tr><td>Bàn phím / chuột AORUS</td><td>Mua 1 tặng 1 (mini)</td><td>Mua bàn phím → tặng deskmat</td><td>Mousepad limited</td><td>W1-W4</td><td>PM Gear</td></tr>
+          <tr><td>"Lucky Spin 40"</td><td>Quà tặng</td><td>Mua bất kỳ SP GIGA → quay số</td><td>40 phần quà tổng — top prize: laptop AORUS</td><td>W1-W4</td><td>MKT</td></tr>
+          <tr><td>"Voucher 40K"</td><td>Voucher</td><td>Đơn từ 4tr → giảm 400K cho GIGA</td><td>—</td><td>W2-W4</td><td>MKT</td></tr>
+          <tr><td>Flash sale 40 phút (online)</td><td>Giảm giá sâu</td><td>−15-25% hàng có hạn</td><td>—</td><td>W4 mỗi ngày 20:00-20:40</td><td>E-commerce</td></tr>
+          <tr><td>Combo "AORUS Battle Box"</td><td>Combo</td><td>Main + RAM + SSD GIGA −12%</td><td>Build PC miễn phí, tem AORUS</td><td>W2-W4</td><td>Showroom</td></tr>
+          <tr><td>Khách event ngày 24 (W4)</td><td>Exclusive</td><td>Voucher khách dự event −10% mọi SP GIGA, áp đêm event</td><td>Giftbag (mousepad + tee + sticker)</td><td>W4 only</td><td>Event team</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <details class="mt-4 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+        <summary class="font-semibold">Em đề xuất extra (ngoài ý anh đã có)</summary>
+        <ul class="list-disc ml-6 mt-3 text-sm space-y-1">
+          <li><strong>"Lucky Spin 40"</strong> — 40 phần quà cho 40 năm — gimmick rất viral, dễ làm content</li>
+          <li><strong>"Voucher 40K"</strong> — số 40 + 40K → match concept</li>
+          <li><strong>Flash sale 40 phút mỗi ngày tuần 4</strong> — tạo urgency, tăng traffic online cuối campaign</li>
+          <li><strong>Trade-in màn hình cũ</strong> — chưa retailer VN nào làm bài bản → tạo PR moment, lock-in dài hạn</li>
+          <li><strong>Exclusive voucher cho khách event</strong> — đẩy event registration + chốt sale tại showroom đêm đó</li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- PART 2: OFFLINE EVENT -->
+    <section id="part2" class="mb-14">
+      <div class="flex items-baseline gap-3 mb-4">
+        <div class="text-4xl font-extrabold accent-orange">02</div>
+        <h2 class="text-3xl font-bold">Offline Event — "GIGABYTE 40 Night"</h2>
+      </div>
+      <p class="text-zinc-600 dark:text-zinc-400 mb-4">Flagship event tại HCM showroom. Tagline: <em>"40 năm. 1 đêm. Đỉnh cao."</em> · Capacity 150-200 khách · Đêm tuần 4.</p>
+
+      <h3 class="font-semibold mb-2">Concept event</h3>
+      <ul class="list-disc ml-6 mb-4 text-sm space-y-1">
+        <li><strong>Tone</strong>: Premium gaming, dark + neon orange/red, LED setup, AORUS Eagle motif</li>
+        <li><strong>Format</strong>: Hybrid — đón khách thân thiết + KOL/báo chí + livestream cho cộng đồng online</li>
+        <li><strong>Trải nghiệm trọng tâm</strong>: Tech showcase (sờ tận tay flagship products) + Talk show + Networking + Mini show + Lucky draw</li>
+      </ul>
+
+      <h3 class="font-semibold mb-2">Agenda dự kiến (5 giờ)</h3>
+      <div class="overflow-x-auto mb-6">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-orange-50 dark:bg-orange-900/20">
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800 w-24">Giờ</th>
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Hoạt động</th>
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800 w-40">Owner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800 font-mono">17:30</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Đón khách, welcome drink, check-in photo backdrop, phát giftbag</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">PG team + Showroom</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800 font-mono">18:00</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Opening — MC + Rep GIGABYTE + Rep GEARVN giới thiệu 40 năm</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">MC + Speakers</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800 font-mono">18:15</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Chiếu Video Lịch sử 40 năm GIGABYTE (5-7 phút, screen lớn + sound)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Production</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800 font-mono">18:30</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Tech Showcase: AORUS Laptop RTX 50, FO27Q3 OLED, AORUS Master mainboard, AORUS PC custom build</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Product team</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800 font-mono">19:00</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Talk show "Đỉnh cao Gaming Gear" — Rep GIGABYTE + KOL + Pro-gamer (mời 1-2 team esports)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">MKT + KOL agency</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800 font-mono">19:45</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Mini game + Lucky Draw 40 (40 giải thưởng) + Photo session với KOL</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">MC + Event team</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800 font-mono">20:15</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Networking + Free food &amp; drink (finger food, sponsor drink)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">F&amp;B vendor</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800 font-mono">20:45</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Closing — Exclusive offer ONLY tonight (voucher −10% mọi GIGA, áp ngay tại showroom)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Sales</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800 font-mono">21:00+</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">After-party private cho KOL/đối tác/báo chí (optional)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">MKT lead</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="font-semibold mb-2">2 hướng triển khai (theo ý anh)</h3>
+      <div class="grid md:grid-cols-2 gap-4 mb-4">
+        <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4">
+          <div class="text-xs uppercase font-semibold text-zinc-500 mb-1">Option 2.1</div>
+          <h4 class="font-semibold mb-2">GEARVN × các đối tác / đại lý</h4>
+          <p class="text-sm">Đêm event này = <strong>showcase chung</strong> giữa GIGABYTE, GEARVN và 2-3 brand co-host (Intel/AMD/Nvidia). Chia khu trải nghiệm theo brand. Cross-promo giúp cả 2 bên + unlock co-fund.</p>
+          <p class="text-xs text-zinc-500 mt-2"><strong>Inspired by</strong>: Viewsonic Tech Show — case anh đã nhắc.</p>
+        </div>
+        <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4">
+          <div class="text-xs uppercase font-semibold text-zinc-500 mb-1">Option 2.2</div>
+          <h4 class="font-semibold mb-2">GEARVN × GIGABYTE tự làm cho GIGA</h4>
+          <p class="text-sm">Đêm event focus 100% GIGABYTE, không split share-of-voice với brand khác. <strong>Story telling sâu hơn</strong>, brand-building chuyên hơn, audience cảm được "đây là đêm của GIGABYTE".</p>
+          <p class="text-xs text-zinc-500 mt-2"><strong>Em recommend Option 2.2</strong> vì 40 năm là moment riêng của GIGA, không nên chia. Brand T1 (Intel/AMD/Nvidia) tham gia ở mức sponsor/co-fund, không phải co-host equal.</p>
+        </div>
+      </div>
+
+      <details class="rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+        <summary class="font-semibold">Production checklist event</summary>
+        <ul class="list-disc ml-6 mt-3 text-sm grid md:grid-cols-2 gap-x-6 gap-y-1">
+          <li>Stage: 6x4m, LED screen 4x2.5m chính + 2 screen 2x1.5m phụ</li>
+          <li>Sound system: 2 line array + 2 sub + 2 wireless mic + 1 podium mic</li>
+          <li>Lighting: par LED 12-20 đèn, follow spot 1, hazer 1</li>
+          <li>Camera: 3 camera live streaming (wide + close-up + roving)</li>
+          <li>Livestream: YouTube + Facebook + TikTok đồng thời, 1080p</li>
+          <li>Photographer: 2 — 1 event, 1 KOL/portrait</li>
+          <li>Videographer: 2 — 1 director, 1 b-roll</li>
+          <li>Set design: backdrop chính + photo booth + zone trải nghiệm 4 (laptop / màn hình / mainboard / gear)</li>
+          <li>PG / hostess: 4-6 mặc đồng phục AORUS</li>
+          <li>Security: 2 (event + parking)</li>
+          <li>F&amp;B: finger food 200 khẩu phần + nước uống free flow + cocktail bar (optional)</li>
+          <li>Lucky draw: 40 phần quà phân lớp (3 lớn / 10 vừa / 27 nhỏ)</li>
+          <li>Giftbag: 200 cái (tee + mousepad + sticker pack + brochure 40 năm)</li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- PART 3: MEDIA & PR -->
+    <section id="part3" class="mb-14">
+      <div class="flex items-baseline gap-3 mb-4">
+        <div class="text-4xl font-extrabold accent-orange">03</div>
+        <h2 class="text-3xl font-bold">Media & PR</h2>
+      </div>
+      <p class="text-zinc-600 dark:text-zinc-400 mb-4">Content calendar 4 tuần · 2 video dài 40 năm · 4-6 KOL review · 8-10 TikTok ngắn · PR booking tier 1/2/3.</p>
+
+      <h3 class="font-semibold mb-2">Content calendar 4 tuần (theo phase)</h3>
+      <div class="tabs border-b border-zinc-200 dark:border-zinc-800 mb-2">
+        <input type="radio" name="week" id="w1" checked>
+        <label for="w1">W1 · TEASING</label>
+        <input type="radio" name="week" id="w2">
+        <label for="w2">W2 · AWARENESS</label>
+        <input type="radio" name="week" id="w3">
+        <label for="w3">W3 · ACTIVATION</label>
+        <input type="radio" name="week" id="w4">
+        <label for="w4">W4 · CLIMAX</label>
+
+        <div class="tab-panel text-sm">
+          <ul class="list-disc ml-5 space-y-1">
+            <li><strong>D1</strong>: Mystery video 15s — "40 năm đã qua. 4 tuần sắp tới." (FB + IG + TikTok)</li>
+            <li><strong>D2</strong>: Banner countdown launch trên gearvn.com home</li>
+            <li><strong>D3</strong>: Post hashtag launch #GIGA40 #BornToPushLimits</li>
+            <li><strong>D5</strong>: <strong>Video lịch sử phần 1</strong> (1986-2000, 5-7 phút) — YouTube + FB</li>
+            <li><strong>D6</strong>: Short clip 30s trích từ video phần 1 — TikTok + Reels</li>
+            <li><strong>D7</strong>: KOL teaser post (1-2 macro KOL): "Có gì sắp xảy ra..."</li>
+          </ul>
+        </div>
+        <div class="tab-panel text-sm">
+          <ul class="list-disc ml-5 space-y-1">
+            <li><strong>D8</strong>: <strong>Video lịch sử phần 2</strong> (2000-2026 + AORUS era, 5-7 phút)</li>
+            <li><strong>D10</strong>: <strong>Q&amp;A interview rep GIGABYTE</strong> — 3-5 câu về sản phẩm flagship + roadmap (3-5 phút)</li>
+            <li><strong>D11</strong>: KOL teaser reveal SP mới (2-3 KOL post unbox preview)</li>
+            <li><strong>D12</strong>: Pre-event announcement — mở form đăng ký event (landing page /giga40)</li>
+            <li><strong>D13</strong>: <strong>Customer testimonial #1</strong> — phỏng vấn khách đang dùng AORUS laptop / màn hình GIGA tại showroom</li>
+            <li><strong>D14</strong>: Recap tuần 2 + thông báo Tuần 3 sắp tới (TikTok)</li>
+          </ul>
+        </div>
+        <div class="tab-panel text-sm">
+          <ul class="list-disc ml-5 space-y-1">
+            <li><strong>D15-D18</strong>: <strong>KOL review chuyên sâu</strong> 4 SP — 1 video/day (laptop / màn hình OLED / mainboard / case)</li>
+            <li><strong>D19</strong>: <strong>TikTok challenge "AORUS Setup Showdown"</strong> — UGC, top 10 setup tặng quà</li>
+            <li><strong>D20</strong>: Customer testimonial #2 + #3</li>
+            <li><strong>D21</strong>: Behind-the-scenes — chuẩn bị event (tease ngày event)</li>
+            <li><strong>Suốt tuần</strong>: push paid ads social, retarget khách đã visit /giga40 landing</li>
+          </ul>
+        </div>
+        <div class="tab-panel text-sm">
+          <ul class="list-disc ml-5 space-y-1">
+            <li><strong>D22-D23</strong>: Final teaser event — KOL post "tôi sẽ có mặt đêm GIGA40"</li>
+            <li><strong>D24</strong>: <strong>EVENT DAY</strong> — livestream YouTube/FB/TikTok 3 giờ + real-time post</li>
+            <li><strong>D25</strong>: <strong>Event recap video</strong> 3-5 phút + PR booking báo chí đăng (Genk, Tinhte, VnExpress tech)</li>
+            <li><strong>D26-D27</strong>: UGC roundup, KOL post-event reaction</li>
+            <li><strong>D28</strong>: Finale push — flash sale 40 phút cuối cùng + closing thank-you post</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 grid md:grid-cols-2 gap-6">
+        <div>
+          <h3 class="font-semibold mb-2">Video production plan</h3>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li><strong>2 video dài</strong> (5-7 phút) — "Lịch sử 40 năm GIGABYTE" phần 1 + 2</li>
+            <li><strong>1 event recap</strong> (3-5 phút) — sau ngày event</li>
+            <li><strong>4-6 KOL review</strong> (60-90s mỗi SP)</li>
+            <li><strong>8-10 TikTok short</strong> (15-30s) — trích từ video dài + content riêng</li>
+            <li><strong>4 Q&amp;A interview</strong> (2-3 phút) — rep GIGABYTE chia sẻ về SP/CTKM</li>
+            <li><strong>3 customer testimonial</strong> (60-90s) — phỏng vấn khách tại showroom</li>
+            <li><strong>1 BTS video</strong> chuẩn bị event (1-2 phút)</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-2">PR / KOL booking</h3>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li><strong>PR Tier 1</strong>: Genk, VnExpress số hóa, Tinhte — 1 bài launch + 1 bài recap</li>
+            <li><strong>PR Tier 2</strong>: VnReview, Sforum, ICTNews — 1 bài review SP flagship</li>
+            <li><strong>PR Tier 3</strong>: Gaming forums (VOZ thread), FB group "PC builder VN"</li>
+            <li><strong>KOL Macro</strong> (>500k): 2-3 KOL — long-term ambassador feel</li>
+            <li><strong>KOL Mid</strong> (50-500k): 5-8 KOL — focus gaming PC, streamer, build PC</li>
+            <li><strong>KOL Micro</strong> (5-50k): 10-15 KOL — UGC, community feel</li>
+            <li><strong>Pro-gamer / team</strong>: 1-2 team esports (mời event + content)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- PART 4: PARTNERSHIP -->
+    <section id="part4" class="mb-14">
+      <div class="flex items-baseline gap-3 mb-4">
+        <div class="text-4xl font-extrabold accent-orange">04</div>
+        <h2 class="text-3xl font-bold">Partnership</h2>
+      </div>
+      <p class="text-zinc-600 dark:text-zinc-400 mb-4">Phân theo 4 tier để mỗi loại partner có cách deal khác nhau — tránh "1 size fits all".</p>
+
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="tier-1 rounded-xl p-4">
+          <div class="text-xs uppercase font-bold accent-orange mb-1">Tier 1 — Ambassador</div>
+          <h4 class="font-semibold mb-2">Gương mặt đại diện chiến dịch</h4>
+          <p class="text-sm mb-2">1-2 KOL macro / pro-gamer ký hợp đồng <strong>chỉ cho campaign 40 năm</strong> hoặc long-term.</p>
+          <p class="text-xs text-zinc-500">Action: shortlist 5-7 cá nhân, gặp & thương lượng tuần W-1.</p>
+          <div class="mt-2 text-xs"><strong>Profile gợi ý</strong>: top streamer (>1M), pro-gamer team đang nổi (Saigon Buffalo, GAM, SBTC...), tech YouTuber tier 1 (Vật Vờ / ThinkView...).</div>
+        </div>
+
+        <div class="tier-2 rounded-xl p-4">
+          <div class="text-xs uppercase font-bold text-indigo-500 mb-1">Tier 2 — Brand lớn (T1)</div>
+          <h4 class="font-semibold mb-2">Intel · AMD · Nvidia</h4>
+          <p class="text-sm mb-2">Co-op fund + co-branded content + slot tại event.</p>
+          <ul class="text-xs list-disc ml-4 space-y-1">
+            <li><strong>Intel</strong>: AORUS + Intel CPU bundle, "Intel Inside Tech Stage" tại event</li>
+            <li><strong>AMD</strong>: Ryzen + AORUS X870 motherboard combo, AMD demo PC</li>
+            <li><strong>Nvidia</strong>: RTX 50 + AORUS laptop pre-order, RTX showcase</li>
+          </ul>
+          <p class="text-xs text-zinc-500 mt-2">Action: pitch proposal trong tuần W-2, ký MOU trước W1.</p>
+        </div>
+
+        <div class="tier-3 rounded-xl p-4">
+          <div class="text-xs uppercase font-bold text-emerald-500 mb-1">Tier 3 — Retail partner (cross-promo)</div>
+          <h4 class="font-semibold mb-2">Đại lý đồng hành</h4>
+          <p class="text-sm mb-2">Phong Vũ · CellphoneS · An Phát · Hacom — cross-promo cùng brand GIGABYTE.</p>
+          <p class="text-xs">Nếu là <strong>GIGABYTE-led campaign</strong>: các bên cùng push cùng key visual, share content. Nếu là <strong>GEARVN-led</strong>: cẩn thận — đại lý đồng cấp là đối thủ trực tiếp, partnership có thể giới hạn (không share traffic, chỉ co-content level brand).</p>
+          <p class="text-xs text-zinc-500 mt-2">⚠️ Em đề xuất confirm với hãng GIGABYTE về scope cross-promo trước khi tiếp cận đại lý khác.</p>
+        </div>
+
+        <div class="tier-4 rounded-xl p-4">
+          <div class="text-xs uppercase font-bold text-purple-500 mb-1">Tier 4 — Community</div>
+          <h4 class="font-semibold mb-2">KOL · Báo · ĐH · Group</h4>
+          <ul class="text-sm list-disc ml-4 space-y-1">
+            <li><strong>KOL micro/mid</strong>: pool 15-20 — UGC engine</li>
+            <li><strong>Báo</strong>: Genk, Tinhte, VnExpress, VnReview — booking PR + invite event</li>
+            <li><strong>Trường ĐH</strong>: Bách Khoa, RMIT, FPT, KHTN — esports club partnership, demo SP tại trường, sponsor giải nội bộ</li>
+            <li><strong>Group FB</strong>: "Gaming PC VN", "Build PC VN", "Esports VN" — seed content + giveaway</li>
+            <li><strong>Forum</strong>: VOZ (TLĐM thread), Tinhte thread</li>
+          </ul>
+        </div>
+      </div>
+
+      <details class="mt-4 rounded-lg border border-zinc-200 dark:border-zinc-800 p-4">
+        <summary class="font-semibold">Listing toàn bộ activity partnership (em mở rộng)</summary>
+        <ul class="list-disc ml-6 mt-3 text-sm space-y-1">
+          <li>Ambassador signing event (mini PR moment)</li>
+          <li>Joint content series với từng brand T1 (Intel/AMD/Nvidia) — 1 video/brand</li>
+          <li>Co-branded landing page cho mỗi co-op (Intel × AORUS, AMD × AORUS...)</li>
+          <li>Cross-promo: GIGABYTE booth tại sự kiện đại lý đồng hành (nếu có)</li>
+          <li>Mời 10-15 KOL/báo chí tham dự event đêm</li>
+          <li>Esports tournament mini (nội bộ ĐH) sponsor bằng SP GIGABYTE</li>
+          <li>Demo unit lưu động tại 2-3 trường ĐH (1 ngày/trường)</li>
+          <li>Giveaway code "#GIGA40" trong group community (chuột AORUS / mousepad)</li>
+          <li>Forum AMA (Ask Me Anything) — rep GIGABYTE lên VOZ trả lời 1 tối</li>
+          <li>Sticker bombing trên các shop net cafe (nếu có quan hệ B2B)</li>
+        </ul>
+      </details>
+    </section>
+
+    <!-- PART 5: POSM -->
+    <section id="part5" class="mb-14">
+      <div class="flex items-baseline gap-3 mb-4">
+        <div class="text-4xl font-extrabold accent-orange">05</div>
+        <h2 class="text-3xl font-bold">POSM Checklist — đầy đủ</h2>
+      </div>
+      <p class="text-zinc-600 dark:text-zinc-400 mb-4">Liệt kê toàn bộ POSM cần sản xuất, chia 6 nhóm. Có thể sort/search.</p>
+
+      <div class="overflow-x-auto">
+      <table id="posmTable" class="display stripe w-full text-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Hạng mục POSM</th>
+            <th>Nhóm</th>
+            <th>SL dự kiến</th>
+            <th>Ghi chú</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Banner mặt tiền showroom (lớn)</td><td>A · In-store</td><td>2 size lớn</td><td>Treo cao, dễ thấy từ đường</td></tr>
+          <tr><td>2</td><td>Standee đón cửa</td><td>A · In-store</td><td>2-3 cái</td><td>Roll-up, đặt 2 bên cửa chính</td></tr>
+          <tr><td>3</td><td>Backdrop chính chụp hình</td><td>A · In-store</td><td>1 cái (4×2.5m)</td><td>Có hashtag #GIGA40, AORUS Eagle motif</td></tr>
+          <tr><td>4</td><td>Hanging mobile (treo trần)</td><td>A · In-store</td><td>8-10 cái</td><td>Logo GIGA40, AORUS Eagle</td></tr>
+          <tr><td>5</td><td>Light box LED</td><td>A · In-store</td><td>2-3 cái</td><td>Highlight zone trải nghiệm</td></tr>
+          <tr><td>6</td><td>Sticker dán sàn (footprint)</td><td>A · In-store</td><td>20 cái</td><td>Chỉ đường đến góc GIGABYTE</td></tr>
+          <tr><td>7</td><td>Window film / decal kính</td><td>A · In-store</td><td>4 mặt kính</td><td>Decal logo + tagline</td></tr>
+          <tr><td>8</td><td>Mascot AORUS Eagle 3D foam</td><td>A · In-store</td><td>1-2 cái</td><td>Đặt photo zone, ~1.8m cao</td></tr>
+          <tr><td>9</td><td>Header trên kệ trưng bày SP</td><td>A · In-store</td><td>10-15 cái</td><td>Cho từng kệ AORUS/GIGABYTE</td></tr>
+          <tr><td>10</td><td>Wobbler nhấp nháy giá</td><td>A · In-store</td><td>30-50 cái</td><td>Treo lên SKU có CTKM</td></tr>
+          <tr><td>11</td><td>Đế laptop có spec card</td><td>B · Trưng bày</td><td>5-8 cái</td><td>Cho AORUS laptop demo</td></tr>
+          <tr><td>12</td><td>Spec card monitor đính kèm</td><td>B · Trưng bày</td><td>10-15 cái</td><td>Print acrylic, đặt cạnh demo unit</td></tr>
+          <tr><td>13</td><td>Demo PC build "AORUS Showcase"</td><td>B · Trưng bày</td><td>2-3 PC</td><td>Full AORUS components, RGB on</td></tr>
+          <tr><td>14</td><td>RGB demo setup (góc đặc biệt)</td><td>B · Trưng bày</td><td>1 set</td><td>Multi-monitor + keyboard mech + glass case</td></tr>
+          <tr><td>15</td><td>Console gaming station (XSX/PS5)</td><td>B · Trưng bày</td><td>1 góc</td><td>Test màn hình HDMI 2.1</td></tr>
+          <tr><td>16</td><td>Mock-up SP flagship (foam dummy)</td><td>B · Trưng bày</td><td>2-3 cái</td><td>Backup nếu hết hàng demo</td></tr>
+          <tr><td>17</td><td>Photo backdrop GIGABYTE 40 (wall)</td><td>C · Photo zone</td><td>1 wall</td><td>Khu chụp hình selfie chính</td></tr>
+          <tr><td>18</td><td>Frame chụp ảnh selfie hashtag</td><td>C · Photo zone</td><td>5 cái</td><td>Frame cầm tay #GIGA40</td></tr>
+          <tr><td>19</td><td>Neon sign "GIGABYTE 40"</td><td>C · Photo zone</td><td>1 cái</td><td>Đặt trên backdrop chính</td></tr>
+          <tr><td>20</td><td>AORUS Eagle foam standee</td><td>C · Photo zone</td><td>1 cái</td><td>Cánh chim AORUS — wing 2m</td></tr>
+          <tr><td>21</td><td>Sticker pack</td><td>D · Gift</td><td>1,000 cái</td><td>5 mẫu sticker khác nhau</td></tr>
+          <tr><td>22</td><td>Lanyard</td><td>D · Gift</td><td>500 cái</td><td>Dùng cho event check-in</td></tr>
+          <tr><td>23</td><td>Tote bag canvas</td><td>D · Gift</td><td>300 cái</td><td>Dùng cho giftbag event</td></tr>
+          <tr><td>24</td><td>Cap có logo</td><td>D · Gift</td><td>100 cái</td><td>Limited, cho VIP/KOL</td></tr>
+          <tr><td>25</td><td>T-shirt limited "GIGABYTE 40"</td><td>D · Gift</td><td>100-200 cái</td><td>Limited edition, PG mặc + KOL gift</td></tr>
+          <tr><td>26</td><td>Mousepad mini</td><td>D · Gift</td><td>500 cái</td><td>Cho khách spin / mua kèm</td></tr>
+          <tr><td>27</td><td>Keychain AORUS</td><td>D · Gift</td><td>1,000 cái</td><td>Quà nhỏ phổ thông</td></tr>
+          <tr><td>28</td><td>Postcard 40 năm</td><td>D · Gift</td><td>1,000 cái</td><td>5 mẫu vintage GIGABYTE history</td></tr>
+          <tr><td>29</td><td>Web banner gearvn.com (3 size)</td><td>E · Digital</td><td>3 design</td><td>Hero + square + vertical</td></tr>
+          <tr><td>30</td><td>Pop-up window trang chủ</td><td>E · Digital</td><td>1</td><td>Show 5s khi user vào lần đầu</td></tr>
+          <tr><td>31</td><td>Landing page /giga40</td><td>E · Digital</td><td>1</td><td>Trang chuyên — story + CTKM + đăng ký event</td></tr>
+          <tr><td>32</td><td>Footer banner email newsletter</td><td>E · Digital</td><td>1</td><td>Mọi email gửi đi đính kèm</td></tr>
+          <tr><td>33</td><td>Social cover (FB + IG)</td><td>E · Digital</td><td>2 design</td><td>Update 2 lần (W1 launch, W4 climax)</td></tr>
+          <tr><td>34</td><td>YouTube channel banner</td><td>E · Digital</td><td>1</td><td>Update suốt campaign</td></tr>
+          <tr><td>35</td><td>TikTok bio link banner</td><td>E · Digital</td><td>1</td><td>Dẫn về landing page</td></tr>
+          <tr><td>36</td><td>App banner GEARVN (nếu có)</td><td>E · Digital</td><td>2</td><td>Home + product page</td></tr>
+          <tr><td>37</td><td>Banner trong Cart page (cross-sell)</td><td>E · Digital</td><td>1</td><td>Push CTKM kèm</td></tr>
+          <tr><td>38</td><td>Email DM template (5 design)</td><td>E · Digital</td><td>5 design</td><td>Teasing / Awareness / Promo / Event invite / Recap</td></tr>
+          <tr><td>39</td><td>Welcome banner event</td><td>F · Event</td><td>2 cái</td><td>Đặt 2 bên cửa event</td></tr>
+          <tr><td>40</td><td>Sign chỉ đường zones trong event</td><td>F · Event</td><td>10-15 cái</td><td>Từ cửa đến từng khu (photo / showcase / lucky draw)</td></tr>
+          <tr><td>41</td><td>Banner sân khấu chính</td><td>F · Event</td><td>1 cái (6×3m)</td><td>Logo GIGABYTE 40 + AORUS Eagle</td></tr>
+          <tr><td>42</td><td>Bandroll treo đường (nếu cho phép)</td><td>F · Event</td><td>5-10 cái</td><td>Cần xin phép quận, optional</td></tr>
+          <tr><td>43</td><td>Brochure "GIGABYTE 40 Years"</td><td>F · Event</td><td>500 cái</td><td>Gấp 4, lịch sử + SP highlight</td></tr>
+          <tr><td>44</td><td>Catalog SP highlight</td><td>F · Event</td><td>200 cái</td><td>A5, full color, SP flagship</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-4 mt-6">
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <h3 class="text-sm uppercase font-semibold text-zinc-500 mb-2">Phân bổ POSM theo nhóm (qty)</h3>
+          <div class="relative h-64"><canvas id="chartPosm"></canvas></div>
+        </div>
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <h3 class="text-sm uppercase font-semibold text-zinc-500 mb-2">Budget allocation Tier M (~700tr)</h3>
+          <div class="relative h-64"><canvas id="chartBudget"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- KPI -->
+    <section id="kpi" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">KPI & Budget</h2>
+
+      <h3 class="font-semibold mb-2">KPI mục tiêu</h3>
+      <div class="overflow-x-auto">
+      <table class="w-full text-sm border-collapse mb-6">
+        <thead>
+          <tr class="bg-zinc-100 dark:bg-zinc-900">
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Mục</th>
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Target</th>
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Đo bằng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Reach</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">5M+ impressions</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">FB/IG/TikTok/YT analytics</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Engagement</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">200K+ (like/cmt/share)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Platform native</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">UGC posts hashtag</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">500+ posts #GIGA40</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Hashtag tracking</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Foot traffic event</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">150-200 khách</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Check-in count</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Sale uplift ngành GIGA</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">+35% vs tháng trước</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">PIM/sales DB</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Database growth (leads)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">5,000+ new leads</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">CDP / form tracking</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Earned media</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">15+ PR articles · 30+ KOL posts</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Manual + KOL agency report</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Livestream viewers (event day)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">10K+ concurrent peak</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">YouTube/FB live analytics</td></tr>
+        </tbody>
+      </table>
+      </div>
+
+      <h3 class="font-semibold mb-2">3 Budget tier đề xuất</h3>
+      <div class="grid md:grid-cols-3 gap-3">
+        <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4">
+          <div class="text-xs uppercase text-zinc-500">Tier S — Cost-controlled</div>
+          <div class="text-2xl font-bold mt-1">250-400tr</div>
+          <p class="text-xs mt-2">Event scale nhỏ (~80 khách), KOL micro chính, video 1 dài, POSM cơ bản, không bandroll/ambassador.</p>
+        </div>
+        <div class="rounded-xl border-2 border-orange-500 p-4 bg-orange-50/50 dark:bg-orange-900/10">
+          <div class="text-xs uppercase font-bold accent-orange">Tier M — RECOMMENDED ⭐</div>
+          <div class="text-2xl font-bold mt-1">600-900tr</div>
+          <p class="text-xs mt-2">Event 150-200 khách, KOL macro 2 + mid 5-8, full video plan, full POSM, có ambassador, PR tier 1-2.</p>
+        </div>
+        <div class="rounded-xl border border-zinc-200 dark:border-zinc-800 p-4">
+          <div class="text-xs uppercase text-zinc-500">Tier L — Premium full-power</div>
+          <div class="text-2xl font-bold mt-1">1.2-1.8 tỷ</div>
+          <p class="text-xs mt-2">Event 250+ khách, ambassador top-tier (>1M), pro-team partnership, bandroll TPHCM, after-party, all PR tier.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RISK & OWNER -->
+    <section id="risk" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Risk & Owner Matrix</h2>
+
+      <div class="grid md:grid-cols-2 gap-4 mb-6">
+        <div class="rounded-lg p-4 border-l-4 border-red-500 bg-red-50 dark:bg-red-900/20">
+          <strong>Risk 1: Stock SKU promo không đủ</strong>
+          <p class="text-sm mt-1">SKU GIGA hot có thể out-of-stock giữa campaign. <strong>Mitigation</strong>: forecast volume trước W-2, lock stock với hãng + bundle alternative.</p>
+        </div>
+        <div class="rounded-lg p-4 border-l-4 border-amber-500 bg-amber-50 dark:bg-amber-900/20">
+          <strong>Risk 2: KOL scandal</strong>
+          <p class="text-sm mt-1">Mời sai KOL có thể damage brand. <strong>Mitigation</strong>: due diligence trước contract, có exit clause, list KOL backup.</p>
+        </div>
+        <div class="rounded-lg p-4 border-l-4 border-amber-500 bg-amber-50 dark:bg-amber-900/20">
+          <strong>Risk 3: Brand guideline conflict</strong>
+          <p class="text-sm mt-1">Mọi creative phải qua approval hãng. <strong>Mitigation</strong>: assign 1 person liên hệ hãng dedicated, schedule approval round 48h.</p>
+        </div>
+        <div class="rounded-lg p-4 border-l-4 border-amber-500 bg-amber-50 dark:bg-amber-900/20">
+          <strong>Risk 4: Event overflow / underflow</strong>
+          <p class="text-sm mt-1">Mời quá → overflow / mời ít → ảnh không đẹp. <strong>Mitigation</strong>: registration cap 250 (over-book 25%), waitlist, no-show buffer.</p>
+        </div>
+        <div class="rounded-lg p-4 border-l-4 border-yellow-500 bg-yellow-50 dark:bg-yellow-900/20">
+          <strong>Risk 5: Conflict brand T1</strong>
+          <p class="text-sm mt-1">Intel/AMD cùng co-host có thể conflict. <strong>Mitigation</strong>: tách zone trải nghiệm rõ, không showdown trực tiếp.</p>
+        </div>
+        <div class="rounded-lg p-4 border-l-4 border-zinc-500 bg-zinc-50 dark:bg-zinc-900/40">
+          <strong>Risk 6: Weather / external</strong>
+          <p class="text-sm mt-1">Mưa lớn ngày event. <strong>Mitigation</strong>: event in-door 100%, backup parking covered, valet service nếu cần.</p>
+        </div>
+      </div>
+
+      <h3 class="font-semibold mb-2">Owner matrix</h3>
+      <div class="overflow-x-auto">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-zinc-100 dark:bg-zinc-900">
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Phần</th>
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Owner chính</th>
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Support</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Campaign Lead</td><td class="p-2 border border-zinc-200 dark:border-zinc-800"><strong>anh Nono (Head ngành màn hình + Lead LCD)</strong></td><td class="p-2 border border-zinc-200 dark:border-zinc-800">PM Laptop, PM Linh kiện, PM VGA</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">1. Sale Promotion</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">PM ngành (theo SKU)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Pricing, Stock, E-commerce</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">2. Offline Event</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Event lead (mới hoặc MKT lead)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Showroom HCM, F&amp;B vendor, AV team</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">3. Media & PR</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Content lead</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Video team, KOL agency, PR agency</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">4. Partnership</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">anh Nono + MKT Director</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Account hãng (Intel/AMD/Nvidia)</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">5. POSM</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Design lead + Procurement</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Showroom team, Print vendor</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Tracking / Reporting</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Data team (qua MCP: pimv3 + bigquery + cdp)</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Claude auto-report HTML hằng tuần</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <!-- NEXT STEPS -->
+    <section id="next" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Next Steps</h2>
+      <div class="grid md:grid-cols-3 gap-4">
+        <div class="rounded-lg p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase font-bold accent-orange mb-2">Tuần W-2 (chuẩn bị)</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li>Chốt budget tier với GEARVN management</li>
+            <li>Gửi proposal pitch GIGABYTE (mục tiêu unlock co-fund)</li>
+            <li>Liên hệ Intel/AMD/Nvidia về co-op</li>
+            <li>Shortlist ambassador (5-7 candidate)</li>
+            <li>Book PR tier 1 (Genk, Tinhte, VnExpress)</li>
+          </ul>
+        </div>
+        <div class="rounded-lg p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase font-bold accent-orange mb-2">Tuần W-1 (lock & load)</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li>Ký hợp đồng KOL + Ambassador</li>
+            <li>Approve toàn bộ creative với hãng (brand guideline)</li>
+            <li>Lock stock SKU promo</li>
+            <li>Production POSM (~7-10 ngày)</li>
+            <li>Setup landing /giga40 + form đăng ký</li>
+            <li>Tracking dashboard ready (em build qua skill html-report + MCP)</li>
+          </ul>
+        </div>
+        <div class="rounded-lg p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase font-bold accent-orange mb-2">Suốt 4 tuần (execution)</div>
+          <ul class="list-disc ml-5 space-y-1 text-sm">
+            <li>Daily standup MKT + content team</li>
+            <li>Weekly review tracking — sale uplift, reach, foot traffic</li>
+            <li>Báo cáo hằng tuần cho GIGABYTE (auto qua MCP + HTML report)</li>
+            <li>Post-campaign report tuần 5 — close loop, kèm next opportunity</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 p-4 rounded-lg bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-200 dark:border-indigo-800 text-sm">
+        <strong>Em gợi ý next deliverable</strong> để hoàn thiện proposal trước khi pitch:
+        <ol class="list-decimal ml-6 mt-2 space-y-1">
+          <li><strong>Detailed budget breakdown</strong> — em build chi tiết tier M (~700tr) chia line-item</li>
+          <li><strong>Pricing strategy</strong> cho 12 CTKM dùng skill <code>stratarts-pricing-strategy-architect</code> (Van Westendorp)</li>
+          <li><strong>Persona-tailored content</strong> — dùng <code>stratarts-customer-persona-builder</code> để chốt 3 persona (Esports / Streamer / Builder), customize tone từng phase</li>
+          <li><strong>Content calendar excel/CSV</strong> — export ra để team execute</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer class="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-sm text-zinc-500">
+      by Tunglee
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const dark = document.documentElement.classList.toggle('dark');
+    localStorage.theme = dark ? 'dark' : 'light';
+    rebuildCharts();
+  });
+
+  const tocLinks = document.querySelectorAll('.toc a');
+  const sections = [...tocLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if (sections.length) {
+    const onScroll = () => {
+      const y = window.scrollY + 100;
+      let active = sections[0];
+      for (const s of sections) if (s.offsetTop <= y) active = s;
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active.id));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  let chartInstances = [];
+  function isDark() { return document.documentElement.classList.contains('dark'); }
+  function gridColor() { return isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'; }
+  function tickColor() { return isDark() ? '#a1a1aa' : '#52525b'; }
+
+  function buildTimeline() {
+    const ctx = document.getElementById('chartTimeline');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Teasing', 'Awareness', 'Activation', 'Climax'],
+        datasets: [
+          { label: 'Sale Promotion',  data: [1, 4, 7, 7], backgroundColor: 'rgba(6,182,212,0.7)' },
+          { label: 'Media & PR',      data: [3, 6, 8, 9], backgroundColor: 'rgba(99,102,241,0.7)' },
+          { label: 'Partnership',     data: [2, 5, 4, 7], backgroundColor: 'rgba(168,85,247,0.7)' },
+          { label: 'POSM rollout',    data: [4, 6, 8, 9], backgroundColor: 'rgba(16,185,129,0.7)' },
+          { label: 'Event push',      data: [0, 2, 4, 10], backgroundColor: 'rgba(249,115,22,0.85)' }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        indexAxis: 'x',
+        scales: {
+          y: { stacked: false, beginAtZero: true, max: 10, ticks: { color: tickColor() }, grid: { color: gridColor() }, title: { display: true, text: 'Cường độ hoạt động (1-10)', color: tickColor() } },
+          x: { ticks: { color: tickColor() }, grid: { color: gridColor() } }
+        },
+        plugins: {
+          legend: { labels: { color: tickColor() } },
+          title: { display: true, text: 'Cường độ từng nhóm activity qua 4 tuần', color: tickColor() }
+        }
+      }
+    });
+    chartInstances.push(chart);
+  }
+
+  function buildPosm() {
+    const ctx = document.getElementById('chartPosm');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['A · In-store', 'B · Trưng bày', 'C · Photo zone', 'D · Gift (handout)', 'E · Digital', 'F · Event'],
+        datasets: [{
+          label: 'Số hạng mục',
+          data: [10, 6, 4, 8, 10, 6],
+          backgroundColor: ['#06b6d4','#6366f1','#ec4899','#10b981','#f59e0b','#f97316']
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          y: { beginAtZero: true, ticks: { color: tickColor() }, grid: { color: gridColor() } },
+          x: { ticks: { color: tickColor(), font: { size: 10 } }, grid: { color: gridColor() } }
+        },
+        plugins: { legend: { display: false } }
+      }
+    });
+    chartInstances.push(chart);
+  }
+
+  function buildBudget() {
+    const ctx = document.getElementById('chartBudget');
+    const chart = new Chart(ctx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Sale Promo (đối ứng)', 'Offline Event', 'Media & PR', 'Partnership / KOL', 'POSM'],
+        datasets: [{
+          data: [30, 25, 25, 12, 8],
+          backgroundColor: ['#f97316','#ec4899','#6366f1','#a855f7','#10b981'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'right', labels: { color: tickColor(), font: { size: 11 } } },
+          tooltip: { callbacks: { label: c => `${c.label}: ${c.parsed}%` } }
+        },
+        cutout: '55%'
+      }
+    });
+    chartInstances.push(chart);
+  }
+
+  function rebuildCharts() {
+    chartInstances.forEach(c => c.destroy());
+    chartInstances = [];
+    buildTimeline(); buildPosm(); buildBudget();
+  }
+
+  buildTimeline(); buildPosm(); buildBudget();
+
+  $(document).ready(function() {
+    $('#promoTable').DataTable({
+      pageLength: 15,
+      order: [[4, 'asc']],
+      language: {
+        search: 'Tìm:', lengthMenu: 'Hiển thị _MENU_ dòng',
+        info: 'Hiển thị _START_–_END_ / _TOTAL_', zeroRecords: 'Không tìm thấy',
+        paginate: { first: '«', last: '»', next: '›', previous: '‹' }
+      }
+    });
+    $('#posmTable').DataTable({
+      pageLength: 15,
+      order: [[0, 'asc']],
+      language: {
+        search: 'Tìm:', lengthMenu: 'Hiển thị _MENU_ dòng',
+        info: 'Hiển thị _START_–_END_ / _TOTAL_', zeroRecords: 'Không tìm thấy',
+        paginate: { first: '«', last: '»', next: '›', previous: '‹' }
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
