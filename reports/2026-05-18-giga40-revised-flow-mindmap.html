@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>GIGABYTE 40 — Revised Flow V2 + Mindmap</title>
+  <meta name="description" content="Bản revise plan GIGABYTE 40 với 6-phase flow + mindmap tổng quát toàn bộ campaign.">
+  <meta property="og:title" content="GIGABYTE 40 — Revised Flow V2 + Mindmap">
+  <meta property="og:description" content="Plan GIGABYTE 40 năm — revised với 6-phase flow (Teaser → Launch → Awareness → Activation → Climax → Sustain) + mindmap visualization.">
+  <meta property="og:type" content="article">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class', theme: { extend: { fontFamily: { sans: ['system-ui', 'ui-sans-serif', 'sans-serif'] } } } };
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Mermaid for mindmap -->
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    const isDark = document.documentElement.classList.contains('dark');
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: isDark ? 'dark' : 'default',
+      securityLevel: 'loose',
+      mindmap: { padding: 10, maxNodeWidth: 200 }
+    });
+    window.__mermaid = mermaid;
+  </script>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+    @media print {
+      .no-print { display: none !important; }
+      body { color: #000; background: #fff; }
+    }
+    details > summary { cursor: pointer; user-select: none; }
+    details > summary::marker { content: "▸ "; }
+    details[open] > summary::marker { content: "▾ "; }
+    .toc a { display: block; padding: .25rem 0; opacity: .6; transition: opacity .15s; font-size: 13px; }
+    .toc a:hover, .toc a.active { opacity: 1; }
+    .toc a.active { font-weight: 600; color: #f97316; }
+
+    .hero-gradient { background: linear-gradient(135deg, #1a0a0a 0%, #2d1810 50%, #0a0a0a 100%); color: #fff; }
+    .accent-orange { color: #f97316; }
+    .stat-card { background: linear-gradient(135deg, rgba(249,115,22,0.10), rgba(239,68,68,0.10)); border: 1px solid rgba(249,115,22,0.3); }
+
+    .phase-1 { --c: #06b6d4; }   /* Teaser */
+    .phase-2 { --c: #6366f1; }   /* Launch */
+    .phase-3 { --c: #a855f7; }   /* Awareness */
+    .phase-4 { --c: #ec4899; }   /* Activation */
+    .phase-5 { --c: #f97316; }   /* Climax */
+    .phase-6 { --c: #10b981; }   /* Sustain */
+    .phase-card { border-left: 5px solid var(--c); padding: 1rem 1.25rem; background: rgba(255,255,255,0.02); }
+    .phase-card .phase-label { color: var(--c); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .change-add { background: rgba(16,185,129,0.10); border-left: 3px solid #10b981; }
+    .change-mod { background: rgba(245,158,11,0.10); border-left: 3px solid #f59e0b; }
+    .change-rem { background: rgba(239,68,68,0.10); border-left: 3px solid #ef4444; }
+
+    /* Mindmap container */
+    .mindmap-wrap { background: rgba(249,115,22,0.04); border: 1px solid rgba(249,115,22,0.2); border-radius: 1rem; padding: 1rem; overflow-x: auto; }
+    .dark .mindmap-wrap { background: rgba(249,115,22,0.06); }
+    .mindmap-wrap svg { min-width: 900px; max-width: none; height: auto; }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans antialiased">
+
+<div class="fixed top-4 right-4 z-50 flex gap-2 no-print">
+  <button id="theme-toggle" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800">☼ / ☾</button>
+  <button onclick="window.print()" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800">print</button>
+</div>
+
+<!-- Hero -->
+<section class="hero-gradient py-16 px-6">
+  <div class="max-w-6xl mx-auto">
+    <p class="text-sm uppercase tracking-widest text-orange-400 mb-3">Revised Plan • V2 • 2026-05-18</p>
+    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight mb-4">
+      GIGABYTE <span class="accent-orange">40</span> — Enter Infinity
+    </h1>
+    <p class="text-xl text-zinc-300 max-w-3xl">Revised flow của plan gốc — chuyển từ <strong>2 phase / 4 tháng</strong> sang <strong>6 phase / 5+ tháng</strong> có rhythm + sustain.</p>
+    <div class="mt-6 flex flex-wrap gap-3 text-sm">
+      <div class="px-4 py-2 rounded-md bg-white/10 backdrop-blur">📅 <strong>5+ tháng</strong> (T5 cuối → T10)</div>
+      <div class="px-4 py-2 rounded-md bg-white/10 backdrop-blur">🎯 <strong>6 phase</strong> (thay vì 2)</div>
+      <div class="px-4 py-2 rounded-md bg-white/10 backdrop-blur">🔥 <strong>1 weekend</strong> climax peak</div>
+      <div class="px-4 py-2 rounded-md bg-white/10 backdrop-blur">♻️ <strong>+ Sustain phase</strong> tận dụng Q4</div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-6xl mx-auto px-6 py-12 lg:grid lg:grid-cols-[220px_minmax(0,1fr)] lg:gap-10">
+
+  <nav class="toc lg:sticky lg:top-12 self-start mb-8 lg:mb-0 no-print">
+    <div class="font-semibold mb-2 text-zinc-500 uppercase tracking-wider text-xs">Nội dung</div>
+    <a href="#mindmap">🧠 Mindmap tổng quát</a>
+    <a href="#changes">7 điểm đã chỉnh</a>
+    <a href="#timeline">Timeline 6 phase</a>
+    <a href="#phase-detail">Chi tiết từng phase</a>
+    <a href="#component-1">1 · Sale Promotion</a>
+    <a href="#component-2">2 · Offline Event</a>
+    <a href="#component-3">3 · Media & PR</a>
+    <a href="#component-4">4 · Partnership</a>
+    <a href="#component-5">5 · POSM</a>
+    <a href="#nextsteps">Next steps</a>
+  </nav>
+
+  <main class="min-w-0">
+
+    <!-- MINDMAP -->
+    <section id="mindmap" class="mb-12">
+      <h2 class="text-3xl font-bold mb-2">🧠 Mindmap tổng quát toàn campaign</h2>
+      <p class="text-zinc-600 dark:text-zinc-400 mb-4 text-sm">Quick overview — nhìn 1 lần nắm hết cấu trúc. Click theme toggle góc trên phải để đổi dark/light.</p>
+
+      <div class="mindmap-wrap">
+        <pre class="mermaid">
+mindmap
+  root)GIGABYTE 40<br/>Enter Infinity(
+    🕐 6 PHASES
+      T5 cuối · TEASER<br/>3 tuần
+        Mystery video
+        Countdown
+        KOL úp mở
+        Early sign-up
+      T6 · LAUNCH<br/>4 tuần
+        Promotion go live
+        Store wave 1
+        Heritage content
+        Event reg mở
+      T7 · AWARENESS<br/>Community
+        + Tournament café
+        KOL Tier 2 wave
+        Mid Lucky #1
+        UGC challenge
+      T8 · ACTIVATION<br/>Escalation
+        + University workshop
+        KOL Tier 3+4 wave
+        Mid Lucky #2
+        POSM refresh
+      T9 · CLIMAX<br/>1 weekend peak
+        Final push 3 tuần
+        Enter Infinity Festival
+        Grand Lucky live
+        All-media peak
+      T10 · SUSTAIN<br/>Q4 bridge
+        Recap content
+        Retarget attendees
+        Q4 BlackFri 11.11
+        CRM nurture 40K
+    🎯 5 COMPONENTS
+      1 · Sale Promotion
+        Mechanic A · Laptop+gift
+        Mechanic B · Tier system
+        Mechanic C · Lucky Draw
+          Weekly micro
+          Mid milestones T7+T8
+          Grand Prize T9
+      2 · Offline Event<br/>SEQUENCED
+        T6-7 Store 39 retailers
+        T7-8 Tournament 3 cities
+        T8 University 4 trường
+        T9 Big Festival 2000+
+      3 · Media & PR
+        Owned channels
+        KOL ladder T1-T4
+          2 macro<br/>de-risk
+        PR tier 1-2-3
+        6 content pillars
+          + Innovation pillar
+      4 · Partnership
+        Tech brands<br/>Intel AMD Nvidia
+        Game publishers<br/>Garena VNG
+        KOL network
+        Universities
+      5 · POSM<br/>3 MOMENTS
+        T6 baseline launch
+        T8 mid refresh
+        T9 climax event
+    🔧 7 KEY CHANGES
+      + Teaser phase
+      + Sustain phase
+      + 2nd macro KOL
+      + Innovation pillar
+      Climax compressed
+      Offline sequenced
+      POSM 3 moments
+        </pre>
+      </div>
+
+      <details class="mt-3 text-sm">
+        <summary class="text-zinc-500">Khó đọc trên mobile? Mở rộng để xem dạng text</summary>
+        <div class="mt-2 ml-4 text-zinc-600 dark:text-zinc-400 text-xs font-mono whitespace-pre">
+GIGABYTE 40 · Enter Infinity
+├── 6 PHASES (T5 cuối → T10)
+│   ├── Teaser  (3 tuần pre-launch)
+│   ├── Launch  (T6 · 4 tuần)
+│   ├── Awareness  (T7 · community)
+│   ├── Activation  (T8 · escalation)
+│   ├── Climax  (T9 · 1 weekend peak)
+│   └── Sustain  (T10 · Q4 bridge)
+├── 5 COMPONENTS
+│   ├── Sale Promotion (A · B · C mechanic)
+│   ├── Offline Event (Store → Tournament → University → Festival)
+│   ├── Media & PR (KOL ladder + 6 pillars)
+│   ├── Partnership (Tech / Game / KOL / University)
+│   └── POSM (3 deployment moments)
+└── 7 KEY CHANGES vs lead MKT v1</div>
+      </details>
+    </section>
+
+    <!-- KEY CHANGES -->
+    <section id="changes" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">7 Điểm đã chỉnh từ plan gốc</h2>
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="change-add rounded-lg p-3 text-sm">
+          <strong>1. + TEASER phase (T5 cuối, 3 tuần)</strong>
+          <p class="mt-1">Plan gốc mở thẳng tháng 6. Bản revise có 3 tuần teaser pre-launch (mystery video, countdown, KOL úp mở) → build cảm xúc trước khi push sale.</p>
+        </div>
+        <div class="change-add rounded-lg p-3 text-sm">
+          <strong>2. + SUSTAIN phase (T10, 4 tuần)</strong>
+          <p class="mt-1">Plan gốc dừng tháng 9. Bản revise có T10 để tận dụng momentum vào Q4 (BlackFriday, 11.11, 12.12) — không lãng phí 40K data đã capture.</p>
+        </div>
+        <div class="change-mod rounded-lg p-3 text-sm">
+          <strong>3. CLIMAX nén từ 1 tháng → 1 weekend peak</strong>
+          <p class="mt-1">T9 không kéo dài "climax" 30 ngày. 3 tuần đầu T9 là final push, cuối tuần cuối = Enter Infinity Festival (peak 1 weekend).</p>
+        </div>
+        <div class="change-mod rounded-lg p-3 text-sm">
+          <strong>4. OFFLINE EVENT — sequencing thay vì parallel</strong>
+          <p class="mt-1">Plan gốc chạy Store + Tournament + University đồng thời 3 tháng → over-stretch. Bản revise sequencing: Store (T6-7) → + Tournament (T7-8) → + University (T8) — mỗi sub-track có moment riêng.</p>
+        </div>
+        <div class="change-mod rounded-lg p-3 text-sm">
+          <strong>5. LUCKY DRAW — thêm Milestone Prize giữa chừng</strong>
+          <p class="mt-1">Plan gốc weekly micro + Grand T9 (gap 3 tháng). Bản revise: thêm <strong>Mid Lucky #1 (giữa T7)</strong> + <strong>Mid Lucky #2 (giữa T8)</strong> để giữ hype, giảm forget rate.</p>
+        </div>
+        <div class="change-mod rounded-lg p-3 text-sm">
+          <strong>6. KOL TIER 1 — 2 macro (de-risk)</strong>
+          <p class="mt-1">Plan gốc chỉ Hoàng Luân (single point of failure). Bản revise: thêm 1 macro KOL nữa (ưu tiên lifestyle/gaming) để cover audience non-tech + backup nếu KOL chính bị issue.</p>
+        </div>
+        <div class="change-mod rounded-lg p-3 text-sm">
+          <strong>7. POSM — 3 moments thay vì rollout 1 lần</strong>
+          <p class="mt-1">Plan gốc: baseline → category. Bản revise: <strong>T6 baseline → T8 mid refresh ("đếm ngược" tone) → T9 event climax</strong> — tránh khách quen mắt, tạo "wow" mới.</p>
+        </div>
+        <div class="change-add rounded-lg p-3 text-sm md:col-span-2">
+          <strong>8. + Content Pillar "INNOVATION / Future of GIGABYTE"</strong>
+          <p class="mt-1">Plan gốc 5 pillar thiếu hẳn "Product Showcase / Innovation" — 40 năm INNOVATION mà không nói SP mới? Bản revise thêm <strong>Pillar #6: Future of GIGABYTE — Next 40</strong> (roadmap AI/AORUS mới, demo công nghệ).</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- TIMELINE GANTT -->
+    <section id="timeline" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Timeline 6 phase — Gantt overview</h2>
+      <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+        <div class="relative h-80"><canvas id="chartGantt"></canvas></div>
+      </div>
+      <p class="text-xs text-zinc-500 mt-2">Trục X = tháng. Mỗi phase 1 màu — dài ngắn theo thời gian thực tế.</p>
+    </section>
+
+    <!-- PHASE DETAIL -->
+    <section id="phase-detail" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Chi tiết từng phase</h2>
+      <div class="space-y-3">
+        <div class="phase-card phase-1 rounded-lg">
+          <div class="phase-label">Phase 1 · Tháng 5 cuối · 3 tuần</div>
+          <h3 class="font-semibold text-lg mb-1">🌒 TEASER — Build curiosity</h3>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li>Mystery video 15-30s: "Forty years. One question. Ready?"</li>
+            <li>Countdown banner gắn home gearvn.com + GIGABYTE VN fanpage</li>
+            <li>2 KOL macro (Hoàng Luân + 1 lifestyle/gaming) úp mở "Có gì sắp đến"</li>
+            <li>Early sign-up form — pre-register Big Event để build database sớm</li>
+            <li><strong>Goal</strong>: chưa cần convert, chỉ tạo "?" → drive curiosity</li>
+          </ul>
+        </div>
+
+        <div class="phase-card phase-2 rounded-lg">
+          <div class="phase-label">Phase 2 · Tháng 6 · 4 tuần</div>
+          <h3 class="font-semibold text-lg mb-1">🚀 LAUNCH — Open the doors</h3>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li>Reveal full concept "Enter Infinity" + 3 promotion mechanic (A/B/C) đồng thời go live</li>
+            <li><strong>Store activation wave 1</strong>: 39 retailers — focus quality, không spread mỏng</li>
+            <li>Content Pillar 1 (Heritage 40 năm) primary — video lịch sử phần 1</li>
+            <li>Big Event REGISTRATION mở chính thức</li>
+            <li>Partnership finalized — MDF từ Intel/AMD/Nvidia kick-in</li>
+            <li>POSM baseline ship 39 location</li>
+          </ul>
+        </div>
+
+        <div class="phase-card phase-3 rounded-lg">
+          <div class="phase-label">Phase 3 · Tháng 7 · 4 tuần</div>
+          <h3 class="font-semibold text-lg mb-1">📢 AWARENESS + COMMUNITY — Engage</h3>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li>+ <strong>Gaming Tournament</strong> launch ở cyber café 3 thành phố (HCM/HN/ĐN) — partner Garena/VNG</li>
+            <li>KOL Tier 2 wave drops (5-8 KOL 100K-500K)</li>
+            <li>UGC Challenge launch "Build Infinity-tier rig under X price"</li>
+            <li><strong>Mid Lucky Prize #1</strong> giữa T7 (mid-tier laptop/màn hình) — bridge engagement</li>
+            <li>Content Pillar 2 (Brand Story / staff confessional)</li>
+            <li>PR Tier 1 wave — Genk, VnExpress, Tinhte</li>
+          </ul>
+        </div>
+
+        <div class="phase-card phase-4 rounded-lg">
+          <div class="phase-label">Phase 4 · Tháng 8 · 4 tuần</div>
+          <h3 class="font-semibold text-lg mb-1">⚡ ACTIVATION + ESCALATION — Peak warm-up</h3>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li>+ <strong>University Workshop</strong> (UIT, HCMUT, FPT, NEU) — back-to-school momentum</li>
+            <li>KOL Tier 3+4 wave (15-20 + 50+ micro) — reach width</li>
+            <li><strong>Mid Lucky Prize #2</strong> giữa T8 + Pillar 6 (Innovation/Future of GIGABYTE) demo</li>
+            <li>UGC Challenge climax — top 10 setup được showcase</li>
+            <li><strong>POSM refresh #2</strong>: đổi tone về "ĐẾM NGƯỢC" — kích hoạt urgency</li>
+            <li>Final push registration Big Event — invite escalation</li>
+          </ul>
+        </div>
+
+        <div class="phase-card phase-5 rounded-lg">
+          <div class="phase-label">Phase 5 · Tháng 9 · 4 tuần</div>
+          <h3 class="font-semibold text-lg mb-1">🔥 CLIMAX — 1 Weekend Peak</h3>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li>Tuần 1-3: final sale push + invite escalation + Hoàng Luân livestream build Infinity rig</li>
+            <li><strong>Tuần cuối — ENTER INFINITY BIG FESTIVAL</strong> 2000+ attendees (1 weekend)</li>
+            <li>Heritage exhibition 1986-2026, tournament finals AORUS, KOL stage</li>
+            <li>Grand Lucky Draw LIVE — broadcast YouTube/FB/TikTok đồng thời</li>
+            <li><strong>POSM refresh #3</strong>: event-day signage + photo zones</li>
+            <li>All-media coverage peak — Genk/Tinhte/VnExpress recap</li>
+          </ul>
+        </div>
+
+        <div class="phase-card phase-6 rounded-lg">
+          <div class="phase-label">Phase 6 · Tháng 10 · 4 tuần</div>
+          <h3 class="font-semibold text-lg mb-1">♻️ SUSTAIN — Q4 Bridge (MỚI)</h3>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li>Event recap content drop (video 3-5 phút + KOL reaction)</li>
+            <li><strong>Retarget</strong> event attendees + UGC participants với promo Q4 GIGABYTE</li>
+            <li>Q4 BlackFriday / 11.11 / 12.12 bridge content — leverage "Enter Infinity" brand equity</li>
+            <li><strong>CRM nurture</strong> từ 40K+ leads đã capture — segment theo behavior</li>
+            <li>Wrap-up case study cho hãng GIGABYTE (báo cáo hiệu quả, đề xuất 2027)</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPONENT 1: SALE PROMO -->
+    <section id="component-1" class="mb-12">
+      <div class="flex items-baseline gap-3 mb-3">
+        <div class="text-3xl font-extrabold accent-orange">01</div>
+        <h2 class="text-2xl font-bold">Sale Promotion — 3 mechanic + Milestone</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-3 text-sm">
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-lg p-3">
+          <strong>Mechanic A · Laptop</strong>
+          <p class="mt-1 text-zinc-600 dark:text-zinc-400">Mua laptop → chọn anniversary AORUS gift → QR đăng ký → vào Lucky Draw. <em>Suốt T6-T9.</em></p>
+        </div>
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-lg p-3">
+          <strong>Mechanic B · PC Components</strong>
+          <p class="mt-1 text-zinc-600 dark:text-zinc-400">Tier system 3 cấp: Essential / Pro / Infinity. Reward builder loyalty. <em>Suốt T6-T9.</em></p>
+        </div>
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-lg p-3">
+          <strong>Mechanic C · Lucky Draw</strong>
+          <p class="mt-1 text-zinc-600 dark:text-zinc-400">Weekly micro draw + <strong>Mid #1 giữa T7</strong> + <strong>Mid #2 giữa T8</strong> + Grand Prize T9 LIVE.</p>
+        </div>
+      </div>
+      <p class="mt-3 text-sm change-mod p-2 rounded">⚙️ <strong>Thay đổi vs gốc</strong>: thêm 2 Mid Lucky giữa chừng → khách mua T6 không phải đợi 3 tháng cho Grand Prize.</p>
+    </section>
+
+    <!-- COMPONENT 2: OFFLINE -->
+    <section id="component-2" class="mb-12">
+      <div class="flex items-baseline gap-3 mb-3">
+        <div class="text-3xl font-extrabold accent-orange">02</div>
+        <h2 class="text-2xl font-bold">Offline Event — Sequenced 4 wave</h2>
+      </div>
+      <div class="space-y-2 text-sm">
+        <div class="flex gap-3 items-start"><span class="w-24 shrink-0 font-mono text-cyan-500">T6 → T7</span><div><strong>Store Activation</strong> 39 retailer — focus deep quality, không phân tán. 200-400/event.</div></div>
+        <div class="flex gap-3 items-start"><span class="w-24 shrink-0 font-mono text-purple-500">T7 → T8</span><div><strong>+ Tournament cyber café</strong> 3 thành phố HCM/HN/ĐN — partner Garena/VNG, AORUS hardware showcase.</div></div>
+        <div class="flex gap-3 items-start"><span class="w-24 shrink-0 font-mono text-pink-500">T8</span><div><strong>+ University Workshop</strong> 4 trường (UIT/HCMUT/FPT/NEU) — AI workload demo, back-to-school momentum.</div></div>
+        <div class="flex gap-3 items-start"><span class="w-24 shrink-0 font-mono text-orange-500">T9 weekend</span><div><strong>Enter Infinity BIG FESTIVAL</strong> 2000+ — heritage exhibit, tournament final, Grand Lucky live broadcast, KOL stage, partner zones.</div></div>
+      </div>
+      <p class="mt-3 text-sm change-mod p-2 rounded">⚙️ <strong>Thay đổi vs gốc</strong>: SEQUENCED thay vì parallel 3 hoạt động cùng lúc → tránh team over-stretch, mỗi wave có moment riêng. ⚠️ <strong>Risk note</strong>: 2000 attendees cần lock venue sớm (Pullman/SECC/Landmark ballroom).</p>
+    </section>
+
+    <!-- COMPONENT 3: MEDIA -->
+    <section id="component-3" class="mb-12">
+      <div class="flex items-baseline gap-3 mb-3">
+        <div class="text-3xl font-extrabold accent-orange">03</div>
+        <h2 class="text-2xl font-bold">Media & PR — 6 pillars + KOL ladder</h2>
+      </div>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div>
+          <h3 class="font-semibold mb-2">KOL ladder (4 tier)</h3>
+          <ul class="list-disc ml-5 text-sm space-y-1">
+            <li><strong>Tier 1 Macro</strong>: <span class="change-add px-1">2 KOL</span> — Hoàng Luân (tech, 1M+) + 1 lifestyle/gaming (de-risk)</li>
+            <li><strong>Tier 2</strong>: 5-8 KOL 100K-500K — deep review</li>
+            <li><strong>Tier 3</strong>: 15-20 micro 10K-80K — TikTok setup showcase</li>
+            <li><strong>Tier 4</strong>: 50+ enthusiast — grassroots authenticity (VOZ, Reddit)</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-semibold mb-2">6 Content Pillars</h3>
+          <ol class="list-decimal ml-5 text-sm space-y-1">
+            <li>Heritage / 40 Years Story</li>
+            <li>Brand Story (staff confessional)</li>
+            <li>UGC Nostalgia ("first PC build of you")</li>
+            <li>Viral Challenge (Infinity-tier rig under X)</li>
+            <li>Daily Countdown (40 facts, 40 ngày)</li>
+            <li class="change-add px-1"><strong>Innovation / Future of GIGABYTE — Next 40 (NEW)</strong></li>
+          </ol>
+        </div>
+      </div>
+      <p class="mt-3 text-sm change-mod p-2 rounded">⚙️ <strong>Thay đổi vs gốc</strong>: + 1 macro KOL (de-risk single point), + Innovation pillar (campaign 40 năm INNOVATION cần có pillar SP/công nghệ mới).</p>
+    </section>
+
+    <!-- COMPONENT 4: PARTNERSHIP -->
+    <section id="component-4" class="mb-12">
+      <div class="flex items-baseline gap-3 mb-3">
+        <div class="text-3xl font-extrabold accent-orange">04</div>
+        <h2 class="text-2xl font-bold">Partnership — 4 nhóm (giữ nguyên)</h2>
+      </div>
+      <div class="overflow-x-auto">
+      <table class="w-full text-sm border-collapse">
+        <thead>
+          <tr class="bg-zinc-100 dark:bg-zinc-900">
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Nhóm</th>
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Đối tác</th>
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">Họ contribute</th>
+            <th class="text-left p-2 border border-zinc-200 dark:border-zinc-800">GIGABYTE provide</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Tech Brands</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">AMD · Intel · Nvidia · Microsoft · Samsung</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">MDF, co-branded assets, prize products</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Logo placement, event zones, media exposure</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Game Publishers</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Garena · VNG · VTC · Riot VN</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">In-game activation, player community access</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Tournament branding, hardware prizes</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">KOL Network</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Hoàng Luân + macro 2nd + Tier 2-4</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Authentic content, trust, organic reach</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Product seeding, event invite, fees</td></tr>
+          <tr><td class="p-2 border border-zinc-200 dark:border-zinc-800">Universities</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">UIT · HCMUT · FPT · NEU Hà Nội</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Campus access, student audience, academic credibility</td><td class="p-2 border border-zinc-200 dark:border-zinc-800">Workshop content, demo units</td></tr>
+        </tbody>
+      </table>
+      </div>
+      <p class="mt-3 text-sm text-zinc-500">✓ Phần này em giữ nguyên — đã rõ. Chỉ thêm 2nd macro KOL.</p>
+    </section>
+
+    <!-- COMPONENT 5: POSM -->
+    <section id="component-5" class="mb-12">
+      <div class="flex items-baseline gap-3 mb-3">
+        <div class="text-3xl font-extrabold accent-orange">05</div>
+        <h2 class="text-2xl font-bold">POSM — 3 deployment moments</h2>
+      </div>
+      <div class="grid md:grid-cols-3 gap-3 text-sm">
+        <div class="border-2 border-indigo-500 rounded-lg p-3">
+          <div class="text-xs uppercase font-bold text-indigo-500">Moment 1 · T6</div>
+          <strong>Launch baseline</strong>
+          <p class="mt-1 text-zinc-600 dark:text-zinc-400">Ship POSM baseline 39 retailer: Tier 1 (LED lightbox, signage, roll-up) + Tier 2 (laptop stand, monitor strip, AORUS LED).</p>
+        </div>
+        <div class="border-2 border-pink-500 rounded-lg p-3">
+          <div class="text-xs uppercase font-bold text-pink-500">Moment 2 · T8 ⚙️ MỚI</div>
+          <strong>Mid refresh "ĐẾM NGƯỢC"</strong>
+          <p class="mt-1 text-zinc-600 dark:text-zinc-400">Đổi tone POSM về countdown đến Big Festival. Wobbler "Còn X ngày", header mới, decal kính refresh.</p>
+        </div>
+        <div class="border-2 border-orange-500 rounded-lg p-3">
+          <div class="text-xs uppercase font-bold text-orange-500">Moment 3 · T9</div>
+          <strong>Event climax</strong>
+          <p class="mt-1 text-zinc-600 dark:text-zinc-400">POSM event-specific: photo zones, neon "GIGABYTE 40", bandroll, brochure heritage, signage chỉ đường zones.</p>
+        </div>
+      </div>
+      <p class="mt-3 text-sm change-mod p-2 rounded">⚙️ <strong>Thay đổi vs gốc</strong>: 3 moments thay vì rollout 1 lần → khách không quen mắt, có "wow" mới ở T8 + T9.</p>
+    </section>
+
+    <!-- NEXT STEPS -->
+    <section id="nextsteps" class="mb-12">
+      <h2 class="text-2xl font-bold mb-4">Next steps</h2>
+      <div class="grid md:grid-cols-2 gap-4 text-sm">
+        <div class="rounded-lg p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase font-bold accent-orange mb-2">Anh Nono trao đổi với lead MKT</div>
+          <ol class="list-decimal ml-5 space-y-1">
+            <li>Show mindmap này (slide 1) — align về cấu trúc 6 phase</li>
+            <li>Highlight 7 điểm chỉnh — focus 3 cái critical: <strong>Teaser + Sustain + Sequencing offline</strong></li>
+            <li>Discuss budget impact: +Teaser +Sustain → cần +budget hay rebalance từ "momentum 3 tháng"?</li>
+            <li>Confirm venue Big Festival sớm — risk cao nhất</li>
+          </ol>
+        </div>
+        <div class="rounded-lg p-4 border border-zinc-200 dark:border-zinc-800">
+          <div class="text-xs uppercase font-bold accent-orange mb-2">Nếu lead MKT đồng ý</div>
+          <ol class="list-decimal ml-5 space-y-1">
+            <li>Em rewrite full proposal V2 (~50 trang HTML, có chart Gantt detail, budget breakdown)</li>
+            <li>Chuyển thành pitch deck cho GIGABYTE (slide ~15 trang)</li>
+            <li>Build measurement dashboard (mid-campaign review checkpoint T7 + T8)</li>
+            <li>Khi data realtime về → auto-report hằng tuần qua MCP stack của anh</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <footer class="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-sm text-zinc-500">
+      by Tunglee
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const dark = document.documentElement.classList.toggle('dark');
+    localStorage.theme = dark ? 'dark' : 'light';
+    // Re-init mermaid
+    if (window.__mermaid) {
+      document.querySelectorAll('.mermaid[data-processed]').forEach(el => { el.removeAttribute('data-processed'); el.innerHTML = el.dataset.src || el.textContent; });
+      window.__mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'default', securityLevel: 'loose', mindmap: { padding: 10, maxNodeWidth: 200 } });
+      window.__mermaid.run();
+    }
+    rebuildCharts();
+  });
+
+  // Cache mindmap src for re-render on theme toggle
+  document.querySelectorAll('.mermaid').forEach(el => { el.dataset.src = el.textContent; });
+
+  // TOC scroll-spy
+  const tocLinks = document.querySelectorAll('.toc a');
+  const sections = [...tocLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  if (sections.length) {
+    const onScroll = () => {
+      const y = window.scrollY + 100;
+      let active = sections[0];
+      for (const s of sections) if (s.offsetTop <= y) active = s;
+      tocLinks.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + active.id));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // ---- Gantt chart ----
+  let chartInstances = [];
+  function isDark() { return document.documentElement.classList.contains('dark'); }
+  function gridColor() { return isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'; }
+  function tickColor() { return isDark() ? '#a1a1aa' : '#52525b'; }
+
+  function buildGantt() {
+    const ctx = document.getElementById('chartGantt');
+    // Use floating bars (start, end) to mimic Gantt
+    const phases = [
+      { name: 'Phase 6 · Sustain (T10)',     start: 9.0,  end: 10.0, color: '#10b981' },
+      { name: 'Phase 5 · Climax (T9)',       start: 8.0,  end: 9.0,  color: '#f97316' },
+      { name: 'Phase 4 · Activation (T8)',   start: 7.0,  end: 8.0,  color: '#ec4899' },
+      { name: 'Phase 3 · Awareness (T7)',    start: 6.0,  end: 7.0,  color: '#a855f7' },
+      { name: 'Phase 2 · Launch (T6)',       start: 5.0,  end: 6.0,  color: '#6366f1' },
+      { name: 'Phase 1 · Teaser (T5 cuối)',  start: 4.25, end: 5.0,  color: '#06b6d4' }
+    ];
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: phases.map(p => p.name),
+        datasets: [{
+          label: 'Timeline',
+          data: phases.map(p => [p.start, p.end]),
+          backgroundColor: phases.map(p => p.color + 'cc'),
+          borderColor: phases.map(p => p.color),
+          borderWidth: 2,
+          borderRadius: 4
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true, maintainAspectRatio: false,
+        scales: {
+          x: {
+            min: 4, max: 10.5,
+            ticks: {
+              color: tickColor(),
+              callback: v => 'T' + Math.floor(v)
+            },
+            grid: { color: gridColor() }
+          },
+          y: { ticks: { color: tickColor() }, grid: { display: false } }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: c => `T${c.raw[0]} → T${c.raw[1]}` } }
+        }
+      }
+    });
+    chartInstances.push(chart);
+  }
+
+  function rebuildCharts() {
+    chartInstances.forEach(c => c.destroy());
+    chartInstances = [];
+    buildGantt();
+  }
+
+  buildGantt();
+</script>
+
+</body>
+</html>
