@@ -1,0 +1,445 @@
+<!doctype html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GIGABYTE 40 — Measurement Dashboard | Mid-campaign Review</title>
+  <meta name="description" content="Measurement dashboard cho campaign GIGABYTE 40 — KPI realtime, checkpoint T7 + T8, decision tree.">
+  <meta property="og:title" content="GIGABYTE 40 — Measurement Dashboard">
+  <meta property="og:description" content="Dashboard tracking realtime KPI + mid-campaign review checkpoint T7 + T8 với decision framework.">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+    @media print { .no-print { display: none !important; } body { color: #000; background: #fff; } }
+
+    .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%); color: #fff; }
+    .accent-orange { color: #f97316; }
+
+    /* Traffic light status */
+    .status-green { background: rgba(16,185,129,0.15); border: 1px solid #10b981; color: #059669; }
+    .status-yellow { background: rgba(245,158,11,0.15); border: 1px solid #f59e0b; color: #d97706; }
+    .status-red { background: rgba(239,68,68,0.15); border: 1px solid #ef4444; color: #dc2626; }
+    .status-gray { background: rgba(113,113,122,0.15); border: 1px solid #71717a; color: #71717a; }
+    .dark .status-green { color: #6ee7b7; }
+    .dark .status-yellow { color: #fcd34d; }
+    .dark .status-red { color: #fca5a5; }
+    .dark .status-gray { color: #a1a1aa; }
+
+    .kpi-card { border: 1px solid rgba(0,0,0,0.08); border-radius: 0.75rem; padding: 1.25rem; }
+    .dark .kpi-card { border-color: rgba(255,255,255,0.08); }
+    .kpi-num { font-size: 2.25rem; font-weight: 800; line-height: 1; }
+    .kpi-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: #71717a; }
+    .kpi-trend { font-size: 12px; font-weight: 600; }
+
+    .pulse-green { animation: pulse-g 2s infinite; }
+    @keyframes pulse-g { 0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.4); } 50% { box-shadow: 0 0 0 8px rgba(16,185,129,0); } }
+
+    .checkpoint-card { background: linear-gradient(135deg, rgba(99,102,241,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(99,102,241,0.3); border-radius: 1rem; padding: 1.5rem; }
+    .dark .checkpoint-card { background: linear-gradient(135deg, rgba(99,102,241,0.10), rgba(168,85,247,0.10)); }
+
+    .decision-row { padding: 0.75rem; border-radius: 0.5rem; }
+    .decision-if-green { background: rgba(16,185,129,0.08); border-left: 3px solid #10b981; }
+    .decision-if-yellow { background: rgba(245,158,11,0.08); border-left: 3px solid #f59e0b; }
+    .decision-if-red { background: rgba(239,68,68,0.08); border-left: 3px solid #ef4444; }
+
+    .toc a { display: block; padding: .25rem 0; opacity: .6; transition: opacity .15s; font-size: 13px; }
+    .toc a:hover, .toc a.active { opacity: 1; }
+    .toc a.active { font-weight: 600; color: #f97316; }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans antialiased">
+
+<div class="fixed top-4 right-4 z-50 flex gap-2 no-print">
+  <button id="theme-toggle" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm">☼ / ☾</button>
+  <button onclick="window.print()" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm">print</button>
+</div>
+
+<section class="hero-gradient py-12 px-6">
+  <div class="max-w-7xl mx-auto">
+    <p class="text-sm uppercase tracking-widest text-orange-400 mb-2">📊 LIVE DASHBOARD · MOCK DATA</p>
+    <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">GIGABYTE 40 — Measurement Dashboard</h1>
+    <p class="text-zinc-400 mt-2">Realtime KPI tracking · Mid-campaign review checkpoints T7 + T8 · Decision framework</p>
+    <div class="flex flex-wrap gap-3 mt-4 text-sm">
+      <div class="px-3 py-1 rounded bg-white/10">📅 Snapshot: <strong>2026-08-12 (mid-T8 mock)</strong></div>
+      <div class="px-3 py-1 rounded bg-white/10">📡 Sources: PIM v3 · BigQuery · CDP · Microsite</div>
+      <div class="px-3 py-1 rounded bg-white/10 pulse-green">🟢 Auto-refresh weekly via MCP</div>
+    </div>
+  </div>
+</section>
+
+<div class="max-w-7xl mx-auto px-6 py-10 lg:grid lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-10">
+
+  <nav class="toc lg:sticky lg:top-12 self-start mb-8 lg:mb-0 no-print">
+    <div class="font-semibold mb-2 text-zinc-500 uppercase tracking-wider text-xs">Sections</div>
+    <a href="#overview">Health overview</a>
+    <a href="#layer1">Layer 1 · Awareness</a>
+    <a href="#layer2">Layer 2 · Engagement</a>
+    <a href="#layer3">Layer 3 · Activation</a>
+    <a href="#layer4">Layer 4 · Commercial</a>
+    <a href="#trend">Trend over time</a>
+    <a href="#checkpoint-t7">Checkpoint T7</a>
+    <a href="#checkpoint-t8">Checkpoint T8</a>
+    <a href="#decision">Decision tree</a>
+    <a href="#sources">Data sources</a>
+  </nav>
+
+  <main class="min-w-0">
+
+    <section id="overview" class="mb-10">
+      <h2 class="text-2xl font-bold mb-4">🏥 Campaign Health Overview</h2>
+      <div class="grid md:grid-cols-4 gap-3">
+        <div class="status-green rounded-xl p-4 text-center">
+          <div class="text-xs uppercase tracking-wider">Awareness</div>
+          <div class="text-3xl font-bold mt-1">🟢</div>
+          <div class="text-sm mt-1">Track</div>
+        </div>
+        <div class="status-green rounded-xl p-4 text-center">
+          <div class="text-xs uppercase tracking-wider">Engagement</div>
+          <div class="text-3xl font-bold mt-1">🟢</div>
+          <div class="text-sm mt-1">Track</div>
+        </div>
+        <div class="status-yellow rounded-xl p-4 text-center">
+          <div class="text-xs uppercase tracking-wider">Activation</div>
+          <div class="text-3xl font-bold mt-1">🟡</div>
+          <div class="text-sm mt-1">Behind</div>
+        </div>
+        <div class="status-green rounded-xl p-4 text-center">
+          <div class="text-xs uppercase tracking-wider">Commercial</div>
+          <div class="text-3xl font-bold mt-1">🟢</div>
+          <div class="text-sm mt-1">Track</div>
+        </div>
+      </div>
+      <p class="mt-4 text-sm text-zinc-600 dark:text-zinc-400">3/4 layer đang track. <strong>Activation</strong> (đặc biệt University workshop) đang behind 35% target — cần action tuần này.</p>
+    </section>
+
+    <section id="layer1" class="mb-10">
+      <h2 class="text-xl font-bold mb-3">Layer 1 · Awareness</h2>
+      <div class="grid md:grid-cols-4 gap-3">
+        <div class="kpi-card">
+          <div class="kpi-label">Total reach (cum.)</div>
+          <div class="kpi-num accent-orange">5.4M</div>
+          <div class="kpi-trend text-emerald-600">▲ 67% of 8M target</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Earned PR</div>
+          <div class="kpi-num">18 / 30</div>
+          <div class="kpi-trend text-emerald-600">▲ on pace</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">KOL posts published</div>
+          <div class="kpi-num">42 / 80</div>
+          <div class="kpi-trend text-emerald-600">▲ Tier 3+4 strong</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Search lift "GIGABYTE 40"</div>
+          <div class="kpi-num">+340%</div>
+          <div class="kpi-trend text-emerald-600">▲ vs pre-campaign</div>
+        </div>
+      </div>
+      <div class="mt-4 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+        <h3 class="text-sm uppercase font-semibold text-zinc-500 mb-2">Reach by channel</h3>
+        <div class="relative h-48"><canvas id="chartChannel"></canvas></div>
+      </div>
+    </section>
+
+    <section id="layer2" class="mb-10">
+      <h2 class="text-xl font-bold mb-3">Layer 2 · Engagement</h2>
+      <div class="grid md:grid-cols-4 gap-3">
+        <div class="kpi-card">
+          <div class="kpi-label">Total engagement</div>
+          <div class="kpi-num accent-orange">285K</div>
+          <div class="kpi-trend text-emerald-600">▲ 71% of 400K target</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">UGC #EnterInfinity</div>
+          <div class="kpi-num">740</div>
+          <div class="kpi-trend text-emerald-600">▲ 74% of 1,000 target</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Avg. video view rate</div>
+          <div class="kpi-num">38%</div>
+          <div class="kpi-trend text-emerald-600">▲ above ind. benchmark 30%</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Microsite session</div>
+          <div class="kpi-num">95K</div>
+          <div class="kpi-trend text-emerald-600">▲ bounce 32% (good)</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="layer3" class="mb-10">
+      <h2 class="text-xl font-bold mb-3">Layer 3 · Activation <span class="text-sm text-amber-500">(⚠️ behind)</span></h2>
+      <div class="grid md:grid-cols-4 gap-3">
+        <div class="kpi-card">
+          <div class="kpi-label">Store wave 1 traffic</div>
+          <div class="kpi-num accent-orange">8,200</div>
+          <div class="kpi-trend text-emerald-600">▲ 82% of 10K target</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Tournament participants</div>
+          <div class="kpi-num">620 / 800</div>
+          <div class="kpi-trend text-emerald-600">▲ 78% — on pace</div>
+        </div>
+        <div class="kpi-card border-2 border-amber-500">
+          <div class="kpi-label text-amber-600">University workshop</div>
+          <div class="kpi-num text-amber-600">650 / 2,000</div>
+          <div class="kpi-trend text-amber-600">🟡 33% — BEHIND</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Festival registration</div>
+          <div class="kpi-num accent-orange">1,420 / 2,000</div>
+          <div class="kpi-trend text-emerald-600">▲ 71% — on pace</div>
+        </div>
+      </div>
+      <div class="mt-3 status-yellow p-3 rounded-lg text-sm">
+        ⚠️ <strong>University workshop chỉ đạt 33% target sau T8 W1-W2</strong> — chỉ làm xong UIT + HCMUT, còn FPT + NEU. Nguyên nhân: lịch trùng kỳ thi cuối kỳ. <strong>Action</strong>: shift FPT + NEU sang T8 cuối / T9 đầu, mời extra demo unit.
+      </div>
+    </section>
+
+    <section id="layer4" class="mb-10">
+      <h2 class="text-xl font-bold mb-3">Layer 4 · Commercial</h2>
+      <div class="grid md:grid-cols-4 gap-3">
+        <div class="kpi-card">
+          <div class="kpi-label">Sale uplift GIGA (T6-T8)</div>
+          <div class="kpi-num accent-orange">+28%</div>
+          <div class="kpi-trend text-emerald-600">▲ trajectory tới +35% T9</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">Lucky Draw entries</div>
+          <div class="kpi-num">18,500</div>
+          <div class="kpi-trend text-emerald-600">▲ 74% of 25K target</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">CRM new leads</div>
+          <div class="kpi-num accent-orange">29,400</div>
+          <div class="kpi-trend text-emerald-600">▲ 74% of 40K target</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label">AOV ngành GIGA</div>
+          <div class="kpi-num">8.4tr</div>
+          <div class="kpi-trend text-emerald-600">▲ +12% vs Q1 baseline</div>
+        </div>
+      </div>
+      <div class="mt-4 border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+        <h3 class="text-sm uppercase font-semibold text-zinc-500 mb-2">Sale uplift by SKU category</h3>
+        <div class="relative h-48"><canvas id="chartSku"></canvas></div>
+      </div>
+    </section>
+
+    <section id="trend" class="mb-10">
+      <h2 class="text-xl font-bold mb-3">📈 Trend over time</h2>
+      <div class="grid md:grid-cols-2 gap-4">
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <h3 class="text-sm uppercase font-semibold text-zinc-500 mb-2">Cumulative reach (weekly)</h3>
+          <div class="relative h-56"><canvas id="chartReach"></canvas></div>
+        </div>
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <h3 class="text-sm uppercase font-semibold text-zinc-500 mb-2">Sale uplift weekly</h3>
+          <div class="relative h-56"><canvas id="chartSale"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="checkpoint-t7" class="mb-10">
+      <h2 class="text-2xl font-bold mb-3">🚦 Checkpoint T7 — Mid-Awareness Review</h2>
+      <div class="checkpoint-card">
+        <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-3"><strong>Khi nào</strong>: Cuối tuần 2 tháng 7 (sau ~2 tuần Awareness phase). <strong>Mục đích</strong>: validate awareness trajectory, adjust media spend, kill content tệ.</p>
+        <h3 class="font-semibold mb-2">Checklist 6 items</h3>
+        <ol class="list-decimal ml-6 text-sm space-y-1">
+          <li>✅ Total reach đạt ≥ 30% target (=2.4M+)? — <strong>nếu KHÔNG</strong> → boost paid ads spend +20%</li>
+          <li>✅ KOL Tier 2 wave drops xong? — <strong>nếu KHÔNG</strong> → escalate KOL agency, có backup KOL?</li>
+          <li>✅ Mid Lucky #1 broadcast xong? Engagement spike confirmed? — <strong>nếu KHÔNG</strong> → adjust Mid #2 prize tier</li>
+          <li>✅ Top 3 best-performing content piece là gì? — double-down vào content style đó cho phase 4</li>
+          <li>✅ Bottom 3 worst-performing content? — KILL hoặc pivot</li>
+          <li>✅ Lucky Draw entries ≥ 5K? — <strong>nếu KHÔNG</strong> → ngộ ra issue ở promotion mechanic (QR not scanning? landing slow?)</li>
+        </ol>
+        <h3 class="font-semibold mt-4 mb-2">Output deliverable</h3>
+        <ul class="list-disc ml-6 text-sm space-y-1">
+          <li><strong>Mid-T7 report HTML</strong> — em sẽ auto-gen qua MCP stack mỗi cuối tuần 2 T7</li>
+          <li><strong>Decision memo</strong> — 1 trang, 3 actions cho phase 4</li>
+          <li><strong>Budget reallocation</strong> đề xuất (nếu cần)</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="checkpoint-t8" class="mb-10">
+      <h2 class="text-2xl font-bold mb-3">🚦 Checkpoint T8 — Pre-Climax Review</h2>
+      <div class="checkpoint-card">
+        <p class="text-sm text-zinc-600 dark:text-zinc-300 mb-3"><strong>Khi nào</strong>: Cuối tuần 2 tháng 8 (sau ~6 tuần campaign). <strong>Mục đích</strong>: lock readiness cho Climax phase, confirm Festival logistic, finalize Grand Prize.</p>
+        <h3 class="font-semibold mb-2">Checklist 8 items</h3>
+        <ol class="list-decimal ml-6 text-sm space-y-1">
+          <li>✅ Total reach ≥ 60% target (=4.8M+)? — pacing healthy?</li>
+          <li>✅ Festival registration ≥ 70% (=1,400+)? — <strong>nếu &lt; 50%</strong> → escalate KOL + paid push reg</li>
+          <li>✅ University workshop completed all 4 trường? — <strong>nếu KHÔNG</strong> → schedule shift</li>
+          <li>✅ Mid Lucky #2 drawn, engagement confirmed?</li>
+          <li>✅ POSM Moment #2 (đếm ngược) deployed 39 retailer?</li>
+          <li>✅ Festival venue locked + production vendor confirmed?</li>
+          <li>✅ Grand Prize finalized (AORUS top-tier RTX 5090 setup ~150tr)?</li>
+          <li>✅ Sale uplift trajectory cho +35% target khả thi? — <strong>nếu &lt; +20%</strong> → emergency: tăng promo depth + flash sale tần suất</li>
+        </ol>
+        <h3 class="font-semibold mt-4 mb-2">Output deliverable</h3>
+        <ul class="list-disc ml-6 text-sm space-y-1">
+          <li><strong>Mid-T8 report HTML</strong></li>
+          <li><strong>Festival GO / NO-GO decision</strong> — risk assessment</li>
+          <li><strong>Final phase 5 brief</strong> cho team execution</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="decision" class="mb-10">
+      <h2 class="text-2xl font-bold mb-3">🌳 Decision Tree — Nếu metric X off, làm gì?</h2>
+      <div class="space-y-3">
+        <div class="decision-row decision-if-red">
+          <strong>🔴 IF Reach &lt; 50% target sau T7</strong>
+          <p class="text-sm mt-1">→ Diagnose: ad spend OK? Creative fatigue? Channel mix sai? <strong>Action</strong>: refresh 2 hero creative + tăng paid 25% + thử new channel (Threads/Discord?)</p>
+        </div>
+        <div class="decision-row decision-if-red">
+          <strong>🔴 IF Festival registration &lt; 50% sau T8</strong>
+          <p class="text-sm mt-1">→ Đe doạ KPI flagship. <strong>Action</strong>: KOL drive sign-up (Tier 1 livestream), giveaway code "Đăng ký nhận quà tham dự", paid retarget warm audience.</p>
+        </div>
+        <div class="decision-row decision-if-red">
+          <strong>🔴 IF Sale uplift &lt; +15% sau T7</strong>
+          <p class="text-sm mt-1">→ Promotion mechanic chưa work. <strong>Action</strong>: deep dive — promo depth không đủ? SKU không hot? Stock issue? Pricing competitive review vs CellphoneS.</p>
+        </div>
+        <div class="decision-row decision-if-yellow">
+          <strong>🟡 IF University workshop &lt; 50% sau T8 W2</strong>
+          <p class="text-sm mt-1"><em>(Hiện tại đang ở case này)</em>. <strong>Action</strong>: shift schedule, thêm extra perk (free demo unit / pizza), partner club esports trường để pull crowd.</p>
+        </div>
+        <div class="decision-row decision-if-yellow">
+          <strong>🟡 IF UGC submission &lt; 30% pace</strong>
+          <p class="text-sm mt-1">→ Challenge không attractive. <strong>Action</strong>: add weekly mini-prize, seed KOL Tier 3 chạy first 50 submission, simplify entry mechanic.</p>
+        </div>
+        <div class="decision-row decision-if-green">
+          <strong>🟢 IF mọi KPI ≥ 90% target</strong>
+          <p class="text-sm mt-1">→ <strong>Action</strong>: keep status quo, không thay đổi. Maintain content quality, đừng over-spend. Reallocate buffer 5% sang Climax phase để đầu tư Festival production.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="sources" class="mb-10">
+      <h2 class="text-2xl font-bold mb-3">📡 Data Sources & Auto-Refresh</h2>
+      <div class="grid md:grid-cols-2 gap-4 text-sm">
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <h3 class="font-semibold mb-2">Sources via MCP stack</h3>
+          <ul class="list-disc ml-5 space-y-1">
+            <li><code>pimv3</code> (MySQL) — Sale uplift, AOV, SKU performance</li>
+            <li><code>cdp-postgres</code> — CRM leads, segment behavior</li>
+            <li><code>n8n-bigquery</code> — Web analytics, microsite session</li>
+            <li><code>d1-gvn</code> (Cloudflare D1) — Form submission, registration</li>
+            <li>Manual import — FB/IG/TikTok/YT API (KOL agency report weekly)</li>
+            <li>Manual import — PR booking report (PR agency weekly)</li>
+          </ul>
+        </div>
+        <div class="border border-zinc-200 dark:border-zinc-800 rounded-xl p-4">
+          <h3 class="font-semibold mb-2">Auto-refresh schedule</h3>
+          <ul class="list-disc ml-5 space-y-1">
+            <li><strong>Daily</strong> 09:00 — Sale + microsite metrics pull (script Python qua MCP)</li>
+            <li><strong>Weekly</strong> Thứ 2 09:00 — Full dashboard refresh + HTML report sinh ra</li>
+            <li><strong>Bi-weekly</strong> Checkpoint T7 + T8 — auto + manual review</li>
+            <li><strong>Final</strong> T9 weekend + T10 W4 — wrap-up case study</li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-4 p-3 rounded-lg bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 text-sm">
+        💡 <strong>Note</strong>: Dashboard này hiện đang dùng <strong>MOCK DATA</strong> (giả định mid-T8 snapshot). Khi campaign go live, em sẽ build pipeline auto-pull từ MCP stack thật, refresh hằng tuần qua skill html-report.
+      </div>
+    </section>
+
+    <footer class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-sm text-zinc-500">
+      by Tunglee
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const dark = document.documentElement.classList.toggle('dark');
+    localStorage.theme = dark ? 'dark' : 'light';
+    rebuildCharts();
+  });
+
+  function isDark() { return document.documentElement.classList.contains('dark'); }
+  function gridColor() { return isDark() ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'; }
+  function tickColor() { return isDark() ? '#a1a1aa' : '#52525b'; }
+
+  let chartInstances = [];
+
+  function buildChannel() {
+    const ctx = document.getElementById('chartChannel');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Facebook', 'TikTok', 'YouTube', 'PR earned', 'KOL organic', 'Microsite'],
+        datasets: [{ label: 'Reach (M)', data: [1.8, 1.5, 0.9, 0.6, 0.4, 0.2], backgroundColor: ['#6366f1', '#ec4899', '#ef4444', '#f59e0b', '#10b981', '#06b6d4'] }]
+      },
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { color: tickColor(), callback: v => v + 'M' }, grid: { color: gridColor() } }, x: { ticks: { color: tickColor() }, grid: { display: false } } }, plugins: { legend: { display: false } } }
+    });
+    chartInstances.push(chart);
+  }
+
+  function buildSku() {
+    const ctx = document.getElementById('chartSku');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['AORUS Laptop', 'AORUS Monitor', 'Mainboard GIGA', 'AORUS RTX VGA', 'Case/cooling', 'RAM/SSD'],
+        datasets: [{ label: '% uplift', data: [42, 38, 26, 31, 18, 22], backgroundColor: '#f97316' }]
+      },
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { beginAtZero: true, ticks: { color: tickColor(), callback: v => '+' + v + '%' }, grid: { color: gridColor() } }, y: { ticks: { color: tickColor() }, grid: { display: false } } }, plugins: { legend: { display: false } } }
+    });
+    chartInstances.push(chart);
+  }
+
+  function buildReach() {
+    const ctx = document.getElementById('chartReach');
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['W1 T5c', 'W2', 'W3', 'W1 T6', 'W2', 'W3', 'W4', 'W1 T7', 'W2', 'W3', 'W4', 'W1 T8', 'W2'],
+        datasets: [
+          { label: 'Cumulative reach (M)', data: [0.15, 0.32, 0.48, 0.7, 1.1, 1.5, 1.9, 2.4, 2.9, 3.5, 4.2, 4.8, 5.4], borderColor: '#f97316', backgroundColor: 'rgba(249,115,22,0.15)', tension: 0.3, fill: true },
+          { label: 'Target trajectory', data: [0.1, 0.25, 0.4, 0.6, 0.9, 1.3, 1.7, 2.2, 2.7, 3.3, 4.0, 4.7, 5.4], borderColor: '#a3a3a3', borderDash: [5,5], fill: false, tension: 0 }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { color: tickColor(), callback: v => v + 'M' }, grid: { color: gridColor() } }, x: { ticks: { color: tickColor(), font: { size: 10 } }, grid: { color: gridColor() } } }, plugins: { legend: { labels: { color: tickColor() } } } }
+    });
+    chartInstances.push(chart);
+  }
+
+  function buildSale() {
+    const ctx = document.getElementById('chartSale');
+    const chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['W1 T6', 'W2', 'W3', 'W4', 'W1 T7', 'W2', 'W3', 'W4', 'W1 T8', 'W2'],
+        datasets: [
+          { label: 'Sale uplift % vs baseline', data: [8, 14, 18, 22, 19, 25, 28, 24, 30, 28], backgroundColor: '#f97316' }
+        ]
+      },
+      options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, ticks: { color: tickColor(), callback: v => '+' + v + '%' }, grid: { color: gridColor() } }, x: { ticks: { color: tickColor(), font: { size: 10 } }, grid: { color: gridColor() } } }, plugins: { legend: { display: false } } }
+    });
+    chartInstances.push(chart);
+  }
+
+  function rebuildCharts() {
+    chartInstances.forEach(c => c.destroy());
+    chartInstances = [];
+    buildChannel(); buildSku(); buildReach(); buildSale();
+  }
+  buildChannel(); buildSku(); buildReach(); buildSale();
+</script>
+
+</body>
+</html>

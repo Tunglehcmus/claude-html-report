@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>GIGABYTE 40 — Pitch Deck for GIGABYTE | GEARVN</title>
+  <meta name="description" content="15-slide pitch deck cho GIGABYTE — Enter Infinity campaign proposal V2 từ GEARVN.">
+  <meta property="og:title" content="GIGABYTE 40 — Pitch Deck for GIGABYTE">
+  <meta property="og:description" content="Pitch deck 15 slide trình bày Enter Infinity campaign cho GIGABYTE — full screen, keyboard navigation.">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body { background: #0a0a0a; color: #fff; font-family: system-ui, ui-sans-serif, sans-serif; margin: 0; }
+    .slide {
+      min-height: 100vh; width: 100%;
+      padding: 4vh 6vw;
+      display: flex; flex-direction: column; justify-content: center;
+      scroll-snap-align: start;
+      position: relative;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    html { scroll-snap-type: y mandatory; scroll-behavior: smooth; }
+    .slide-num { position: absolute; top: 2vh; right: 3vw; font-size: 11px; color: #525252; letter-spacing: 0.2em; }
+    .slide-title { position: absolute; top: 2vh; left: 3vw; font-size: 11px; color: #525252; letter-spacing: 0.2em; text-transform: uppercase; }
+    .accent { color: #f97316; }
+    h1.huge { font-size: clamp(48px, 8vw, 120px); font-weight: 800; line-height: 1; letter-spacing: -0.02em; }
+    h1.big { font-size: clamp(36px, 5.5vw, 72px); font-weight: 800; line-height: 1.05; letter-spacing: -0.02em; }
+    h2.section { font-size: clamp(28px, 4vw, 56px); font-weight: 700; line-height: 1.1; letter-spacing: -0.01em; }
+    .hero-gradient { background: radial-gradient(ellipse at top right, rgba(249,115,22,0.20), transparent 60%), linear-gradient(135deg, #0a0a0a 0%, #1f1410 50%, #0a0a0a 100%); }
+    .nav-fixed { position: fixed; bottom: 2vh; left: 50%; transform: translateX(-50%); z-index: 50; background: rgba(0,0,0,0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); border-radius: 999px; padding: 8px 16px; display: flex; gap: 12px; align-items: center; font-size: 12px; color: #a3a3a3; }
+    .nav-fixed button { background: none; border: none; color: #fff; cursor: pointer; padding: 4px 8px; border-radius: 4px; }
+    .nav-fixed button:hover { background: rgba(255,255,255,0.1); }
+    @media print { .nav-fixed { display: none; } .slide { page-break-after: always; min-height: auto; } }
+    .stat-num { font-size: clamp(40px, 6vw, 80px); font-weight: 800; line-height: 1; color: #f97316; }
+    .stat-label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.15em; color: #a3a3a3; margin-top: 4px; }
+    .pill-dark { display: inline-block; padding: 6px 14px; border-radius: 999px; font-size: 12px; background: rgba(249,115,22,0.15); border: 1px solid rgba(249,115,22,0.3); color: #fb923c; }
+    .phase-strip { display: flex; gap: 8px; flex-wrap: wrap; }
+    .phase-chip { padding: 8px 14px; border-radius: 8px; font-weight: 600; font-size: 13px; text-align: center; min-width: 140px; }
+    .pc-1 { background: rgba(6,182,212,0.2); border: 1px solid #06b6d4; color: #67e8f9; }
+    .pc-2 { background: rgba(99,102,241,0.2); border: 1px solid #6366f1; color: #a5b4fc; }
+    .pc-3 { background: rgba(168,85,247,0.2); border: 1px solid #a855f7; color: #d8b4fe; }
+    .pc-4 { background: rgba(236,72,153,0.2); border: 1px solid #ec4899; color: #f9a8d4; }
+    .pc-5 { background: rgba(249,115,22,0.25); border: 1px solid #f97316; color: #fdba74; }
+    .pc-6 { background: rgba(16,185,129,0.2); border: 1px solid #10b981; color: #6ee7b7; }
+  </style>
+</head>
+<body>
+
+<nav class="nav-fixed">
+  <button onclick="prev()">←</button>
+  <span id="slide-indicator">1 / 15</span>
+  <button onclick="next()">→</button>
+  <span style="color:#525252">·</span>
+  <span style="color:#525252">↑↓ scroll · F print</span>
+</nav>
+
+<!-- SLIDE 1 - COVER -->
+<section class="slide hero-gradient">
+  <span class="slide-num">01 / 15</span>
+  <span class="slide-title">Cover</span>
+  <div>
+    <div class="pill-dark mb-6">PROPOSAL · CONFIDENTIAL · 2026-05-18</div>
+    <h1 class="huge">GIGABYTE <span class="accent">40</span></h1>
+    <h1 class="huge accent" style="opacity:0.85">Enter Infinity</h1>
+    <p class="mt-8 text-2xl text-zinc-300 max-w-3xl">A 5-month, 6-phase brand & sales campaign by <strong>GEARVN</strong> for <strong>GIGABYTE Vietnam</strong>.</p>
+    <p class="mt-2 text-base text-zinc-500">Prepared by: GEARVN — Lead of LCD · Head ngành màn hình</p>
+  </div>
+</section>
+
+<!-- SLIDE 2 - WHY NOW -->
+<section class="slide">
+  <span class="slide-num">02 / 15</span>
+  <span class="slide-title">Why Now</span>
+  <h2 class="section mb-8">Why Now? <span class="accent">40 năm chỉ đến 1 lần.</span></h2>
+  <div class="grid md:grid-cols-3 gap-6 mt-6">
+    <div>
+      <div class="stat-num">+18.4%</div>
+      <div class="stat-label">VN gaming monitor YoY Q1/2026</div>
+    </div>
+    <div>
+      <div class="stat-num">71%</div>
+      <div class="stat-label">Sản lượng đã shift 165Hz+</div>
+    </div>
+    <div>
+      <div class="stat-num">+19pp</div>
+      <div class="stat-label">240Hz+ tăng từ 9% → 19% trong 4 quý</div>
+    </div>
+  </div>
+  <div class="mt-12 max-w-4xl">
+    <p class="text-xl text-zinc-300">Thị trường VN đang ở <strong>inflection point</strong>: gamer trẻ shift sang premium / OLED / 240Hz+, sẵn sàng pay cho brand có story. GIGABYTE có <em>40-year heritage</em> — đối thủ không thể copy. Nếu không claim moment này 2026, ASUS ROG / MSI sẽ.</p>
+  </div>
+</section>
+
+<!-- SLIDE 3 - THE CHALLENGE -->
+<section class="slide hero-gradient">
+  <span class="slide-num">03 / 15</span>
+  <span class="slide-title">The Challenge</span>
+  <h2 class="section mb-8">Bài toán</h2>
+  <div class="grid md:grid-cols-2 gap-8">
+    <div>
+      <h3 class="text-2xl font-bold mb-3 text-red-400">Tại VN, GIGABYTE đang</h3>
+      <ul class="text-lg space-y-2 text-zinc-300 list-disc ml-6">
+        <li>#3 top-of-mind sau ASUS ROG, MSI</li>
+        <li>Brand recognition gaming gear thấp hơn DNA actual</li>
+        <li>AORUS premium tier (15-25tr) chưa được showcase đủ</li>
+        <li>Gen Z / Esports awareness yếu</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-2xl font-bold mb-3 accent">Cơ hội 40 năm</h3>
+      <ul class="text-lg space-y-2 text-zinc-300 list-disc ml-6">
+        <li>Single-shot narrative moment — kể câu chuyện innovation</li>
+        <li>Brand equity cao có thể chuyển thành sale Q4</li>
+        <li>Unlock co-fund T1 (Intel/AMD/Nvidia) — họ cũng muốn moment</li>
+        <li>Capture 40,000+ leads CRM cho 2027</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 - THE BIG IDEA -->
+<section class="slide">
+  <span class="slide-num">04 / 15</span>
+  <span class="slide-title">The Big Idea</span>
+  <div class="text-center">
+    <p class="pill-dark inline-block mb-8">THE BIG IDEA</p>
+    <h1 class="huge accent">Enter Infinity.</h1>
+    <h2 class="text-3xl md:text-5xl font-bold mt-2 text-zinc-200">40 Years of Infinite Innovation.</h2>
+    <p class="mt-12 text-xl text-zinc-400 max-w-3xl mx-auto">40 năm GIGABYTE không phải heritage tĩnh — là <em>chuỗi không ngừng push giới hạn</em>. Past → Present → <span class="accent">Next 40</span>.</p>
+  </div>
+</section>
+
+<!-- SLIDE 5 - 6 PHASE FLOW -->
+<section class="slide hero-gradient">
+  <span class="slide-num">05 / 15</span>
+  <span class="slide-title">6-Phase Flow</span>
+  <h2 class="section mb-8">6 phases · 5 months · 1 weekend climax</h2>
+  <div class="phase-strip mt-4 mb-8">
+    <div class="phase-chip pc-1">🌒 TEASER<br><span style="font-weight:400;font-size:11px">T5 cuối · 3w</span></div>
+    <div class="phase-chip pc-2">🚀 LAUNCH<br><span style="font-weight:400;font-size:11px">T6 · 4w</span></div>
+    <div class="phase-chip pc-3">📢 AWARENESS<br><span style="font-weight:400;font-size:11px">T7 · 4w</span></div>
+    <div class="phase-chip pc-4">⚡ ACTIVATION<br><span style="font-weight:400;font-size:11px">T8 · 4w</span></div>
+    <div class="phase-chip pc-5">🔥 CLIMAX<br><span style="font-weight:400;font-size:11px">T9 · 4w + 1weekend peak</span></div>
+    <div class="phase-chip pc-6">♻️ SUSTAIN<br><span style="font-weight:400;font-size:11px">T10 · 4w · Q4 bridge</span></div>
+  </div>
+  <p class="text-xl text-zinc-300 max-w-4xl">Mỗi phase có vai trò khác nhau — tránh "1 train chạy thẳng 4 tháng" → audience fatigue.<br>Climax peak = 1 weekend Big Festival, không phải kéo 1 tháng.</p>
+</section>
+
+<!-- SLIDE 6 - PHASES HIGHLIGHTS -->
+<section class="slide">
+  <span class="slide-num">06 / 15</span>
+  <span class="slide-title">Phase Highlights</span>
+  <h2 class="section mb-6">Mỗi phase 1 vai trò</h2>
+  <div class="grid md:grid-cols-2 gap-x-10 gap-y-4 mt-6">
+    <div><strong class="text-cyan-400">🌒 TEASER</strong> — Mystery video. Build curiosity. NO sale. <em>Goal: 500K reach + 2K early sign-up.</em></div>
+    <div><strong class="text-indigo-400">🚀 LAUNCH</strong> — Concept reveal. 3 promotion mechanic go live. Store wave 1. <em>Goal: 2M reach + 3K orders.</em></div>
+    <div><strong class="text-purple-400">📢 AWARENESS</strong> — Tournament + KOL Tier 2. UGC challenge. Mid Lucky #1. <em>Goal: 200 UGC + 500 tournament.</em></div>
+    <div><strong class="text-pink-400">⚡ ACTIVATION</strong> — University + KOL Tier 3+4. Mid Lucky #2. POSM refresh. <em>Goal: 2K student + 1.5K event reg.</em></div>
+    <div><strong class="accent">🔥 CLIMAX</strong> — ENTER INFINITY FESTIVAL 2,000+ · Grand Lucky live broadcast. <em>Goal: 50K concurrent livestream.</em></div>
+    <div><strong class="text-emerald-400">♻️ SUSTAIN</strong> — Recap + retarget + Q4 BlackFriday bridge. <em>Goal: +25% Q4 sale uplift.</em></div>
+  </div>
+</section>
+
+<!-- SLIDE 7 - BIG FESTIVAL -->
+<section class="slide hero-gradient">
+  <span class="slide-num">07 / 15</span>
+  <span class="slide-title">Big Festival</span>
+  <h2 class="section mb-4">Enter Infinity Festival</h2>
+  <p class="text-xl text-zinc-400 mb-6">Tháng 9 · 1 weekend · HCM · 2,000+ attendees · livestream nationally</p>
+  <div class="grid md:grid-cols-2 gap-8">
+    <div>
+      <h3 class="text-xl font-bold mb-3 accent">Inside the Festival</h3>
+      <ul class="text-base text-zinc-300 list-disc ml-6 space-y-1">
+        <li>Heritage Exhibition 1986-2026 — 4 decade pavilion</li>
+        <li>Tournament Final — AORUS esports invitational</li>
+        <li>KOL Stage — Hoàng Luân + macro #2 + Tier 2</li>
+        <li>GRAND LUCKY DRAW LIVE — broadcast YT/FB/TikTok</li>
+        <li>Tech Showcase — RTX 5090 + AORUS flagship demo</li>
+        <li>Networking + F&B + photo zones</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold mb-3 accent">Production</h3>
+      <ul class="text-base text-zinc-300 list-disc ml-6 space-y-1">
+        <li>Venue: Pullman / SECC / Landmark (lock T6)</li>
+        <li>Stage 12×6m + LED wall 8×4m</li>
+        <li>5 camera livestream simulcast</li>
+        <li>80+ press + 30 VIP KOL invite</li>
+        <li>2,200 giftbag, F&B 2,200 khẩu</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8 - KOL ECOSYSTEM -->
+<section class="slide">
+  <span class="slide-num">08 / 15</span>
+  <span class="slide-title">KOL Ecosystem</span>
+  <h2 class="section mb-6">KOL ladder — 4 tier de-risk</h2>
+  <div class="grid md:grid-cols-4 gap-4 mt-6">
+    <div class="border border-orange-500/40 rounded-xl p-4 bg-orange-500/5">
+      <div class="text-xs uppercase accent font-bold">Tier 1 · MACRO</div>
+      <div class="stat-num">2</div>
+      <p class="text-sm text-zinc-400 mt-1">1M+ each — Hoàng Luân (tech) + 1 lifestyle/gaming (de-risk).</p>
+    </div>
+    <div class="border border-zinc-700 rounded-xl p-4">
+      <div class="text-xs uppercase text-zinc-400 font-bold">Tier 2</div>
+      <div class="text-5xl font-bold">5-8</div>
+      <p class="text-sm text-zinc-400 mt-1">100K-500K — deep review, unboxing.</p>
+    </div>
+    <div class="border border-zinc-700 rounded-xl p-4">
+      <div class="text-xs uppercase text-zinc-400 font-bold">Tier 3</div>
+      <div class="text-5xl font-bold">15-20</div>
+      <p class="text-sm text-zinc-400 mt-1">10K-80K — TikTok setup showcase.</p>
+    </div>
+    <div class="border border-zinc-700 rounded-xl p-4">
+      <div class="text-xs uppercase text-zinc-400 font-bold">Tier 4</div>
+      <div class="text-5xl font-bold">50+</div>
+      <p class="text-sm text-zinc-400 mt-1">&lt;10K — grassroots authenticity, VOZ AMA.</p>
+    </div>
+  </div>
+  <p class="mt-8 text-zinc-300 max-w-3xl">⚙️ <strong>Key change vs gốc</strong>: 2 macro KOL thay vì 1 — de-risk single point of failure.</p>
+</section>
+
+<!-- SLIDE 9 - CHANNEL MIX -->
+<section class="slide hero-gradient">
+  <span class="slide-num">09 / 15</span>
+  <span class="slide-title">Channel Mix</span>
+  <h2 class="section mb-6">Owned · Paid · Earned</h2>
+  <div class="grid md:grid-cols-3 gap-6 mt-4">
+    <div class="border border-zinc-700 rounded-xl p-5">
+      <div class="text-xs uppercase font-bold accent">Owned</div>
+      <p class="text-zinc-300 mt-2 text-sm">GIGABYTE VN FB · TikTok · YouTube · Microsite · GEARVN amplification</p>
+    </div>
+    <div class="border border-zinc-700 rounded-xl p-5">
+      <div class="text-xs uppercase font-bold accent">Paid</div>
+      <p class="text-zinc-300 mt-2 text-sm">FB/TT/YT ads · KOL fees (4-tier) · PR booking (3-tier) · Display retarget</p>
+    </div>
+    <div class="border border-zinc-700 rounded-xl p-5">
+      <div class="text-xs uppercase font-bold accent">Earned</div>
+      <p class="text-zinc-300 mt-2 text-sm">UGC #EnterInfinity · Press · Forum (VOZ AMA) · Reaction · Community</p>
+    </div>
+  </div>
+  <div class="mt-8">
+    <h3 class="text-xl font-bold mb-3 accent">6 Content Pillars</h3>
+    <div class="grid md:grid-cols-3 gap-3 text-sm">
+      <div>1 · Heritage 40 Years Story</div>
+      <div>2 · Brand Story (HQ staff confessional)</div>
+      <div>3 · UGC Nostalgia (first PC components)</div>
+      <div>4 · Viral Challenge (Infinity-tier build)</div>
+      <div>5 · Daily Countdown (40 facts/40 days)</div>
+      <div><span class="accent font-bold">6 · Innovation / Next 40 ⭐ NEW</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10 - PARTNERSHIP ASK -->
+<section class="slide">
+  <span class="slide-num">10 / 15</span>
+  <span class="slide-title">Partnership Ask</span>
+  <h2 class="section mb-6">Partnership architecture</h2>
+  <div class="grid md:grid-cols-2 gap-6">
+    <div>
+      <h3 class="text-xl font-bold mb-3 accent">GIGABYTE provides (ASK)</h3>
+      <ul class="text-zinc-300 text-base list-disc ml-6 space-y-1">
+        <li><strong>Brand approval</strong> — creative guideline + storytelling rights</li>
+        <li><strong>MDF co-fund</strong> — 30-40% Tier M budget (~1.5-2 tỷ)</li>
+        <li><strong>Product seeding</strong> — flagship demo unit cho Festival</li>
+        <li><strong>HQ visit access</strong> — quay video Brand Story tại Taipei</li>
+        <li><strong>Exec presence</strong> — VP/GM Asia tham gia Festival stage</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold mb-3 accent">GEARVN delivers</h3>
+      <ul class="text-zinc-300 text-base list-disc ml-6 space-y-1">
+        <li><strong>Execution lead</strong> — full 6-phase campaign management</li>
+        <li><strong>Channel chính</strong> — owned media (FB/TikTok/YT/site) + showroom HCM</li>
+        <li><strong>Ecosystem data</strong> — CDP / BigQuery realtime tracking</li>
+        <li><strong>Risk + budget control</strong> — Tier S/M/L flexibility</li>
+        <li><strong>Wrap-up report</strong> — ROI + learning + 2027 proposal</li>
+      </ul>
+    </div>
+  </div>
+  <p class="mt-6 text-zinc-400 text-sm">+ Brand T1 (Intel/AMD/Nvidia) parallel ask: co-fund Festival zone + co-branded combo.</p>
+</section>
+
+<!-- SLIDE 11 - BUDGET -->
+<section class="slide hero-gradient">
+  <span class="slide-num">11 / 15</span>
+  <span class="slide-title">Budget</span>
+  <h2 class="section mb-6">Budget — 3 tier flexibility</h2>
+  <div class="grid md:grid-cols-3 gap-4 mt-4">
+    <div class="border border-zinc-700 rounded-xl p-5">
+      <div class="text-xs uppercase text-zinc-500">Tier S</div>
+      <div class="stat-num" style="font-size:48px">~2.5 tỷ</div>
+      <p class="text-sm text-zinc-400 mt-2">Cost-controlled. Event 500-800 · 1 macro · 4 phase (no Sustain)</p>
+    </div>
+    <div class="border-2 border-orange-500 rounded-xl p-5 bg-orange-500/5">
+      <div class="text-xs uppercase font-bold accent">Tier M — RECOMMENDED ⭐</div>
+      <div class="stat-num" style="font-size:48px">~4.5-6 tỷ</div>
+      <p class="text-sm text-zinc-300 mt-2">Event 2,000 · 2 macro · 6 phase full · PR T1+T2</p>
+    </div>
+    <div class="border border-zinc-700 rounded-xl p-5">
+      <div class="text-xs uppercase text-zinc-500">Tier L</div>
+      <div class="stat-num" style="font-size:48px">~8-10 tỷ</div>
+      <p class="text-sm text-zinc-400 mt-2">Premium. Event 3,500+ · 3 macro + 2 pro-team · TVC quốc gia</p>
+    </div>
+  </div>
+  <div class="mt-8 max-w-3xl">
+    <h3 class="text-xl font-bold accent mb-3">Tier M ~5.2 tỷ — split by component</h3>
+    <div class="grid md:grid-cols-2 gap-2 text-sm">
+      <div>Sale Promotion (26%): ~1.37 tỷ</div>
+      <div>Offline events + Festival (41%): ~2.10 tỷ</div>
+      <div>Media & PR (30%): ~1.50 tỷ</div>
+      <div>POSM (4%): ~0.18 tỷ</div>
+      <div>Partnership (4%): ~0.20 tỷ</div>
+      <div>Sustain + Contingency (7%): ~0.35 tỷ</div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 12 - KPI -->
+<section class="slide">
+  <span class="slide-num">12 / 15</span>
+  <span class="slide-title">KPI Targets</span>
+  <h2 class="section mb-6">KPI Targets — Tier M</h2>
+  <div class="grid md:grid-cols-2 gap-x-12 gap-y-4 mt-6">
+    <div><div class="stat-num">8M+</div><div class="stat-label">Total reach impressions</div></div>
+    <div><div class="stat-num">400K+</div><div class="stat-label">Total engagement</div></div>
+    <div><div class="stat-num">1,000+</div><div class="stat-label">UGC #EnterInfinity posts</div></div>
+    <div><div class="stat-num">2,000+</div><div class="stat-label">Festival attendees</div></div>
+    <div><div class="stat-num">50K+</div><div class="stat-label">Livestream concurrent peak</div></div>
+    <div><div class="stat-num accent">+35%</div><div class="stat-label">Sale uplift ngành GIGA T6-T9</div></div>
+    <div><div class="stat-num accent">40,000+</div><div class="stat-label">CRM new leads captured</div></div>
+    <div><div class="stat-num accent">+25%</div><div class="stat-label">Q4 bridge sale (T10)</div></div>
+  </div>
+  <p class="mt-8 text-zinc-400">Tracking: <strong>realtime dashboard</strong> qua GEARVN data stack (PIM + BigQuery + CDP). Mid-campaign review T7 + T8 → adjust if off.</p>
+</section>
+
+<!-- SLIDE 13 - WHY GEARVN -->
+<section class="slide hero-gradient">
+  <span class="slide-num">13 / 15</span>
+  <span class="slide-title">Why GEARVN</span>
+  <h2 class="section mb-6">Why GEARVN as execution lead?</h2>
+  <div class="grid md:grid-cols-2 gap-8 mt-4">
+    <div>
+      <h3 class="text-xl font-bold mb-3 accent">Brand DNA</h3>
+      <ul class="text-zinc-300 list-disc ml-6 space-y-1">
+        <li>#1 gaming retailer VN by trust</li>
+        <li>Esports sponsorship history</li>
+        <li>Cộng đồng gamer + creator + builder</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold mb-3 accent">Data Stack</h3>
+      <ul class="text-zinc-300 list-disc ml-6 space-y-1">
+        <li>PIM v3 (MySQL) — product, đơn hàng</li>
+        <li>CDP Postgres — customer behavior</li>
+        <li>BigQuery — analytics</li>
+        <li>Cloudflare D1 — edge data</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold mb-3 accent">Execution</h3>
+      <ul class="text-zinc-300 list-disc ml-6 space-y-1">
+        <li>UX website tốt nhất ngành</li>
+        <li>Content marketing team in-house</li>
+        <li>Showroom HCM flagship</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold mb-3 accent">AI / Automation</h3>
+      <ul class="text-zinc-300 list-disc ml-6 space-y-1">
+        <li>Auto-report stack (Claude + MCP)</li>
+        <li>Weekly HTML report cho hãng</li>
+        <li>Crawler đối thủ giá thị trường</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 14 - TIMELINE AT A GLANCE -->
+<section class="slide">
+  <span class="slide-num">14 / 15</span>
+  <span class="slide-title">Timeline</span>
+  <h2 class="section mb-6">Timeline at a glance</h2>
+  <div class="border border-zinc-800 rounded-xl p-6">
+    <div class="relative h-72"><canvas id="ganttChart"></canvas></div>
+  </div>
+  <p class="mt-6 text-zinc-300">📅 <strong>Decision needed</strong>: pitch approval before T5 cuối to kick off Teaser on time.</p>
+</section>
+
+<!-- SLIDE 15 - ASK + THANK YOU -->
+<section class="slide hero-gradient">
+  <span class="slide-num">15 / 15</span>
+  <span class="slide-title">Ask</span>
+  <div class="max-w-4xl">
+    <div class="pill-dark inline-block mb-6">THE ASK</div>
+    <h1 class="big mb-6">3 commitments từ GIGABYTE</h1>
+    <ol class="text-2xl text-zinc-200 space-y-4 list-decimal ml-8">
+      <li><strong>Brand approval + creative rights</strong> — Enter Infinity tagline + 6-pillar content</li>
+      <li><strong class="accent">MDF co-fund ~1.5-2 tỷ</strong> — 30-40% Tier M budget</li>
+      <li><strong>HQ collaboration</strong> — Taipei video shoot + Festival exec presence</li>
+    </ol>
+    <p class="mt-12 text-xl text-zinc-400">In return: GEARVN delivers full 5-month execution, realtime tracking, wrap-up case study cho 2027.</p>
+    <div class="mt-12 text-center">
+      <p class="text-3xl font-bold accent">Let's Enter Infinity together.</p>
+      <p class="mt-2 text-zinc-500">Q&A · contact via anh Nono · Head ngành màn hình GEARVN</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const indicator = document.getElementById('slide-indicator');
+
+  function currentSlideIndex() {
+    const center = window.scrollY + window.innerHeight / 2;
+    let idx = 0;
+    slides.forEach((s, i) => {
+      const top = s.offsetTop;
+      if (center >= top) idx = i;
+    });
+    return idx;
+  }
+
+  function updateIndicator() {
+    const i = currentSlideIndex();
+    indicator.textContent = `${i + 1} / ${slides.length}`;
+  }
+  window.addEventListener('scroll', updateIndicator, { passive: true });
+
+  function next() {
+    const i = currentSlideIndex();
+    if (i < slides.length - 1) slides[i + 1].scrollIntoView({ behavior: 'smooth' });
+  }
+  function prev() {
+    const i = currentSlideIndex();
+    if (i > 0) slides[i - 1].scrollIntoView({ behavior: 'smooth' });
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); prev(); }
+    if (e.key === 'f' || e.key === 'F') window.print();
+  });
+
+  // Gantt
+  const ctx = document.getElementById('ganttChart');
+  if (ctx) {
+    const phases = [
+      { name: 'P6 · Sustain (T10)', start: 9.0, end: 10.0, color: '#10b981' },
+      { name: 'P5 · Climax (T9)', start: 8.0, end: 9.0, color: '#f97316' },
+      { name: 'P4 · Activation (T8)', start: 7.0, end: 8.0, color: '#ec4899' },
+      { name: 'P3 · Awareness (T7)', start: 6.0, end: 7.0, color: '#a855f7' },
+      { name: 'P2 · Launch (T6)', start: 5.0, end: 6.0, color: '#6366f1' },
+      { name: 'P1 · Teaser (T5)', start: 4.25, end: 5.0, color: '#06b6d4' }
+    ];
+    new Chart(ctx, {
+      type: 'bar',
+      data: { labels: phases.map(p => p.name), datasets: [{ data: phases.map(p => [p.start, p.end]), backgroundColor: phases.map(p => p.color + 'cc'), borderColor: phases.map(p => p.color), borderWidth: 2, borderRadius: 4 }] },
+      options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, scales: { x: { min: 4, max: 10.5, ticks: { color: '#a3a3a3', callback: v => 'T' + Math.floor(v) }, grid: { color: 'rgba(255,255,255,0.08)' } }, y: { ticks: { color: '#e4e4e7' }, grid: { display: false } } }, plugins: { legend: { display: false } } }
+    });
+  }
+
+  updateIndicator();
+</script>
+
+</body>
+</html>
