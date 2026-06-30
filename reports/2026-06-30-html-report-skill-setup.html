@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="vi" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+
+  <title>html-report skill — Cài đặt &amp; Hướng dẫn</title>
+  <meta name="description" content="Skill html-report đã được cài đặt & xác minh trên máy: Python, gh CLI, GitHub Pages, pipeline publish. Kèm hướng dẫn dùng bằng tiếng Việt.">
+  <meta property="og:title" content="html-report skill — Cài đặt & Hướng dẫn">
+  <meta property="og:description" content="Trạng thái cài đặt + cách dùng skill html-report để tạo report HTML tương tác và publish lên GitHub Pages.">
+  <meta property="og:type" content="article">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { darkMode: 'class' };
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    }
+  </script>
+
+  <link id="hljs-theme" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/styles/github-dark.min.css">
+  <script src="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11/build/highlight.min.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    const isDark = document.documentElement.classList.contains('dark');
+    mermaid.initialize({ startOnLoad: true, theme: isDark ? 'dark' : 'default', securityLevel: 'loose' });
+    window.__mermaid = mermaid;
+  </script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+    onload='renderMathInElement(document.body, { delimiters: [
+      {left:"$$",right:"$$",display:true},
+      {left:"$",right:"$",display:false}
+    ]})'></script>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+    @media print { .no-print { display: none !important; } body { color: #000; background: #fff; } a { color: inherit; text-decoration: underline; } }
+    pre code.hljs { border-radius: .5rem; padding: 1rem; font-size: .85rem; }
+    details > summary { cursor: pointer; user-select: none; padding: .5rem 0; }
+    details > summary::marker { content: "▸ "; }
+    details[open] > summary::marker { content: "▾ "; }
+    details { border-top: 1px solid rgb(228 228 231); padding-bottom: .5rem; }
+    .dark details { border-color: rgb(39 39 42); }
+    .toc a { display: block; padding: .2rem 0; opacity: .6; transition: opacity .15s; }
+    .toc a:hover, .toc a.active { opacity: 1; }
+    .toc a.active { font-weight: 500; }
+    .copy-btn { position: absolute; top: .5rem; right: .5rem; }
+    pre.has-copy { position: relative; }
+
+    .tabs > input[type="radio"] { display: none; }
+    .tabs > label { cursor: pointer; padding: .5rem 1rem; border-bottom: 2px solid transparent; display: inline-block; }
+    .tabs > input:checked + label { border-color: currentColor; font-weight: 500; }
+    .tabs > .tab-panel { display: none; padding-top: 1rem; }
+    .tabs > input:nth-of-type(1):checked ~ .tab-panel:nth-of-type(1),
+    .tabs > input:nth-of-type(2):checked ~ .tab-panel:nth-of-type(2),
+    .tabs > input:nth-of-type(3):checked ~ .tab-panel:nth-of-type(3) { display: block; }
+
+    .stat-card { padding: 1.5rem; border-radius: .75rem; border: 1px solid rgb(228 228 231); }
+    .dark .stat-card { border-color: rgb(39 39 42); }
+    .badge-ok { color: rgb(5 150 105); }
+    .dark .badge-ok { color: rgb(52 211 153); }
+  </style>
+</head>
+
+<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans antialiased">
+
+<div class="fixed top-4 right-4 z-50 flex gap-2 no-print">
+  <button id="theme-toggle" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800">☼ / ☾</button>
+  <button onclick="window.print()" class="px-3 py-1.5 rounded-md border border-zinc-300 dark:border-zinc-700 bg-white/70 dark:bg-zinc-900/70 backdrop-blur text-sm hover:bg-zinc-100 dark:hover:bg-zinc-800">in / PDF</button>
+</div>
+
+<div class="max-w-6xl mx-auto px-6 py-12 lg:grid lg:grid-cols-[210px_minmax(0,1fr)] lg:gap-12">
+
+  <nav class="toc lg:sticky lg:top-12 self-start text-sm mb-8 lg:mb-0 no-print">
+    <div class="font-semibold mb-2 text-zinc-500 uppercase tracking-wider text-xs">Mục lục</div>
+    <a href="#status">Trạng thái cài đặt</a>
+    <a href="#how">Cách dùng</a>
+    <a href="#flow">Quy trình publish</a>
+    <a href="#reports">Report đã có</a>
+    <a href="#sizes">Biểu đồ dung lượng</a>
+    <a href="#invoke">3 cách gọi skill</a>
+    <a href="#rules">Quy tắc chất lượng</a>
+    <a href="#trouble">Xử lý sự cố</a>
+  </nav>
+
+  <main class="min-w-0">
+
+    <header class="mb-12">
+      <p class="text-sm text-zinc-500 mb-2">SETUP &amp; HƯỚNG DẪN • <time>2026-06-30</time></p>
+      <h1 class="text-4xl font-bold tracking-tight mb-3">Skill <code>html-report</code> đã sẵn sàng</h1>
+      <p class="text-lg text-zinc-600 dark:text-zinc-400">Báo cáo này được tạo <em>bằng chính skill vừa cài</em> và publish tự động lên GitHub Pages — vừa là bằng chứng pipeline chạy thông, vừa là tài liệu hướng dẫn dùng bằng tiếng Việt.</p>
+    </header>
+
+    <section id="status" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">Trạng thái cài đặt</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="stat-card">
+          <div class="text-sm text-zinc-500">Python</div>
+          <div class="text-2xl font-bold mt-1">3.12.10</div>
+          <div class="text-xs badge-ok mt-2">✓ cài qua winget</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-sm text-zinc-500">GitHub CLI</div>
+          <div class="text-2xl font-bold mt-1">2.95.0</div>
+          <div class="text-xs badge-ok mt-2">✓ cài qua winget</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-sm text-zinc-500">Skill html-report</div>
+          <div class="text-2xl font-bold mt-1">global</div>
+          <div class="text-xs badge-ok mt-2">✓ ~/.claude/skills/</div>
+        </div>
+        <div class="stat-card">
+          <div class="text-sm text-zinc-500">GitHub Pages</div>
+          <div class="text-2xl font-bold mt-1">HTTP 200</div>
+          <div class="text-xs badge-ok mt-2">✓ live &amp; push OK</div>
+        </div>
+      </div>
+      <p class="text-sm text-zinc-500 mt-3">Repo đích: <code>Tunglehcmus/claude-html-report</code> · base URL tự suy ra <code>https://Tunglehcmus.github.io/claude-html-report</code>.</p>
+    </section>
+
+    <section id="how" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">Cách dùng — chỉ cần nói với Claude</h2>
+      <p class="mb-3 text-zinc-600 dark:text-zinc-400">Trong Claude Code, yêu cầu một report và nhắc tên skill. Claude sẽ lên kế hoạch, sinh HTML, rồi chạy script publish và trả về URL.</p>
+<pre><code class="language-text">dùng skill html-report viết report phân tích doanh số tháng 6
+
+làm một html-report so sánh 3 phương án A/B/C
+
+dùng html-report, nhưng chỉ draft thôi đừng push (--draft)</code></pre>
+      <p class="text-sm text-zinc-500 mt-2">Muốn xem thử mà chưa publish? Nói “chỉ draft thôi” — file tạo ở local, mở trình duyệt xem được đầy đủ tương tác, không commit/push.</p>
+    </section>
+
+    <section id="flow" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">Quy trình publish</h2>
+      <div class="stat-card"><pre class="mermaid">
+flowchart LR
+  U["Bạn yêu cầu report"] --> S["skill html-report"]
+  S --> H["Sinh HTML self-contained<br/>(charts, tables, tabs...)"]
+  H --> P["publish.py"]
+  P --> M["cập nhật manifest.json"]
+  P --> G["git add · commit · push"]
+  G --> GP["GitHub Pages"]
+  GP --> URL["URL công khai để chia sẻ"]
+      </pre></div>
+    </section>
+
+    <section id="reports" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">Report đã có trong repo</h2>
+      <input id="tbl-filter" placeholder="Lọc theo tên / mô tả…"
+        class="w-full mb-3 px-3 py-2 rounded-md border border-zinc-300 dark:border-zinc-700 bg-transparent focus:outline-none focus:ring-2 focus:ring-blue-500">
+      <div class="overflow-x-auto stat-card !p-0">
+        <table id="tbl" class="w-full text-sm">
+          <thead class="bg-zinc-50 dark:bg-zinc-900 text-left">
+            <tr>
+              <th class="px-4 py-2 cursor-pointer select-none" data-sort="0">Tiêu đề ↕</th>
+              <th class="px-4 py-2 cursor-pointer select-none" data-sort="1">Ngày ↕</th>
+              <th class="px-4 py-2 cursor-pointer select-none" data-sort="2" data-numeric>KB ↕</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-200 dark:divide-zinc-800">
+            <tr><td class="px-4 py-2">GIGABYTE 40 — Measurement Dashboard</td><td class="px-4 py-2">2026-05-18</td><td class="px-4 py-2">25</td></tr>
+            <tr><td class="px-4 py-2">GIGABYTE 40 — Pitch Deck for GIGABYTE</td><td class="px-4 py-2">2026-05-18</td><td class="px-4 py-2">25</td></tr>
+            <tr><td class="px-4 py-2">GIGABYTE 40 — Enter Infinity · Full Proposal V2</td><td class="px-4 py-2">2026-05-18</td><td class="px-4 py-2">66</td></tr>
+            <tr><td class="px-4 py-2">GIGABYTE 40 — Revised Flow V2 + Mindmap</td><td class="px-4 py-2">2026-05-18</td><td class="px-4 py-2">33</td></tr>
+            <tr><td class="px-4 py-2">GIGABYTE 40 — Born to Push Limits | Campaign</td><td class="px-4 py-2">2026-05-18</td><td class="px-4 py-2">60</td></tr>
+            <tr><td class="px-4 py-2">Competitive Intelligence — GEARVN màn hình</td><td class="px-4 py-2">2026-05-17</td><td class="px-4 py-2">41</td></tr>
+            <tr><td class="px-4 py-2">Thị trường màn hình Gaming VN — Q1 2026</td><td class="px-4 py-2">2026-05-17</td><td class="px-4 py-2">21</td></tr>
+            <tr><td class="px-4 py-2">Example: what an html-report looks like</td><td class="px-4 py-2">2026-05-10</td><td class="px-4 py-2">17</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-xs text-zinc-500 mt-2">Bấm tiêu đề cột để sắp xếp · gõ ô trên để lọc. Dung lượng làm tròn KB.</p>
+    </section>
+
+    <section id="sizes" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">Biểu đồ dung lượng các report</h2>
+      <p class="mb-4 text-zinc-600 dark:text-zinc-400">Di chuột để xem tooltip. Co giãn theo màn hình.</p>
+      <div class="h-72 stat-card"><canvas id="chart-1"></canvas></div>
+    </section>
+
+    <section id="invoke" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">3 cách gọi skill</h2>
+      <div class="tabs border-b border-zinc-200 dark:border-zinc-800">
+        <input type="radio" id="t1" name="tabs" checked><label for="t1">Nhắc tên skill</label>
+        <input type="radio" id="t2" name="tabs"><label for="t2">Chế độ draft</label>
+        <input type="radio" id="t3" name="tabs"><label for="t3">Chạy tay script</label>
+
+        <div class="tab-panel">
+          <p class="mb-2">Cách thường dùng — chỉ cần nhắc <code>html-report</code> trong câu yêu cầu:</p>
+<pre><code class="language-text">dùng skill html-report tổng hợp kết quả khảo sát khách hàng quý 2</code></pre>
+        </div>
+        <div class="tab-panel">
+          <p class="mb-2">Xem trước, không publish — Claude truyền <code>--draft</code>, chỉ tạo file local:</p>
+<pre><code class="language-text">html-report cho báo cáo này nhưng chỉ draft thôi, đừng push lên</code></pre>
+        </div>
+        <div class="tab-panel">
+          <p class="mb-2">Tự chạy publish thủ công (Claude làm hộ, đây là lệnh bên dưới):</p>
+<pre><code class="language-bash">python "C:\Users\Admin\.claude\skills\html-report\scripts\publish.py" \
+  reports/2026-06-30-my-report.html \
+  "Tiêu đề report" \
+  "Mô tả một dòng"</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <section id="rules" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">Quy tắc chất lượng skill ép buộc</h2>
+      <p class="mb-3 text-zinc-600 dark:text-zinc-400">Mỗi report bắt buộc dùng <strong>≥ 3</strong> yếu tố tương tác. Có thể tóm gọn:</p>
+      <p>$$\text{report đạt chuẩn} \iff \sum_{\text{yếu tố tương tác}} 1 \;\ge\; 3$$</p>
+      <ul class="list-disc pl-6 space-y-1 text-zinc-700 dark:text-zinc-300 mt-3">
+        <li>1 file duy nhất, CDN-only, không build step</li>
+        <li>Responsive (chạy tốt ở viewport 375px) · Dark mode có toggle lưu localStorage</li>
+        <li><code>&lt;title&gt;</code> + meta description + OG tags · sticky TOC nếu &gt;2 section</li>
+        <li>Tôn trọng <code>prefers-reduced-motion</code> · không màu hardcode light-only · không <code>style=""</code> inline</li>
+      </ul>
+    </section>
+
+    <section id="trouble" class="mb-12">
+      <h2 class="text-2xl font-semibold mb-4">Xử lý sự cố &amp; ghi chú</h2>
+      <details>
+        <summary class="font-medium">Lệnh dùng <code>python3</code> nhưng máy mình là <code>python</code></summary>
+        <p class="mt-2 text-zinc-600 dark:text-zinc-400">Trên Windows, Python cài user-scope thường chỉ tạo <code>python.exe</code>. SKILL.md ghi ví dụ <code>python3</code>; khi chạy thật, Claude dùng đường dẫn đầy đủ tới <code>python.exe</code> nên không vướng. Nếu tự gõ tay, thay <code>python3</code> bằng <code>python</code>.</p>
+      </details>
+      <details>
+        <summary class="font-medium"><code>git push</code> báo lỗi xác thực</summary>
+        <p class="mt-2 text-zinc-600 dark:text-zinc-400">Máy này dùng Git Credential Manager và đã có credential GitHub sẵn nên push chạy im lặng. Nếu sau này hết hạn, lần push tiếp theo GCM sẽ bật cửa sổ đăng nhập lại — approve một lần là xong.</p>
+      </details>
+      <details>
+        <summary class="font-medium">Muốn đổi giao diện mặc định của report</summary>
+        <p class="mt-2 text-zinc-600 dark:text-zinc-400">Sửa <code>.claude/skills/html-report/templates/base.html</code> (font, màu, thư viện) hoặc <code>SKILL.md</code> (hành vi của Claude: ưu tiên thư viện nào, ngưỡng chất lượng). SKILL.md là đòn bẩy mạnh nhất.</p>
+      </details>
+      <details>
+        <summary class="font-medium">Pages báo 404 ngay sau khi push</summary>
+        <p class="mt-2 text-zinc-600 dark:text-zinc-400">GitHub Pages cần ~1 phút để build sau mỗi lần push. Đợi rồi refresh. Repo này Pages đã bật sẵn nên các report mới chỉ chờ build.</p>
+      </details>
+    </section>
+
+    <footer class="mt-16 pt-8 border-t border-zinc-200 dark:border-zinc-800 text-sm text-zinc-500">
+      Tạo bởi skill <code>html-report</code> · <a class="underline hover:text-zinc-900 dark:hover:text-zinc-100" href="../">xem tất cả report</a>.
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  document.getElementById('theme-toggle').addEventListener('click', () => {
+    const dark = document.documentElement.classList.toggle('dark');
+    localStorage.theme = dark ? 'dark' : 'light';
+    if (window.__mermaid) {
+      document.querySelectorAll('.mermaid[data-processed]').forEach(el => { el.removeAttribute('data-processed'); el.innerHTML = el.dataset.src || el.textContent; });
+      window.__mermaid.initialize({ startOnLoad: false, theme: dark ? 'dark' : 'default', securityLevel: 'loose' });
+      window.__mermaid.run();
+    }
+    if (window.__chart) {
+      window.__chart.options.scales.x.grid.color = dark ? '#27272a' : '#e4e4e7';
+      window.__chart.options.scales.y.grid.color = dark ? '#27272a' : '#e4e4e7';
+      window.__chart.update();
+    }
+  });
+
+  // Code highlight + copy buttons
+  hljs.highlightAll();
+  document.querySelectorAll('pre > code').forEach(code => {
+    const pre = code.parentElement;
+    pre.classList.add('has-copy');
+    const btn = document.createElement('button');
+    btn.textContent = 'copy';
+    btn.className = 'copy-btn no-print text-xs px-2 py-1 rounded bg-zinc-700 text-zinc-100';
+    btn.style.opacity = '0.6';
+    btn.addEventListener('click', async () => {
+      await navigator.clipboard.writeText(code.innerText);
+      btn.textContent = 'đã copy'; setTimeout(() => btn.textContent = 'copy', 1200);
+    });
+    pre.appendChild(btn);
+  });
+
+  // Sticky TOC scroll-spy
+  const tocLinks = document.querySelectorAll('.toc a');
+  const sections = [...tocLinks].map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const onScroll = () => {
+    const y = window.scrollY + 100;
+    let active = sections[0];
+    for (const s of sections) if (s && s.offsetTop <= y) active = s;
+    tocLinks.forEach(a => a.classList.toggle('active', active && a.getAttribute('href') === '#' + active.id));
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  // Chart.js — dung lượng các report (KB)
+  const ctx = document.getElementById('chart-1');
+  const isDark0 = document.documentElement.classList.contains('dark');
+  window.__chart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: ['Proposal V2','Campaign','Comp. Intel','Revised Flow','Measurement','Pitch Deck','Gaming Q1','Example'],
+      datasets: [{
+        label: 'Dung lượng (KB)',
+        data: [66, 60, 41, 33, 25, 25, 21, 17],
+        backgroundColor: '#3b82f6',
+        borderRadius: 4
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: isDark0 ? '#27272a' : '#e4e4e7' } },
+        y: { grid: { color: isDark0 ? '#27272a' : '#e4e4e7' }, beginAtZero: true }
+      }
+    }
+  });
+
+  // Sortable + filterable table
+  const tbl = document.getElementById('tbl');
+  const tbody = tbl.tBodies[0];
+  document.querySelectorAll('#tbl thead th').forEach(th => {
+    let asc = true;
+    th.addEventListener('click', () => {
+      const idx = +th.dataset.sort;
+      const numeric = th.hasAttribute('data-numeric');
+      const rows = [...tbody.rows];
+      rows.sort((a, b) => {
+        const av = a.cells[idx].textContent.trim();
+        const bv = b.cells[idx].textContent.trim();
+        if (numeric) return (parseFloat(av.replace(/[^0-9.\-]/g,'')) - parseFloat(bv.replace(/[^0-9.\-]/g,''))) * (asc ? 1 : -1);
+        return av.localeCompare(bv) * (asc ? 1 : -1);
+      });
+      asc = !asc;
+      rows.forEach(r => tbody.appendChild(r));
+    });
+  });
+  document.getElementById('tbl-filter').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    [...tbody.rows].forEach(r => {
+      r.style.display = r.textContent.toLowerCase().includes(q) ? '' : 'none';
+    });
+  });
+</script>
+
+</body>
+</html>
