@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tồn kho NCC Peri</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
 <style>
 /* VOICE work tool for the Peri buying team, dense and exact
    IDEA a warehouse stock board: one row per SKU, supplier counts per warehouse
@@ -31,12 +31,23 @@ button,select,input{font:inherit;color:inherit}
 .btn:hover{border-color:var(--ink)}
 header .btn{background:#d70018;color:#fff;border:0}header .btn:hover{background:#b80015}
 :focus-visible{outline:2px solid var(--red);outline-offset:2px}
-.src{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;padding-block:16px}
-.sc{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);text-align:left;cursor:pointer;display:grid;gap:6px}
-.sc:hover,.sc.on{border-color:var(--ink)}
-.sc b{font-weight:600;font-size:14px}
-.sc small{color:var(--mute);font-size:12.5px;display:flex;justify-content:space-between;gap:8px}
-.sc a{color:var(--mute)}
+.src{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;padding-block:18px}
+.sc{--c:#cdeb78;--m:#effac9;position:relative;overflow:hidden;border:0;border-radius:22px;padding:14px 16px 14px;background:var(--c);color:#14163a;text-align:left;cursor:pointer;display:grid;gap:8px;min-height:148px;align-content:start;transition:transform .15s ease,box-shadow .15s ease}
+.sc:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(20,22,58,.14)}
+.sc.on{box-shadow:0 0 0 3px #14163a}
+.sc.k1{--c:#f3a0e2;--m:#e04fc6}.sc.k2{--c:#9aaef9;--m:#cdeb78}.sc.k3{--c:#b8eedb;--m:#fff3a3}
+.sc .top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.sc b{font-family:Fredoka,Geist,system-ui,sans-serif;font-weight:600;font-size:17px;line-height:1.15;letter-spacing:0}
+.sc a{flex:none;font-size:12px;font-weight:600;color:#14163a;text-decoration:none;background:rgba(255,255,255,.6);border-radius:999px;padding:3px 10px}
+.sc a:hover{background:#fff}
+.sc small{color:rgba(20,22,58,.72);font-size:12.5px;display:block}
+.sc .big{font-family:Fredoka,Geist,system-ui,sans-serif;font-weight:600;font-size:30px;line-height:1;margin-top:2px}
+.sc .big span{font-size:14px;font-weight:500;margin-left:4px}
+.sc .bar,.sc small.sum{margin-right:62px}
+.sc .bar{height:10px;border-radius:999px;background:rgba(255,255,255,.5)}
+.sc .bar .i-in{background:#14163a}.sc .bar .i-low{background:#f59e0b}.sc .bar .i-out{background:#e5484d}.sc .bar .i-na{background:rgba(255,255,255,.85)}
+.sc .err{color:#9b0718;margin-right:62px}
+.sc svg.mas{position:absolute;right:-4px;bottom:-8px;width:74px;height:74px;pointer-events:none}
 .bar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--soft)}
 .bar i{display:block;height:100%}
 .i-in{background:var(--ink)}.i-low{background:var(--amber)}.i-out{background:var(--red)}.i-na{background:var(--line)}
@@ -75,7 +86,7 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 .more{margin:14px 0 40px}
 .empty{padding:40px 0;color:var(--mute);text-align:center}
 .gate{border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
-@media(max-width:600px){.src{display:flex;overflow-x:auto;gap:8px;padding-block:12px;scroll-snap-type:x mandatory}.sc{flex:0 0 172px;scroll-snap-align:start}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:8px;border-bottom:1px solid var(--line)}.stack td{display:flex;justify-content:space-between;gap:12px;border:0;padding:3px 0;text-align:right}.stack td::before{content:attr(data-l);color:var(--mute);font-size:12.5px;font-weight:400;text-align:left}.stack td.w{display:block;text-align:left}.stack td.w::before{display:none}tr.al td:first-child{box-shadow:none}tr.al{box-shadow:inset 3px 0 var(--red);padding-left:8px}}
+@media(max-width:600px){.src{display:flex;overflow-x:auto;gap:10px;padding-block:12px;scroll-snap-type:x mandatory}.sc{flex:0 0 210px;scroll-snap-align:start}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:8px;border-bottom:1px solid var(--line)}.stack td{display:flex;justify-content:space-between;gap:12px;border:0;padding:3px 0;text-align:right}.stack td::before{content:attr(data-l);color:var(--mute);font-size:12.5px;font-weight:400;text-align:left}.stack td.w{display:block;text-align:left}.stack td.w::before{display:none}tr.al td:first-child{box-shadow:none}tr.al{box-shadow:inset 3px 0 var(--red);padding-left:8px}}
 </style>
 </head>
 <body>
@@ -219,11 +230,16 @@ const loadGas=force=>{if(!getPin()){askPin('');return;}S.needPin=false;SOURCES.c
   callData(force,getPin(),res=>{if(res&&res.pinError){setPin('');askPin(res.locked?'Nhập sai quá nhiều lần. Thử lại sau 10 phút.':'Mã PIN không đúng.');return;}SOURCES.concat(GVN).forEach(s=>{const d=data[s.id],r=res&&res[s.id];if(r&&r.rows){d.rows=r.rows;d.state='ok';d.err='';d.at=r.at||res.at;}else{d.err=(r&&r.error)||'Không đọc được sheet';d.state=d.rows?'stale':'err';}});recompute();},
   e=>{SOURCES.concat(GVN).forEach(s=>{const d=data[s.id];d.err='Lỗi tải: '+((e&&e.message)||e);d.state=d.rows?'stale':'err';});recompute();});};
 const counts=arr=>{const c={in:0,low:0,out:0,na:0,nomatch:0};arr.forEach(x=>c[x.state]++);return c;};
+const SHAPES=['<circle cx="40" cy="44" r="33"/>','<path d="M5 80a35 35 0 0 1 70 0z"/>','<path d="M40 8l31 17v36L40 78 9 61V25z"/>','<rect x="8" y="16" width="64" height="58" rx="12"/>'];
+const FACE={happy:'<path d="M27 45q4 4 8 0M45 45q4 4 8 0M34 55q6 5 12 0"/>',meh:'<path d="M33 56h14"/><circle cx="31" cy="45" r="2.6" fill="#14163a" stroke="none"/><circle cx="49" cy="45" r="2.6" fill="#14163a" stroke="none"/>',sad:'<path d="M27 43q4 -3 8 0M45 43q4 -3 8 0M34 58q6 -5 12 0"/>',sleep:'<path d="M27 46q4 3 8 0M45 46q4 3 8 0"/><circle cx="40" cy="55" r="2" fill="#14163a" stroke="none"/>'};
+const mascot=(i,mood)=>`<svg class="mas" viewBox="0 0 80 80" aria-hidden="true"><g fill="var(--m)" stroke="#14163a" stroke-width="2.4">${SHAPES[i%SHAPES.length]}</g><g fill="none" stroke="#14163a" stroke-width="2.6" stroke-linecap="round">${FACE[mood]}</g>${mood==='sleep'?'<text x="8" y="22" font-family="Fredoka,sans-serif" font-weight="600" font-size="14" fill="#14163a">z</text>':''}</svg>`;
 const renderSrc=()=>{
-  $('src').innerHTML=SOURCES.map(s=>{const d=data[s.id],it=d.items||[],c=counts(it),n=it.length||1;
-    const bar=d.items?`<div class="bar">${['in','low','out','na'].map(k=>c[k]?`<i class="i-${k}" style="width:${c[k]/n*100}%" title="${STL[k]}: ${c[k]}"></i>`:'').join('')}</div><small><span>${c.in+c.low} còn · ${c.out} hết${c.na?` · ${c.na} chưa có số`:''}</span></small>`:'';
+  $('src').innerHTML=SOURCES.map((s,ix)=>{const d=data[s.id],it=d.items||[],c=counts(it),n=it.length||1;
+    const known=c.in+c.low+c.out,outR=known?c.out/known:0;
+    const mood=!d.items||!known?'sleep':outR<.2?'happy':outR<.45?'meh':'sad';
+    const bar=d.items?`<div class="big">${c.in+c.low}<span>còn</span></div><div class="bar">${['in','low','out','na'].map(k=>c[k]?`<i class="i-${k}" style="width:${c[k]/n*100}%" title="${STL[k]}: ${c[k]}"></i>`:'').join('')}</div><small class="sum">${c.out} hết${c.low?` · ${c.low} sắp hết`:''}${c.na?` · ${c.na} chưa có số`:''}</small>`:'';
     const st=d.state==='loading'?'<small>Đang tải…</small>':d.err?`<span class="err">${esc(d.err)}</span>`:d.bad?'<span class="err">Không nhận ra cột của tab này.</span>':'';
-    return `<div class="sc${S.src===s.id?' on':''}" data-src="${s.id}" role="button" tabindex="0"><b>${esc(s.ncc)} · ${esc(s.brand)}</b><small><span>${d.date?'Sheet ghi '+esc(d.date):(d.items?'Sheet không ghi ngày':'')}</span><a href="${url(s)}" target="_blank" rel="noopener">Mở sheet</a></small>${bar}${st}</div>`;}).join('');
+    return `<div class="sc k${ix%4}${S.src===s.id?' on':''}" data-src="${s.id}" role="button" tabindex="0"><div class="top"><b>${esc(s.ncc)} · ${esc(s.brand)}</b><a href="${url(s)}" target="_blank" rel="noopener">Mở sheet</a></div><small>${d.date?'Sheet ghi '+esc(d.date):(d.items?'Sheet không ghi ngày':'')}</small>${bar}${st}${mascot(ix,mood)}</div>`;}).join('');
 };
 const fillSel=(id,label,vals,cur)=>{$(id).innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option${v===cur?' selected':''}>${esc(v)}</option>`).join('');};
 const qmatch=(q,...f)=>!q||f.some(x=>hnorm(x).includes(q));
