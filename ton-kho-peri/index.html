@@ -154,7 +154,7 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 <script>window.onerror=function(m,s,l,c){var g=document.getElementById('gate');if(g)g.innerHTML='<div class="gate"><span class="err">Lỗi trang: '+String(m).replace(/</g,'&lt;')+' (dòng '+l+':'+c+')</span></div>';};</script>
 <script>
 (()=>{
-const SID={logi:'1lfgrXbm_jj073s29us2M3dUftn8D2FW4fEJLedPzrP0',atk:'1n7pGGfcXhtcfxxThOAYD2se8Zh1_CUcd4zZLrt7U18c',mh:'1w_ndsYa7dLGi9CndRX8lPOzeJVr7wT90KVywReAdWDo',vasus:'1M5By9120T5bZ1eP54B9KOGZ4q_Q61kWoGvrQWG_B9Bk',vrazer:'125jikvCtFzS66twLf4umZyBpRFIeElrW8z_Jfd-YkHM',dasus:'1y5ZKiw_uBv1rij_mB242DPvXka6-DCGw6XrOGvGWfjw',gvn:'1wm3Ytp13IHS5R6LQ07wfvGgMeyovRaseArxxSrM0_cc'};
+const SID={logi:'1lfgrXbm_jj073s29us2M3dUftn8D2FW4fEJLedPzrP0',atk:'1n7pGGfcXhtcfxxThOAYD2se8Zh1_CUcd4zZLrt7U18c',mh:'1w_ndsYa7dLGi9CndRX8lPOzeJVr7wT90KVywReAdWDo',vasus:'1M5By9120T5bZ1eP54B9KOGZ4q_Q61kWoGvrQWG_B9Bk',vrazer:'125jikvCtFzS66twLf4umZyBpRFIeElrW8z_Jfd-YkHM',dasus:'1y5ZKiw_uBv1rij_mB242DPvXka6-DCGw6XrOGvGWfjw',gvn:'1wm3Ytp13IHS5R6LQ07wfvGgMeyovRaseArxxSrM0_cc',hl:'1uK4HYAOctjtwMaf1YS_sjgfGMBppYRXrzKf8jrQgXjo',h3:'1umgoo1iGtnbK_0pdTs_wora_15o3ZBbZW2Wx3x83EBk',spc:'1FWM8xkbyNjoq7-Z-ZPNLCLT2uRhNipbaMQPKmrk5Fdk'};
 const SOURCES=[
  {id:'dgw-logi',ncc:'DGW',brand:'Logitech',sid:SID.logi,tab:'TỒN KHO',cols:'A1:J2500',gid:91559644},
  {id:'dgw-asus',ncc:'DGW',brand:'Asus',sid:SID.dasus,tab:'TỒN KHO',cols:'A1:N2500',gid:1055861893,mul:1000},
@@ -164,15 +164,18 @@ const SOURCES=[
  {id:'mh-dareu',ncc:'Mai Hoàng',brand:'DAREU',sid:SID.mh,tab:'TỒN KHO DAREU',cols:'A1:G2500',gid:741525144},
  {id:'mh-akko',ncc:'Mai Hoàng',brand:'AKKO',sid:SID.mh,tab:'TỒN KHO AKKO',cols:'A1:F2500',gid:966503420},
  {id:'mh-warrior',ncc:'Mai Hoàng',brand:'Warrior',sid:SID.mh,tab:'TỒN KHO WARRIOR',cols:'A1:F2500',gid:1663328221},
- {id:'mh-rapoo',ncc:'Mai Hoàng',brand:'Rapoo',sid:SID.mh,tab:'TỒN KHO RAPOO',cols:'A1:F2500',gid:1499542568}];
+ {id:'mh-rapoo',ncc:'Mai Hoàng',brand:'Rapoo',sid:SID.mh,tab:'TỒN KHO RAPOO',cols:'A1:F2500',gid:1499542568},
+ {id:'hl-edra',ncc:'Hưng Long',brand:'E-Dra',sid:SID.hl,tab:'TỒN KHO',cols:'A1:H2500',gid:1358451920,parser:'hl'},
+ {id:'3h-hw',ncc:'3H',brand:'HyperWork',sid:SID.h3,tab:'TỒN KHO',cols:'A1:P2500',gid:1961750201},
+ {id:'spc-logi',ncc:'SPC',brand:'Logitech',sid:SID.spc,tab:'TÔN KHO 2026',cols:'A1:F2500',gid:1819493241}];
 const GVN={id:'gvn',sid:SID.gvn,tab:'Báo Giá SP Peri',cols:'A1:M4000',gid:696525776};
-const NCCS=['DGW','VSC','Linh Kiệt','Mai Hoàng'];
+const NCCS=['DGW','VSC','Linh Kiệt','Mai Hoàng','Hưng Long','3H','SPC'];
 const LOW=5;
 /*LOGIC-START*/
 const hnorm=s=>String(s??'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/gi,'d').toLowerCase().replace(/\s+/g,' ').trim();
 const ck=s=>hnorm(s).toUpperCase().replace(/[^A-Z0-9]/g,'');
 const nk=s=>hnorm(s).replace(/[^a-z0-9]+/g,' ').trim();
-const FIELD={name:[/^ten (san pham|hang)/,/^ten sp ton kho/,/^model/,/san pham gearvn/],code:[/part number/,/^p\/n$/,/^id code$/,/^ma hang$/],mvt:[/^ma vat tu$/,/^mvt$/],hcm:[/hcm/],hn:[/(^|[^a-z])hn([^a-z]|$)/,/ha noi/],qty:[/^ton kho$/],price:[/gia nhap/,/gia (xuat )?gvn|gvnq/,/^gia/],note:[/ghi chu/,/^note$/],sku:[/sku gearvn/,/^sku gvn$/],gvnname:[/^ten sp gearvn$/]};
+const FIELD={name:[/^ten (san pham|hang)/,/^ten sp ton kho/,/^ten sp$/,/^model/,/san pham gearvn/],code:[/part number/,/^p\/n$/,/^id code$/,/^ma hang$/,/^ma sp$/,/^sn$/],mvt:[/^ma vat tu$/,/^mvt$/],hcm:[/hcm/,/^sg$/],hn:[/(^|[^a-z])hn([^a-z]|$)/,/ha noi/],qty:[/^ton kho$/,/^ton kho \d/],price:[/gia nhap/,/gia (xuat )?gvn|gvnq/,/gia dai l/,/^bao gia/,/^gia/],note:[/ghi chu/,/^note$/],sku:[/sku gearvn/,/^sku gvn$/],gvnname:[/^ten sp gearvn$/]};
 const ALLRE=Object.values(FIELD).flat();
 const detect=rows=>{
   const col={},rowOf={},lim=Math.min(rows.length,7);
@@ -185,7 +188,29 @@ const detect=rows=>{
 const pq=s=>{s=String(s??'').trim();if(!s)return{v:null};const t=hnorm(s);if(/^-+$/.test(t)||t==='het'||t==='het hang')return{v:0};if(t==='ok'||t==='co'||t==='co hang')return{v:null,ok:true};const d=s.replace(/[\s,.]/g,'');if(/^-?\d+$/.test(d))return{v:+d};return{v:null,t:s};};
 const pp=s=>{const d=String(s??'').replace(/[\s,.đ₫]/g,'');return /^\d+$/.test(d)?+d:null;};
 const hasL=s=>/[a-zà-ỹ]/i.test(s);
+const parseHL=(src,rows)=>{
+  const items=[];let date='',map=null,group='';
+  for(const v of rows[0]||[]){const m=String(v).match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);if(m)date=m[1].padStart(2,'0')+'/'+m[2].padStart(2,'0')+'/'+m[3];}
+  for(let r=0;r<rows.length;r++){
+    const row=(rows[r]||[]).map(x=>String(x??'').trim()),h=row.map(hnorm);
+    const ih=h.indexOf('hcm'),in_=h.indexOf('hn');
+    if(ih>0){const ip=h.findIndex(x=>/^gia/.test(x));map={hcm:ih,hn:in_,price:ip,variant:row[1]===''&&ip>1?1:-1,note:Math.max(ih,in_)+1};group='';const L=items[items.length-1];if(L&&L._r===r-1&&L.total==null&&L.price==null)items.pop();continue;}
+    if(!map||!row.some(Boolean))continue;
+    if(row[0])group=row[0];else if(map.variant<0||!row[1])continue;
+    const variant=map.variant>0?row[1]:'';
+    if(!row[0]&&!variant)continue;
+    if(!row.slice(1).some(Boolean)&&/^\d+\./.test(row[0]))continue;
+    const name=(group+(variant?' '+variant:'')).trim();
+    const hcm=pq(row[map.hcm]),hn=map.hn>0?pq(row[map.hn]):{v:null},qty={v:null};
+    const total=hcm.v!=null||hn.v!=null?(hcm.v||0)+(hn.v||0):null;
+    const state=total>0?(total<=LOW?'low':'in'):total===0?'out':'na';
+    const price=map.price>=0?row[map.price]:'',pr=pp(price);
+    items.push({_r:r,src,group:'',name,model:group,variant,gvnname:'',code:'',mvt:'',sku:'',hcm,hn,qty,total,ok:false,state,price:pr,note:[row[map.note]||'',pr==null&&price?'giá: '+price:''].filter(Boolean).join(' · '),gvn:[]});
+  }
+  return {items,date};
+};
 const parseSource=(src,rows)=>{
+  if(src.parser==='hl')return parseHL(src,rows);
   const D=detect(rows),items=[];if(!D.ok)return{items,date:D.date,bad:true};
   const first=String((rows[D.end]||[])[0]??'').trim();let group=first&&hasL(first)&&!ALLRE.some(re=>re.test(hnorm(first)))?first:'';
   for(let r=D.start;r<rows.length;r++){
@@ -219,13 +244,18 @@ const toks=s=>new Set(nk(s).split(' ').filter(t=>t&&!STOP.has(t)));
 const jac=(a,b)=>{let i=0;for(const t of a)if(b.has(t))i++;return i/(a.size+b.size-i||1);};
 const xcodes=n=>[(n.match(/^([a-z]{0,4}\d{4,}[a-z0-9-]*)\s*_/i)||[])[1],(n.match(/_\s*([a-z0-9-]{4,})\s*$/i)||[])[1]].filter(Boolean);
 const brandOk=(a,b)=>{a=hnorm(a);b=hnorm(b);return !!a&&!!b&&(a===b||a.includes(b)||b.includes(a));};
+const MODEL_RE=/(EGC|EEC|EGT|ERS|EK|EM|EH|EC|TGK|TKG|TM|TH|CMK)\d{2,4}[A-Z0-9]*$/;
+const modelKeys=s=>{const out=new Set();hnorm(s).toUpperCase().split(/[^A-Z0-9]+/).forEach(t=>{const m=t.match(MODEL_RE);if(m)out.add(m[0]);});return [...out];};
+const COLOR={black:/^(bk|black|den)$/,white:/^(wh|white|trang)$/,red:/^(re|red|do)$/,grey:/^(gr|grey|gray|xam)$/,pink:/^(pk|pink|hong)$/,blue:/^(blue|xanh)$/,orange:/^(orange|cam)$/,alpha:/^(al|alpha)$/,beta:/^(be|beta)$/,fabric:/^fabric$/,lake:/^lake$/,desert:/^(des|desert)$/,violet:/^(vio|violet)$/,yellow:/^(yellow|vang)$/};
+const colorsOf=s=>{const out=new Set();hnorm(s).split(/[^a-z0-9]+/).forEach(t=>{for(const k in COLOR)if(COLOR[k].test(t))out.add(k);});return out;};
 const link=(gvn,items)=>{
-  const I={code:new Map(),sku:new Map(),name:new Map(),gmap:new Map(),gsku:new Map()},add=(m,k,it)=>{if(!k)return;if(!m.has(k))m.set(k,[]);m.get(k).push(it);};
-  for(const it of items){it.gvn=[];[it.code,it.mvt,...xcodes(it.name)].forEach(c=>{const k=ck(c);if(k.length>=4)add(I.code,k,it);});if(it.sku)add(I.sku,ck(it.sku),it);if(it.src.mapByGvn){if(it.gvnname)add(I.gmap,nk(it.gvnname),it);if(it.sku)add(I.gsku,ck(it.sku),it);}add(I.name,nk(it.name),it);it.tok=toks(it.name);}
+  const I={code:new Map(),sku:new Map(),name:new Map(),gmap:new Map(),gsku:new Map(),model:new Map()},add=(m,k,it)=>{if(!k)return;if(!m.has(k))m.set(k,[]);m.get(k).push(it);};
+  for(const it of items){it.gvn=[];[it.code,it.mvt,...xcodes(it.name)].forEach(c=>{const k=ck(c);if(k.length>=4)add(I.code,k,it);});if(it.sku)add(I.sku,ck(it.sku),it);if(it.src.mapByGvn){if(it.gvnname)add(I.gmap,nk(it.gvnname),it);if(it.sku)add(I.gsku,ck(it.sku),it);}add(I.name,nk(it.name),it);it.tok=toks(it.name);if(it.src.parser==='hl'&&it.model){const ks=new Set(modelKeys(it.model));const cm=ck(it.model).match(MODEL_RE);if(cm&&cm[0]===ck(it.model))ks.add(cm[0]);ks.forEach(k=>add(I.model,k,it));it.col=colorsOf(it.variant||it.model.replace(/^\S+/,''));}}
   for(const g of gvn){
     const res=new Map(),put=(arr,t)=>(arr||[]).forEach(it=>{if(!res.has(it))res.set(it,t);});
     if(g.mancc){const k=ck(g.mancc);if(k.length>=4)put(I.code.get(k),'mã');put(I.name.get(nk(g.mancc)),'tên');}
     if(!res.size){put(I.gsku.get(ck(g.sku)),'SKU (Map Mã)');put(I.gmap.get(nk(g.name)),'tên GVN (Map Mã)');}
+    if(!res.size&&g.mancc&&hnorm(g.npp).includes('hung long')){for(const k of modelKeys(g.mancc)){let c=I.model.get(k)||[];if(c.length>1){const gc=colorsOf(g.mancc+' '+g.name);const sc=c.map(it=>[...it.col].filter(x=>gc.has(x)).length),mx=Math.max(...sc);if(mx>0)c=c.filter((_,i)=>sc[i]===mx);}put(c,'model');if(res.size)break;}}
     g.m=[...res].map(([it,t])=>({it,t}));
     g.live=hnorm(g.status)==='con hang';
     if(g.live)g.m.forEach(x=>x.it.gvn.push(g.name||g.sku));
