@@ -251,6 +251,7 @@ const MODEL_RE=/(EGC|EEC|EGT|ERS|EK|EM|EH|EC|TGK|TKG|TM|TH|CMK)\d{2,4}[A-Z0-9]*$
 const modelKeys=s=>{const out=new Set();hnorm(s).toUpperCase().split(/[^A-Z0-9]+/).forEach(t=>{const m=t.match(MODEL_RE);if(m)out.add(m[0]);});return [...out];};
 const COLOR={black:/^(bk|black|den)$/,white:/^(wh|white|trang)$/,red:/^(re|red|do)$/,grey:/^(gr|grey|gray|xam)$/,pink:/^(pk|pink|hong)$/,blue:/^(blue|xanh)$/,orange:/^(orange|cam)$/,alpha:/^(al|alpha)$/,beta:/^(be|beta)$/,fabric:/^fabric$/,lake:/^lake$/,desert:/^(des|desert)$/,violet:/^(vio|violet)$/,yellow:/^(yellow|vang)$/};
 const colorsOf=s=>{const out=new Set();hnorm(s).split(/[^a-z0-9]+/).forEach(t=>{for(const k in COLOR)if(COLOR[k].test(t))out.add(k);});return out;};
+const SKIP_BRANDS=['hyperx','corsair'];
 const link=(gvn,items)=>{
   const I={code:new Map(),sku:new Map(),name:new Map(),gmap:new Map(),gsku:new Map(),model:new Map()},add=(m,k,it)=>{if(!k)return;if(!m.has(k))m.set(k,[]);m.get(k).push(it);};
   for(const it of items){it.gvn=[];it.gvnAll=[];if(it.nogvn)continue;[it.code,it.mvt,...xcodes(it.name)].forEach(c=>{const k=ck(c);if(k.length>=4)add(I.code,k,it);});if(it.sku)add(I.sku,ck(it.sku),it);if(it.src.mapByGvn){if(it.gvnname)add(I.gmap,nk(it.gvnname),it);if(it.sku)add(I.gsku,ck(it.sku),it);}add(I.name,nk(it.name),it);it.tok=toks(it.name);if(it.src.parser==='hl'&&it.model){const ks=new Set(modelKeys(it.model));const cm=ck(it.model).match(MODEL_RE);if(cm&&cm[0]===ck(it.model))ks.add(cm[0]);ks.forEach(k=>add(I.model,k,it));it.col=colorsOf(it.variant||it.model.replace(/^\S+/,''));}}
@@ -263,7 +264,7 @@ const link=(gvn,items)=>{
     g.live=hnorm(g.status)==='con hang';
     if(g.live)g.m.forEach(x=>x.it.gvn.push(g.name||g.sku));
     g.m.forEach(x=>{if(!x.it.gvnAll.includes(g))x.it.gvnAll.push(g);});
-    g.inScope=g.live&&(g.m.length>0||NCCS.some(x=>hnorm(g.npp).includes(hnorm(x))));
+    g.inScope=g.live&&!SKIP_BRANDS.includes(hnorm(g.brand).replace(/[^a-z0-9]/g,''))&&(g.m.length>0||NCCS.some(x=>hnorm(g.npp).includes(hnorm(x))));
   }
 };
 /*LOGIC-END*/
