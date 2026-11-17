@@ -167,7 +167,7 @@ const SOURCES=[
  {id:'mh-rapoo',ncc:'Mai Hoàng',brand:'Rapoo',sid:SID.mh,tab:'TỒN KHO RAPOO',cols:'A1:F2500',gid:1499542568},
  {id:'hl-edra',ncc:'Hưng Long',brand:'E-Dra',sid:SID.hl,tab:'TỒN KHO',cols:'A1:H2500',gid:1358451920,parser:'hl'},
  {id:'3h-hw',ncc:'3H',brand:'HyperWork',sid:SID.h3,tab:'TỒN KHO',cols:'A1:P2500',gid:1961750201},
- {id:'spc-logi',ncc:'SPC',brand:'Logitech',sid:SID.spc,tab:'TÔN KHO 2026',cols:'A1:F2500',gid:1819493241}];
+ {id:'spc-logi',ncc:'SPC',brand:'Logitech',sid:SID.spc,tab:'TÔN KHO 2026',cols:'A1:F2500',gid:1819493241,hcmOnly:true,blank0:true}];
 const GVN={id:'gvn',sid:SID.gvn,tab:'Báo Giá SP Peri',cols:'A1:M4000',gid:696525776};
 const NCCS=['DGW','VSC','Linh Kiệt','Mai Hoàng','Hưng Long','3H','SPC'];
 const LOW=5;
@@ -223,7 +223,7 @@ const parseSource=(src,rows)=>{
     if(!name){const t=row.map(x=>String(x??'').trim()).find(x=>x&&hasL(x)&&!x.startsWith('#'));if(t&&t.length<60&&!has)group=t;continue;}
     if(!has&&name.length<45&&name===name.toUpperCase()&&hasL(name)){group=name;continue;}
     if(FIELD.name.some(re=>re.test(hnorm(name))))continue;
-    let hcm=pq(hs),hn=pq(ns),qty=pq(qs);if(src.hcmOnly&&!hs&&!ns&&qs){hcm=qty;hn={v:null};qty={v:null};}
+    let hcm=pq(hs),hn=pq(ns),qty=pq(qs);if(src.hcmOnly&&!hs&&!ns&&qs){hcm=qty;hn={v:null};qty={v:null};}if(src.blank0&&!String(hs??'').trim()&&!String(ns??'').trim()&&!String(qs??'').trim()){hcm={v:0};hn={v:null};qty={v:null};}
     const total=hcm.v!=null||hn.v!=null?(hcm.v||0)+(hn.v||0):qty.v;
     const ok=!!(hcm.ok||hn.ok||qty.ok);
     const state=total>0||ok?(total>0&&total<=LOW&&!ok?'low':'in'):total===0?'out':'na';
@@ -316,12 +316,14 @@ const rowsSku=()=>{
   for(const g of gvn){if(!g.inScope)continue;
     if(g.m.length)g.m.forEach(({it})=>r.push({g,it,name:g.name,ncc:it.src.ncc,total:it.total,state:it.state}));
     else r.push({g,it:null,name:g.name,ncc:g.npp,total:null,state:'nomatch'});}
+  const allR=r;
   if(S.brand)r=r.filter(x=>hnorm(x.g.brand)===hnorm(S.brand));
   if(S.ncc)r=r.filter(x=>hnorm(x.ncc).includes(hnorm(S.ncc)));
   if(S.src)r=r.filter(x=>x.it&&x.it.src.id===S.src);
   const base=r;
   if(S.st)r=r.filter(x=>x.state===S.st);
   r=r.filter(x=>qmatch(q,x.g.name,x.g.sku,x.g.mancc,x.g.brand,x.ncc,x.it&&x.it.code,x.it&&x.it.name));
+  const keep=new Set(r.map(x=>x.g));r=allR.filter(x=>keep.has(x.g));
   return {base,r};
 };
 const rowsNcc=()=>{
