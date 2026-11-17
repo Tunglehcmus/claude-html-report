@@ -93,9 +93,10 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 .pc .tag{font-size:12.5px;color:var(--mute);overflow-wrap:anywhere}
 .pc .nl{display:grid;gap:6px;margin-top:2px}
 .pc .nr{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;padding:8px 10px;border-radius:10px;background:var(--soft)}
+.pc .nl .nr{display:grid;grid-template-columns:minmax(4.6em,auto) 1fr auto;flex-wrap:nowrap}.pc .qs{display:flex;gap:4px 12px;flex-wrap:wrap}
 .pc .nr b{font-weight:600;font-size:13.5px;min-width:5.5em}
 .chip{font-size:12.5px;color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}.chip strong{color:var(--ink);font-weight:600;font-size:14px;margin-left:4px}.chip strong.zero{color:var(--red)}
-.pc .nr .pill{margin-left:auto}
+.pc .nr .pill{margin-left:auto;justify-self:end}
 .cards .empty{grid-column:1/-1}
 .empty{padding:40px 0;color:var(--mute);text-align:center}
 .gate{border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
@@ -305,7 +306,7 @@ const render=()=>{
   const chip=(l,v,z)=>`<span class="chip">${l}<strong class="${z?'zero':''}">${v}</strong></span>`;
   if(isSku){
     $('cards').innerHTML=groups.slice(0,S.limit).map(({g,rs})=>{const best=rs.reduce((a,x)=>RANK[x.state]<RANK[a]?x.state:a,'nomatch');
-      return `<article class="pc s-${best}"><h3>${esc(g.name||g.sku)}</h3><div class="tag">${esc([g.sku,g.brand].filter(Boolean).join(' · '))}</div><div class="nl">${rs.map(({it,ncc,state})=>`<div class="nr"><b>${esc(ncc||'Chưa khớp NCC')}</b>${it?chip('HCM',qs(it,'hcm'),qv(it,'hcm')===0)+chip('HN',qs(it,'hn'),qv(it,'hn')===0):''}${pill(state)}</div>`).join('')}</div></article>`;}).join('');
+      return `<article class="pc s-${best}"><h3>${esc(g.name||g.sku)}</h3><div class="tag">${esc([g.sku,g.brand].filter(Boolean).join(' · '))}</div><div class="nl">${rs.map(({it,ncc,state})=>`<div class="nr"><b>${esc(ncc||'Chưa khớp NCC')}</b><span class="qs">${it?chip('HCM',qs(it,'hcm'),qv(it,'hcm')===0)+chip('HN',qs(it,'hn'),qv(it,'hn')===0):''}</span>${pill(state)}</div>`).join('')}</div></article>`;}).join('');
   }else{
     $('cards').innerHTML=rows.slice(0,S.limit).map(i=>{const h=i.hcm.v==null&&i.hn.v==null&&i.qty.v!=null?fmt(i.qty.v):(i.hcm.ok?'OK':i.hcm.v==null?'—':fmt(i.hcm.v)),n=i.hn.ok?'OK':i.hn.v==null?'—':fmt(i.hn.v);
       return `<article class="pc s-${i.state}"><h3>${esc(i.name)}</h3><div class="tag">${esc(i.src.ncc)} · ${esc(i.src.brand)}${i.group?' · '+esc(i.group):''}${i.note?' · '+esc(i.note):''}</div><div class="nr">${chip('HCM',h,h==='0')}${chip('HN',n,n==='0')}${i.price?chip('Giá',money(i.price)):''}${pill(i.state)}</div><div class="tag">Mã: ${esc([i.code,i.mvt].filter(Boolean).join(' · ')||'—')}${i.gvn.length?'<br>GVN: '+esc(i.gvn.join(', ')):''}</div></article>`;}).join('');
