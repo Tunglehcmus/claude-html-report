@@ -106,7 +106,7 @@ const SOURCES=[
  {id:'dgw-asus',ncc:'DGW',brand:'Asus',sid:SID.dasus,tab:'TỒN KHO',cols:'A1:N2500',gid:1055861893,mul:1000},
  {id:'vsc-asus',ncc:'VSC',brand:'Asus',sid:SID.vasus,tab:'TỒN KHO',cols:'A1:J2500',gid:718291458},
  {id:'vsc-razer',ncc:'VSC',brand:'Razer',sid:SID.vrazer,tab:' tồn kho RAZER',cols:'A1:H2500',gid:780734675},
- {id:'lk-atk',ncc:'Linh Kiệt',brand:'ATK',sid:SID.atk,tab:'Map Mã',cols:'A1:H2500',gid:118821521},
+ {id:'lk-atk',ncc:'Linh Kiệt',brand:'ATK',sid:SID.atk,tab:'Map Mã',cols:'A1:H2500',gid:118821521,hcmOnly:true,mapByGvn:true},
  {id:'mh-dareu',ncc:'Mai Hoàng',brand:'DAREU',sid:SID.mh,tab:'TỒN KHO DAREU',cols:'A1:G2500',gid:741525144},
  {id:'mh-akko',ncc:'Mai Hoàng',brand:'AKKO',sid:SID.mh,tab:'TỒN KHO AKKO',cols:'A1:F2500',gid:966503420},
  {id:'mh-warrior',ncc:'Mai Hoàng',brand:'Warrior',sid:SID.mh,tab:'TỒN KHO WARRIOR',cols:'A1:F2500',gid:1663328221},
@@ -119,7 +119,7 @@ const LOW=5;
 const hnorm=s=>String(s??'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/gi,'d').toLowerCase().replace(/\s+/g,' ').trim();
 const ck=s=>hnorm(s).toUpperCase().replace(/[^A-Z0-9]/g,'');
 const nk=s=>hnorm(s).replace(/[^a-z0-9]+/g,' ').trim();
-const FIELD={name:[/^ten (san pham|hang)/,/^ten sp ton kho/,/^model/,/san pham gearvn/],code:[/part number/,/^p\/n$/,/^id code$/,/^ma hang$/],mvt:[/^ma vat tu$/,/^mvt$/],hcm:[/hcm/],hn:[/(^|[^a-z])hn([^a-z]|$)/,/ha noi/],qty:[/^ton kho$/],price:[/gia nhap/,/gia (xuat )?gvn|gvnq/,/^gia/],note:[/ghi chu/,/^note$/],sku:[/sku gearvn/,/^sku gvn$/]};
+const FIELD={name:[/^ten (san pham|hang)/,/^ten sp ton kho/,/^model/,/san pham gearvn/],code:[/part number/,/^p\/n$/,/^id code$/,/^ma hang$/],mvt:[/^ma vat tu$/,/^mvt$/],hcm:[/hcm/],hn:[/(^|[^a-z])hn([^a-z]|$)/,/ha noi/],qty:[/^ton kho$/],price:[/gia nhap/,/gia (xuat )?gvn|gvnq/,/^gia/],note:[/ghi chu/,/^note$/],sku:[/sku gearvn/,/^sku gvn$/],gvnname:[/^ten sp gearvn$/]};
 const ALLRE=Object.values(FIELD).flat();
 const detect=rows=>{
   const col={},rowOf={},lim=Math.min(rows.length,7);
@@ -139,17 +139,18 @@ const parseSource=(src,rows)=>{
     const row=rows[r]||[],get=f=>D.col[f]==null?'':String(row[D.col[f]]??'').trim();
     let name=get('name');const code=get('code'),mvt=get('mvt'),sku=get('sku'),hs=get('hcm'),ns=get('hn'),price=get('price'),note=get('note');
     const qs=D.col.qty!=null&&D.col.qty!==D.col.hcm&&D.col.qty!==D.col.hn?get('qty'):'';
+    const gvnname=get('gvnname');if(D.col.gvnname!=null&&!gvnname)continue;
     const has=code||mvt||price||hs||ns||qs||(sku&&sku!=='0');
     if(!name&&/\d/.test(code))name=code;
     if(!name){const t=row.map(x=>String(x??'').trim()).find(x=>x&&hasL(x)&&!x.startsWith('#'));if(t&&t.length<60&&!has)group=t;continue;}
     if(!has&&name.length<45&&name===name.toUpperCase()&&hasL(name)){group=name;continue;}
     if(FIELD.name.some(re=>re.test(hnorm(name))))continue;
-    const hcm=pq(hs),hn=pq(ns),qty=pq(qs);
+    let hcm=pq(hs),hn=pq(ns),qty=pq(qs);if(src.hcmOnly&&!hs&&!ns&&qs){hcm=qty;hn={v:null};qty={v:null};}
     const total=hcm.v!=null||hn.v!=null?(hcm.v||0)+(hn.v||0):qty.v;
     const ok=!!(hcm.ok||hn.ok||qty.ok);
     const state=total>0||ok?(total>0&&total<=LOW&&!ok?'low':'in'):total===0?'out':'na';
     const pr=pp(price);
-    items.push({src,group,name,code,mvt,sku:sku==='0'?'':sku,hcm,hn,qty,total,ok,state,price:pr==null?null:pr*(src.mul&&pr<100000?src.mul:1),note:[note,hcm.t,hn.t,qty.t,pr==null&&price?'giá: '+price:''].filter(Boolean).join(' · '),gvn:[]});
+    items.push({src,group,name,gvnname,code,mvt,sku:sku==='0'?'':sku,hcm,hn,qty,total,ok,state,price:pr==null?null:pr*(src.mul&&pr<100000?src.mul:1),note:[note,hcm.t,hn.t,qty.t,pr==null&&price?'giá: '+price:''].filter(Boolean).join(' · '),gvn:[]});
   }
   return {items,date:D.date};
 };
@@ -166,11 +167,12 @@ const jac=(a,b)=>{let i=0;for(const t of a)if(b.has(t))i++;return i/(a.size+b.si
 const xcodes=n=>[(n.match(/^([a-z]{0,4}\d{4,}[a-z0-9-]*)\s*_/i)||[])[1],(n.match(/_\s*([a-z0-9-]{4,})\s*$/i)||[])[1]].filter(Boolean);
 const brandOk=(a,b)=>{a=hnorm(a);b=hnorm(b);return !!a&&!!b&&(a===b||a.includes(b)||b.includes(a));};
 const link=(gvn,items)=>{
-  const I={code:new Map(),sku:new Map(),name:new Map()},add=(m,k,it)=>{if(!k)return;if(!m.has(k))m.set(k,[]);m.get(k).push(it);};
-  for(const it of items){it.gvn=[];[it.code,it.mvt,...xcodes(it.name)].forEach(c=>{const k=ck(c);if(k.length>=4)add(I.code,k,it);});if(it.sku)add(I.sku,ck(it.sku),it);add(I.name,nk(it.name),it);it.tok=toks(it.name);}
+  const I={code:new Map(),sku:new Map(),name:new Map(),gmap:new Map(),gsku:new Map()},add=(m,k,it)=>{if(!k)return;if(!m.has(k))m.set(k,[]);m.get(k).push(it);};
+  for(const it of items){it.gvn=[];[it.code,it.mvt,...xcodes(it.name)].forEach(c=>{const k=ck(c);if(k.length>=4)add(I.code,k,it);});if(it.sku)add(I.sku,ck(it.sku),it);if(it.src.mapByGvn){if(it.gvnname)add(I.gmap,nk(it.gvnname),it);if(it.sku)add(I.gsku,ck(it.sku),it);}add(I.name,nk(it.name),it);it.tok=toks(it.name);}
   for(const g of gvn){
     const res=new Map(),put=(arr,t)=>(arr||[]).forEach(it=>{if(!res.has(it))res.set(it,t);});
     if(g.mancc){const k=ck(g.mancc);if(k.length>=4)put(I.code.get(k),'mã');put(I.name.get(nk(g.mancc)),'tên');}
+    if(!res.size){put(I.gsku.get(ck(g.sku)),'SKU (Map Mã)');put(I.gmap.get(nk(g.name)),'tên GVN (Map Mã)');}
     g.m=[...res].map(([it,t])=>({it,t}));
     g.live=hnorm(g.status)==='con hang';
     if(g.live)g.m.forEach(x=>x.it.gvn.push(g.name||g.sku));
