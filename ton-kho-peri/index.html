@@ -52,6 +52,7 @@ header .btn{background:#d70018;color:#fff;border:0}header .btn:hover{background:
 .bar i{display:block;height:100%}
 .i-in{background:var(--ink)}.i-low{background:var(--amber)}.i-out{background:var(--red)}.i-na{background:var(--line)}
 .err{color:var(--red);font-size:12.5px}
+.kpi[hidden]{display:none}
 .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5em,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 .kpi button{background:var(--bg);border:0;padding:12px 14px;text-align:left;cursor:pointer}
 .kpi button:hover,.kpi button.on{background:var(--soft)}
@@ -98,7 +99,7 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 <main class="wrap">
   <div id="gate"></div>
   <div class="src" id="src"></div>
-  <div class="kpi" id="kpi"></div>
+  <div class="kpi" id="kpi" hidden></div>
   <div class="tools">
     <div class="tabs"><button id="t-sku" class="on">Theo SKU GVN</button><button id="t-ncc">Tồn kho NCC</button></div>
     <input type="search" id="q" placeholder="Tìm SKU, tên, mã NCC, part number…">
