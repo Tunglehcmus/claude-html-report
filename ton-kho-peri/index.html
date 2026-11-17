@@ -256,7 +256,7 @@ const KW_STOP=new Set('chuot ban phim tai nghe ghe game gaming choi co may tinh 
 const KW_SOFT=new Set('wl bluetooth bt rgb lightspeed us pbt abs new ergonomic chair series ds tri mode'.split(' '));
 const KW_COL=new Set(['black','white','pink','red','blue','purple','yellow','gray','green','orange','rose']);
 const KW_SYN={den:'black',trang:'white',hong:'pink',do:'red',xanh:'blue',tim:'purple',vang:'yellow',xam:'gray',grey:'gray',blk:'black',bla:'black',bk:'black',whi:'white',wht:'white',wh:'white',rd:'red',wireless:'wl',khong:'wl',day:'',graphite:'black'};
-const kwToks=s=>{s=hnorm(s).replace(/khong day/g,' wl ').replace(/(\d)\.0\b/g,'$1').replace(/([a-z])(\d)/g,'$1 $2').replace(/(\d)(?=[a-z]{2}|[a-z]\d)/g,'$1 ');const o=[];for(let t of s.split(/[^a-z0-9]+/)){if(!t)continue;if(t in KW_SYN)t=KW_SYN[t];if(!t||KW_STOP.has(t))continue;o.push(t);}return o;};
+const kwToks=s=>{s=hnorm(s).replace(/khong day/g,' wl ').replace(/(\d)\.0\b/g,'$1').replace(/(\d)(?=[a-z]{2}|[a-z]\d)/g,'$1 ').replace(/([a-z])(\d)/g,'$1 $2');const o=[];for(let t of s.split(/[^a-z0-9]+/)){if(!t)continue;if(t in KW_SYN)t=KW_SYN[t];if(!t||KW_STOP.has(t))continue;o.push(t);}return o;};
 const kwMatch=(g,items)=>{const nps=String(g.npp||'').split('/').map(x=>hnorm(x)).filter(Boolean);if(!nps.length)return[];
   const gt=new Set(kwToks(g.name)),req=[...gt].filter(t=>!KW_SOFT.has(t));if(req.length<2)return[];const gCol=[...gt].some(t=>KW_COL.has(t));
   const best={};for(const it of items){if(it.nogvn)continue;if(it._nn==null)it._nn=hnorm(it.src.ncc);if(!nps.includes(it._nn)||!brandOk(it.src.brand,g.brand))continue;
