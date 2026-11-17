@@ -258,9 +258,9 @@ const KW_COL=new Set(['black','white','pink','red','blue','purple','yellow','gra
 const KW_SYN={den:'black',trang:'white',hong:'pink',do:'red',xanh:'blue',tim:'purple',vang:'yellow',xam:'gray',grey:'gray',blk:'black',bla:'black',bk:'black',whi:'white',wht:'white',wh:'white',rd:'red',wireless:'wl',khong:'wl',day:'',graphite:'black'};
 const kwToks=s=>{s=hnorm(s).replace(/khong day/g,' wl ').replace(/\bnx ?(snow|sw)\b/g,' nxsw ').replace(/\bnx ?(storm|sm)\b/g,' nxsm ').replace(/(\d)\.0\b/g,'$1').replace(/(\d)(?=[a-z]{2}|[a-z]\d)/g,'$1 ').replace(/([a-z])(\d)/g,'$1 $2');const o=[];for(let t of s.split(/[^a-z0-9]+/)){if(!t)continue;if(t in KW_SYN)t=KW_SYN[t];if(!t||KW_STOP.has(t))continue;o.push(t);}return o;};
 const kwKey=ts=>[...new Set(ts)].sort().join(' ');
-const kwMatch=(g,items,gk)=>{const nps=String(g.npp||'').split('/').map(x=>hnorm(x)).filter(Boolean);if(!nps.length)return[];
+const kwMatch=(g,items,gk,skip)=>{
   const gt=new Set(kwToks(g.name)),req=[...gt].filter(t=>!KW_SOFT.has(t));if(req.length<2)return[];const gCol=[...gt].some(t=>KW_COL.has(t));
-  let pass=[];for(const it of items){if(it.nogvn)continue;if(it._nn==null)it._nn=hnorm(it.src.ncc);if(!nps.includes(it._nn)||!brandOk(it.src.brand,g.brand))continue;
+  let pass=[];for(const it of items){if(it.nogvn)continue;if(skip&&skip.has(it.src.ncc)||!brandOk(it.src.brand,g.brand))continue;
     if(!it._kt){it._kt=new Set(kwToks(it.name));it._ks=[...new Set(kwToks(it.name.replace(/\([^)]*\)?/g,' ')))];}
     if(req.every(t=>it._kt.has(t)))pass.push(it);}
   if(!gCol){const cols=it=>[...it._kt].filter(t=>KW_COL.has(t)&&t!=='black');const plain=pass.filter(it=>!cols(it).length);
@@ -277,7 +277,7 @@ const link=(gvn,items)=>{
     if(g.mancc){const k=ck(g.mancc);if(k.length>=4)put(I.code.get(k),'mã');put(I.name.get(nk(g.mancc)),'tên');}
     if(!res.size){put(I.gsku.get(ck(g.sku)),'SKU (Map Mã)');put(I.gmap.get(nk(g.name)),'tên GVN (Map Mã)');}
     if(!res.size&&g.mancc&&hnorm(g.npp).includes('hung long')){for(const k of modelKeys(g.mancc)){let c=I.model.get(k)||[];if(c.length>1){const gc=colorsOf(g.mancc+' '+g.name);const sc=c.map(it=>[...it.col].filter(x=>gc.has(x)).length),mx=Math.max(...sc);if(mx>0)c=c.filter((_,i)=>sc[i]===mx);}put(c,'model');if(res.size)break;}}
-    if(!res.size)put(kwMatch(g,items,GK),'tên');
+    put(kwMatch(g,items,GK,new Set([...res.keys()].map(it=>it.src.ncc))),'tên');
     g.m=[...res].map(([it,t])=>({it,t}));
     g.live=hnorm(g.status)==='con hang';
     if(g.live)g.m.forEach(x=>x.it.gvn.push(g.name||g.sku));
