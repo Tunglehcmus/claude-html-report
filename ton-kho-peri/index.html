@@ -147,10 +147,11 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
     <input type="search" id="q" placeholder="Tìm SKU, tên, mã NCC, part number…">
     <select id="fn" aria-label="Nhà cung cấp"></select>
     <select id="fb" aria-label="Hãng"></select>
+    <select id="fs" aria-label="Tình trạng"></select>
     <select id="so" aria-label="Sắp xếp"><option value="al">Hết hàng trước</option><option value="desc">Tồn nhiều → ít</option><option value="asc">Tồn ít → nhiều</option><option value="az">Tên A → Z</option></select>
     <button class="btn" id="copy">Copy bảng</button>
-  </div>
 <script>window.PERI_API='https://script.google.com/macros/s/AKfycbzt4cp1XfLXDw8VNBwHLSwd3URQjgibUBclVDCDChT27hNAMZSVHx-oPtiqULHUfEbH/exec';</script>
+  </div>
   <p class="note" id="note"></p>
   <div class="cards" id="cards"></div>
   <div class="more" id="more"></div>
@@ -349,6 +350,7 @@ const q2=v=>v==null?'':`<span class="q${v.v===0?' zero':''}">${v.ok?'OK':fmt(v.v
 const kpi=(base,isSku)=>{const c=counts(base);
   const list=isSku?[['','Sản phẩm GVN còn hàng',new Set(base.map(x=>x.g)).size],['in','Còn hàng ở NCC',c.in],['low',`Sắp hết (≤${LOW})`,c.low],['out','Hết hàng ở NCC',c.out],['nomatch','Chưa khớp mã NCC',c.nomatch],['na','Chưa có số tồn',c.na]]
    :[['','Dòng tồn kho NCC',base.length],['in','Còn hàng',c.in],['low',`Sắp hết (≤${LOW})`,c.low],['out','Hết hàng',c.out],['alert','Hết hàng, GVN đang bán',base.filter(i=>i.state==='out'&&i.gvn.length).length],['nomatch','Chưa kinh doanh',base.filter(i=>!i.gvnAll.length).length],['na','Chưa có số tồn',c.na]];
+  $('fs').innerHTML=`<option value="">Tất cả tình trạng</option>`+list.slice(1).map(([k,l,v])=>`<option value="${k}"${S.st===k?' selected':''}>${esc(l)} (${fmt(v)})</option>`).join('');
   $('kpi').innerHTML=list.map(([k,l,v])=>`<button data-st="${k}" class="${S.st===k?'on ':''}${k==='out'||k==='alert'?'alert':''}"><strong>${fmt(v)}</strong><span>${l}</span></button>`).join('');};
 const render=()=>{
   gate();renderSrc();
@@ -382,7 +384,7 @@ const render=()=>{
   S.rows=rows;
 };
 const set=(k,v)=>{S[k]=v;S.limit=200;render();};
-$('q').oninput=e=>set('q',e.target.value);$('fn').onchange=e=>set('ncc',e.target.value);$('fb').onchange=e=>set('brand',e.target.value);$('so').onchange=e=>set('sort',e.target.value);
+$('q').oninput=e=>set('q',e.target.value);$('fn').onchange=e=>set('ncc',e.target.value);$('fb').onchange=e=>set('brand',e.target.value);$('so').onchange=e=>set('sort',e.target.value);$('fs').onchange=e=>set('st',e.target.value);
 const view=v=>{S.view=v;S.st='';S.brand='';S.limit=200;try{if(location.hash!=='#'+v)history.replaceState(null,'','#'+v);}catch(e){}render();};
 $('t-sku').onclick=()=>view('sku');$('t-ncc').onclick=()=>view('ncc');
 window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h==='sku'||h==='ncc')view(h);});
