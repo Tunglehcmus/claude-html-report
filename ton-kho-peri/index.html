@@ -221,7 +221,7 @@ const parseSource=(src,rows)=>{
     const row=rows[r]||[],get=f=>D.col[f]==null?'':String(row[D.col[f]]??'').trim();
     let name=get('name');const code=get('code'),mvt=get('mvt'),sku=get('sku'),hs=get('hcm'),ns=get('hn'),price=get('price'),note=get('note');
     const qs=D.col.qty!=null&&D.col.qty!==D.col.hcm&&D.col.qty!==D.col.hn?get('qty'):'';
-    const gvnname=get('gvnname');
+    const gvnname=get('gvnname'),nogvn=D.col.gvnname!=null&&!gvnname;
     const has=code||mvt||price||hs||ns||qs||(sku&&sku!=='0');
     if(!name&&/\d/.test(code))name=code;
     if(!name){const t=row.map(x=>String(x??'').trim()).find(x=>x&&hasL(x)&&!x.startsWith('#'));if(t&&t.length<60&&!has)group=t;continue;}
@@ -232,7 +232,7 @@ const parseSource=(src,rows)=>{
     const ok=!!(hcm.ok||hn.ok||qty.ok);
     const state=total>0||ok?(total>0&&total<=LOW&&!ok?'low':'in'):total===0?'out':'na';
     const pr=pp(price);
-    items.push({src,group,name,gvnname,code,mvt,sku:sku==='0'?'':sku,hcm,hn,qty,total,ok,state,price:pr==null?null:pr*(src.mul&&pr<100000?src.mul:1),note:[note,hcm.t,hn.t,qty.t,pr==null&&price?'giá: '+price:''].filter(Boolean).join(' · '),gvn:[]});
+    items.push({src,nogvn,group,name,gvnname,code,mvt,sku:sku==='0'?'':sku,hcm,hn,qty,total,ok,state,price:pr==null?null:pr*(src.mul&&pr<100000?src.mul:1),note:[note,hcm.t,hn.t,qty.t,pr==null&&price?'giá: '+price:''].filter(Boolean).join(' · '),gvn:[]});
   }
   return {items,date:D.date};
 };
@@ -254,7 +254,7 @@ const COLOR={black:/^(bk|black|den)$/,white:/^(wh|white|trang)$/,red:/^(re|red|d
 const colorsOf=s=>{const out=new Set();hnorm(s).split(/[^a-z0-9]+/).forEach(t=>{for(const k in COLOR)if(COLOR[k].test(t))out.add(k);});return out;};
 const link=(gvn,items)=>{
   const I={code:new Map(),sku:new Map(),name:new Map(),gmap:new Map(),gsku:new Map(),model:new Map()},add=(m,k,it)=>{if(!k)return;if(!m.has(k))m.set(k,[]);m.get(k).push(it);};
-  for(const it of items){it.gvn=[];it.gvnAll=[];[it.code,it.mvt,...xcodes(it.name)].forEach(c=>{const k=ck(c);if(k.length>=4)add(I.code,k,it);});if(it.sku)add(I.sku,ck(it.sku),it);if(it.src.mapByGvn){if(it.gvnname)add(I.gmap,nk(it.gvnname),it);if(it.sku)add(I.gsku,ck(it.sku),it);}add(I.name,nk(it.name),it);it.tok=toks(it.name);if(it.src.parser==='hl'&&it.model){const ks=new Set(modelKeys(it.model));const cm=ck(it.model).match(MODEL_RE);if(cm&&cm[0]===ck(it.model))ks.add(cm[0]);ks.forEach(k=>add(I.model,k,it));it.col=colorsOf(it.variant||it.model.replace(/^\S+/,''));}}
+  for(const it of items){it.gvn=[];it.gvnAll=[];if(it.nogvn)continue;[it.code,it.mvt,...xcodes(it.name)].forEach(c=>{const k=ck(c);if(k.length>=4)add(I.code,k,it);});if(it.sku)add(I.sku,ck(it.sku),it);if(it.src.mapByGvn){if(it.gvnname)add(I.gmap,nk(it.gvnname),it);if(it.sku)add(I.gsku,ck(it.sku),it);}add(I.name,nk(it.name),it);it.tok=toks(it.name);if(it.src.parser==='hl'&&it.model){const ks=new Set(modelKeys(it.model));const cm=ck(it.model).match(MODEL_RE);if(cm&&cm[0]===ck(it.model))ks.add(cm[0]);ks.forEach(k=>add(I.model,k,it));it.col=colorsOf(it.variant||it.model.replace(/^\S+/,''));}}
   for(const g of gvn){
     const res=new Map(),put=(arr,t)=>(arr||[]).forEach(it=>{if(!res.has(it))res.set(it,t);});
     if(g.mancc){const k=ck(g.mancc);if(k.length>=4)put(I.code.get(k),'mã');put(I.name.get(nk(g.mancc)),'tên');}
