@@ -106,7 +106,7 @@ const SOURCES=[
  {id:'dgw-asus',ncc:'DGW',brand:'Asus',sid:SID.dasus,tab:'TỒN KHO',cols:'A1:N2500',gid:1055861893,mul:1000},
  {id:'vsc-asus',ncc:'VSC',brand:'Asus',sid:SID.vasus,tab:'TỒN KHO',cols:'A1:J2500',gid:718291458},
  {id:'vsc-razer',ncc:'VSC',brand:'Razer',sid:SID.vrazer,tab:' tồn kho RAZER',cols:'A1:H2500',gid:780734675},
- {id:'lk-atk',ncc:'Linh Kiệt',brand:'ATK',sid:SID.atk,tab:'Tồn kho ATK',cols:'A1:H2500',gid:1787075563},
+ {id:'lk-atk',ncc:'Linh Kiệt',brand:'ATK',sid:SID.atk,tab:'Map Mã',cols:'A1:H2500',gid:118821521},
  {id:'mh-dareu',ncc:'Mai Hoàng',brand:'DAREU',sid:SID.mh,tab:'TỒN KHO DAREU',cols:'A1:G2500',gid:741525144},
  {id:'mh-akko',ncc:'Mai Hoàng',brand:'AKKO',sid:SID.mh,tab:'TỒN KHO AKKO',cols:'A1:F2500',gid:966503420},
  {id:'mh-warrior',ncc:'Mai Hoàng',brand:'Warrior',sid:SID.mh,tab:'TỒN KHO WARRIOR',cols:'A1:F2500',gid:1663328221},
@@ -119,7 +119,7 @@ const LOW=5;
 const hnorm=s=>String(s??'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/gi,'d').toLowerCase().replace(/\s+/g,' ').trim();
 const ck=s=>hnorm(s).toUpperCase().replace(/[^A-Z0-9]/g,'');
 const nk=s=>hnorm(s).replace(/[^a-z0-9]+/g,' ').trim();
-const FIELD={name:[/^ten (san pham|hang)/,/^model/,/san pham gearvn/],code:[/part number/,/^p\/n$/,/^id code$/,/^ma hang$/],mvt:[/^ma vat tu$/,/^mvt$/],hcm:[/hcm/],hn:[/(^|[^a-z])hn([^a-z]|$)/,/ha noi/],qty:[/^ton kho$/],price:[/gia nhap/,/gia (xuat )?gvn|gvnq/,/^gia/],note:[/ghi chu/,/^note$/],sku:[/sku gearvn/]};
+const FIELD={name:[/^ten (san pham|hang)/,/^ten sp ton kho/,/^model/,/san pham gearvn/],code:[/part number/,/^p\/n$/,/^id code$/,/^ma hang$/],mvt:[/^ma vat tu$/,/^mvt$/],hcm:[/hcm/],hn:[/(^|[^a-z])hn([^a-z]|$)/,/ha noi/],qty:[/^ton kho$/],price:[/gia nhap/,/gia (xuat )?gvn|gvnq/,/^gia/],note:[/ghi chu/,/^note$/],sku:[/sku gearvn/,/^sku gvn$/]};
 const ALLRE=Object.values(FIELD).flat();
 const detect=rows=>{
   const col={},rowOf={},lim=Math.min(rows.length,7);
