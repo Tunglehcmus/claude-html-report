@@ -18,15 +18,18 @@
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Geist,system-ui,sans-serif;overflow-x:clip}
 .wrap{max-width:1320px;margin:0 auto;padding-inline:max(3vw,16px)}
-header{background:var(--strip);color:#fff}
-header .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;padding-block:22px 18px}
+header{background:#fff;color:#121214;border-bottom:1px solid #e4e4e9}
+header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding-block:14px}
+.htxt{display:flex;flex-direction:column;gap:14px;flex:1 1 300px}
+.hero{flex:0 1 380px;display:flex;justify-content:center}.hero img{display:block;width:100%;max-width:380px;height:auto}
+@media(max-width:600px){header .wrap{flex-direction:column-reverse;align-items:stretch}.hero img{max-width:300px;margin-inline:auto}}
 h1{margin:0;font-size:clamp(28px,4vw,40px);line-height:1.05;letter-spacing:-.02em;font-weight:600}
-header p{margin:4px 0 0;opacity:.88;font-size:14px}
+header p{margin:4px 0 0;color:#62636b;font-size:14px}
 .hbtn{display:flex;align-items:center;gap:12px;font-size:13px}
 button,select,input{font:inherit;color:inherit}
 .btn{min-height:40px;padding:0 16px;border-radius:8px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-weight:500}
 .btn:hover{border-color:var(--ink)}
-header .btn{background:#fff;color:#d70018;border:0}
+header .btn{background:#d70018;color:#fff;border:0}header .btn:hover{background:#b80015}
 :focus-visible{outline:2px solid var(--red);outline-offset:2px}
 .src{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;padding-block:16px}
 .sc{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);text-align:left;cursor:pointer;display:grid;gap:6px}
@@ -77,8 +80,9 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 </head>
 <body>
 <header><div class="wrap">
-  <div><h1>Tồn kho NCC · Peri</h1><p>Mã GEARVN đang kinh doanh đối chiếu tồn kho HCM / HN của nhà cung cấp, đọc trực tiếp từ Google Sheet.</p></div>
-  <div class="hbtn"><span id="upd">Đang tải…</span><button class="btn" id="refresh">Làm mới</button></div>
+  <div class="htxt"><div><h1>Tồn kho NCC · Peri</h1><p>Mã GEARVN đang kinh doanh đối chiếu tồn kho HCM / HN của nhà cung cấp. Số liệu chỉ cập nhật khi bấm "Làm mới".</p></div>
+  <div class="hbtn"><button class="btn" id="refresh">Làm mới</button><span id="upd">Đang tải…</span></div></div>
+  <div class="hero"><img src="https://tunglehcmus.github.io/claude-html-report/ton-kho-peri/ba-dua.webp" width="760" height="398" alt=""></div>
 </div></header>
 <main class="wrap">
   <div id="gate"></div>
@@ -211,7 +215,7 @@ const API=window.PERI_API||'';const gas=!!(window.google&&google.script&&google.
 const callData=(force,pin,ok,fail)=>{if(API){fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({force:!!force,pin:pin})}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(ok).catch(fail);}else{google.script.run.withSuccessHandler(ok).withFailureHandler(fail).getData(!!force,pin);}};
 const PINK='peri_pin';const getPin=()=>{try{return localStorage.getItem(PINK)||''}catch(e){return S.pin||''}};const setPin=v=>{S.pin=v;try{v?localStorage.setItem(PINK,v):localStorage.removeItem(PINK)}catch(e){}};
 const askPin=msg=>{S.needPin=true;S.pinDirty=true;S.pinMsg=msg||'';SOURCES.concat(GVN).forEach(s=>{data[s.id].state='err';data[s.id].err='';});render();setTimeout(()=>{const i=$('pin');if(i)i.focus();},50);};
-const loadGas=force=>{if(!getPin()){askPin('');return;}S.needPin=false;SOURCES.concat(GVN).forEach(s=>{if(!data[s.id].rows)data[s.id].state='loading';});$('upd').textContent='Đang tải dữ liệu…';
+const loadGas=force=>{if(!getPin()){askPin('');return;}S.needPin=false;SOURCES.concat(GVN).forEach(s=>{if(!data[s.id].rows)data[s.id].state='loading';});$('upd').textContent=force?'Đang lấy số mới từ sheet…':'Đang tải dữ liệu…';
   callData(force,getPin(),res=>{if(res&&res.pinError){setPin('');askPin(res.locked?'Nhập sai quá nhiều lần. Thử lại sau 10 phút.':'Mã PIN không đúng.');return;}SOURCES.concat(GVN).forEach(s=>{const d=data[s.id],r=res&&res[s.id];if(r&&r.rows){d.rows=r.rows;d.state='ok';d.err='';d.at=r.at||res.at;}else{d.err=(r&&r.error)||'Không đọc được sheet';d.state=d.rows?'stale':'err';}});recompute();},
   e=>{SOURCES.concat(GVN).forEach(s=>{const d=data[s.id];d.err='Lỗi tải: '+((e&&e.message)||e);d.state=d.rows?'stale':'err';});recompute();});};
 const counts=arr=>{const c={in:0,low:0,out:0,na:0,nomatch:0};arr.forEach(x=>c[x.state]++);return c;};
@@ -259,7 +263,7 @@ const render=()=>{
   gate();renderSrc();
   const ld=SOURCES.concat(GVN).filter(s=>data[s.id].at);const at=ld.length?Math.min(...ld.map(s=>data[s.id].at)):0;
   const loading=SOURCES.concat(GVN).filter(s=>data[s.id].state==='loading').length;
-  $('upd').textContent=S.needPin?'Cần mã PIN':loading?`Đang tải ${loading} sheet…`:at?'Dữ liệu lúc '+new Date(at).toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})+' '+new Date(at).toLocaleDateString('vi-VN'):'';
+  $('upd').textContent=S.needPin?'Cần mã PIN':loading?`Đang tải ${loading} sheet…`:at?'Cập nhật lúc '+new Date(at).toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})+' '+new Date(at).toLocaleDateString('vi-VN'):'';
   fillSel('fn','Tất cả NCC',NCCS,S.ncc);
   fillSel('fb','Tất cả hãng',[...new Set((S.view==='sku'?gvn.filter(g=>g.inScope).map(g=>g.brand):SOURCES.map(s=>s.brand)).filter(Boolean).map(b=>b.trim()))].sort((a,b)=>a.localeCompare(b)),S.brand);
     $('t-sku').classList.toggle('on',S.view==='sku');$('t-ncc').classList.toggle('on',S.view==='ncc');
