@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tồn kho NCC Peri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* VOICE work tool for the Peri buying team, dense and exact
+   IDEA a warehouse stock board: one row per SKU, supplier counts per warehouse
+   PICTURE the live SKU table itself, headed by a strip of supplier sheets with stock bars
+   COLOUR white ground, near-black ink, GEARVN red field and accent, amber for low stock
+   TYPE Geist 600 titles + Geist text, tabular figures in columns
+   LAYOUT red title strip, source strip, figures row, toolbar, table; stacks under 600px */
+:root{color-scheme:light dark;--bg:light-dark(#fff,#0e0e10);--ink:light-dark(#121214,#ececee);--mute:light-dark(#62636b,#9c9ca6);--line:light-dark(#e4e4e9,#28282e);--soft:light-dark(#f5f5f7,#17171b);--red:light-dark(#d70018,#ff4157);--amber:light-dark(#a8530a,#f5a524);--strip:#d70018}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Geist,system-ui,sans-serif;overflow-x:clip}
+.wrap{max-width:1320px;margin:0 auto;padding-inline:max(3vw,16px)}
+header{background:var(--strip);color:#fff}
+header .wrap{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px 24px;padding-block:22px 18px}
+h1{margin:0;font-size:clamp(28px,4vw,40px);line-height:1.05;letter-spacing:-.02em;font-weight:600}
+header p{margin:4px 0 0;opacity:.88;font-size:14px}
+.hbtn{display:flex;align-items:center;gap:12px;font-size:13px}
+button,select,input{font:inherit;color:inherit}
+.btn{min-height:40px;padding:0 16px;border-radius:8px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-weight:500}
+.btn:hover{border-color:var(--ink)}
+header .btn{background:#fff;color:#d70018;border:0}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+.src{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:10px;padding-block:16px}
+.sc{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--bg);text-align:left;cursor:pointer;display:grid;gap:6px}
+.sc:hover,.sc.on{border-color:var(--ink)}
+.sc b{font-weight:600;font-size:14px}
+.sc small{color:var(--mute);font-size:12.5px;display:flex;justify-content:space-between;gap:8px}
+.sc a{color:var(--mute)}
+.bar{display:flex;height:8px;border-radius:4px;overflow:hidden;background:var(--soft)}
+.bar i{display:block;height:100%}
+.i-in{background:var(--ink)}.i-low{background:var(--amber)}.i-out{background:var(--red)}.i-na{background:var(--line)}
+.err{color:var(--red);font-size:12.5px}
+.kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(9.5em,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.kpi button{background:var(--bg);border:0;padding:12px 14px;text-align:left;cursor:pointer}
+.kpi button:hover,.kpi button.on{background:var(--soft)}
+.kpi strong{display:block;font-size:clamp(24px,3vw,32px);font-weight:600;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi span{font-size:13px;color:var(--mute)}
+.kpi .alert strong{color:var(--red)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-block:16px 10px}
+.tabs{display:flex;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.tabs button{min-height:40px;padding:0 14px;border:0;background:var(--bg);cursor:pointer;font-weight:500}
+.tabs button.on{background:var(--ink);color:var(--bg)}
+input[type=search]{min-height:40px;font-size:16px;padding:0 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);flex:1 1 220px}
+select{min-height:40px;padding:0 8px;border:1px solid var(--line);border-radius:8px;background:var(--bg);font-size:14px}
+label.ck{display:flex;gap:6px;align-items:center;font-size:13.5px;color:var(--mute);white-space:nowrap}
+.note{font-size:13px;color:var(--mute);margin:0 0 8px}
+.scroll{overflow-x:auto;border-top:2px solid var(--ink)}
+table{width:100%;border-collapse:collapse}
+th{font-size:12.5px;color:var(--mute);font-weight:500;text-align:left;padding:8px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th.n,td.n{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td.n{font-weight:600}
+.sku{font-weight:600;font-size:13px;overflow-wrap:anywhere}
+.nm{font-size:14px}
+.meta{font-size:12.5px;color:var(--mute)}
+.m{font-size:13px;display:flex;flex-wrap:wrap;gap:2px 10px;padding:1px 0}
+.m b{font-weight:600}
+.m .q{font-variant-numeric:tabular-nums;white-space:nowrap}
+.fz{font-size:11.5px;border:1px dashed var(--amber);color:var(--amber);border-radius:4px;padding:0 4px}
+.pill{display:inline-block;font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.p-in{background:var(--soft);color:var(--ink)}.p-low{background:color-mix(in srgb,var(--amber) 16%,transparent);color:var(--amber)}.p-out{background:color-mix(in srgb,var(--red) 14%,transparent);color:var(--red)}.p-na{color:var(--mute);border:1px solid var(--line)}.p-nomatch{color:var(--mute);border:1px dashed var(--line)}
+tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
+.zero{color:var(--red)}
+.more{margin:14px 0 40px}
+.empty{padding:40px 0;color:var(--mute);text-align:center}
+.gate{border:1px solid var(--line);border-radius:10px;padding:16px;margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+@media(max-width:600px){.src{display:flex;overflow-x:auto;gap:8px;padding-block:12px;scroll-snap-type:x mandatory}.sc{flex:0 0 172px;scroll-snap-align:start}table{font-size:13px}.stack thead{display:none}.stack tr{display:grid;padding-block:8px;border-bottom:1px solid var(--line)}.stack td{display:flex;justify-content:space-between;gap:12px;border:0;padding:3px 0;text-align:right}.stack td::before{content:attr(data-l);color:var(--mute);font-size:12.5px;font-weight:400;text-align:left}.stack td.w{display:block;text-align:left}.stack td.w::before{display:none}tr.al td:first-child{box-shadow:none}tr.al{box-shadow:inset 3px 0 var(--red);padding-left:8px}}
+</style>
+</head>
+<body>
+<header><div class="wrap">
+  <div><h1>Tồn kho NCC · Peri</h1><p>Mã GEARVN đang kinh doanh đối chiếu tồn kho HCM / HN của nhà cung cấp, đọc trực tiếp từ Google Sheet.</p></div>
+  <div class="hbtn"><span id="upd">Đang tải…</span><button class="btn" id="refresh">Làm mới</button></div>
+</div></header>
+<main class="wrap">
+  <div id="gate"></div>
+  <div class="src" id="src"></div>
+  <div class="kpi" id="kpi"></div>
+  <div class="tools">
+    <div class="tabs"><button id="t-sku" class="on">Theo SKU GVN</button><button id="t-ncc">Tồn kho NCC</button></div>
+    <input type="search" id="q" placeholder="Tìm SKU, tên, mã NCC, part number…">
+    <select id="fn" aria-label="Nhà cung cấp"></select>
+    <select id="fb" aria-label="Hãng"></select>
+    <select id="so" aria-label="Sắp xếp"><option value="al">Hết hàng trước</option><option value="desc">Tồn nhiều → ít</option><option value="asc">Tồn ít → nhiều</option><option value="az">Tên A → Z</option></select>
+    <button class="btn" id="copy">Copy bảng</button>
+  </div>
+  <p class="note" id="note"></p>
+  <div class="scroll"><table class="stack"><thead id="th"></thead><tbody id="tb"></tbody></table></div>
+  <div class="more" id="more"></div>
+</main>
+<script>window.PERI_API='https://script.google.com/macros/s/AKfycbzt4cp1XfLXDw8VNBwHLSwd3URQjgibUBclVDCDChT27hNAMZSVHx-oPtiqULHUfEbH/exec';</script>
+<script>window.onerror=function(m,s,l,c){var g=document.getElementById('gate');if(g)g.innerHTML='<div class="gate"><span class="err">Lỗi trang: '+String(m).replace(/</g,'&lt;')+' (dòng '+l+':'+c+')</span></div>';};</script>
+<script>
+(()=>{
+const SID={logi:'1lfgrXbm_jj073s29us2M3dUftn8D2FW4fEJLedPzrP0',atk:'1n7pGGfcXhtcfxxThOAYD2se8Zh1_CUcd4zZLrt7U18c',mh:'1w_ndsYa7dLGi9CndRX8lPOzeJVr7wT90KVywReAdWDo',vasus:'1M5By9120T5bZ1eP54B9KOGZ4q_Q61kWoGvrQWG_B9Bk',vrazer:'125jikvCtFzS66twLf4umZyBpRFIeElrW8z_Jfd-YkHM',dasus:'1y5ZKiw_uBv1rij_mB242DPvXka6-DCGw6XrOGvGWfjw',gvn:'1wm3Ytp13IHS5R6LQ07wfvGgMeyovRaseArxxSrM0_cc'};
+const SOURCES=[
+ {id:'dgw-logi',ncc:'DGW',brand:'Logitech',sid:SID.logi,tab:'TỒN KHO',cols:'A1:J2500',gid:91559644},
+ {id:'dgw-asus',ncc:'DGW',brand:'Asus',sid:SID.dasus,tab:'TỒN KHO',cols:'A1:N2500',gid:1055861893,mul:1000},
+ {id:'vsc-asus',ncc:'VSC',brand:'Asus',sid:SID.vasus,tab:'TỒN KHO',cols:'A1:J2500',gid:718291458},
+ {id:'vsc-razer',ncc:'VSC',brand:'Razer',sid:SID.vrazer,tab:' tồn kho RAZER',cols:'A1:H2500',gid:780734675},
+ {id:'lk-atk',ncc:'Linh Kiệt',brand:'ATK',sid:SID.atk,tab:'Tồn kho ATK',cols:'A1:H2500',gid:1787075563},
+ {id:'mh-dareu',ncc:'Mai Hoàng',brand:'DAREU',sid:SID.mh,tab:'TỒN KHO DAREU',cols:'A1:G2500',gid:741525144},
+ {id:'mh-akko',ncc:'Mai Hoàng',brand:'AKKO',sid:SID.mh,tab:'TỒN KHO AKKO',cols:'A1:F2500',gid:966503420},
+ {id:'mh-warrior',ncc:'Mai Hoàng',brand:'Warrior',sid:SID.mh,tab:'TỒN KHO WARRIOR',cols:'A1:F2500',gid:1663328221},
+ {id:'mh-rapoo',ncc:'Mai Hoàng',brand:'Rapoo',sid:SID.mh,tab:'TỒN KHO RAPOO',cols:'A1:F2500',gid:1499542568},
+ {id:'mh-xig',ncc:'Mai Hoàng',brand:'Xigmatek',sid:SID.mh,tab:'TỒN KHO XIGMATEK',cols:'A1:G2500',gid:304930893}];
+const GVN={id:'gvn',sid:SID.gvn,tab:'Báo Giá SP Peri',cols:'A1:M4000',gid:696525776};
+const NCCS=['DGW','VSC','Linh Kiệt','Mai Hoàng'];
+const LOW=5;
+/*LOGIC-START*/
+const hnorm=s=>String(s??'').normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/đ/gi,'d').toLowerCase().replace(/\s+/g,' ').trim();
+const ck=s=>hnorm(s).toUpperCase().replace(/[^A-Z0-9]/g,'');
+const nk=s=>hnorm(s).replace(/[^a-z0-9]+/g,' ').trim();
+const FIELD={name:[/^ten (san pham|hang)/,/^model/,/san pham gearvn/],code:[/part number/,/^p\/n$/,/^id code$/,/^ma hang$/],mvt:[/^ma vat tu$/,/^mvt$/],hcm:[/hcm/],hn:[/(^|[^a-z])hn([^a-z]|$)/,/ha noi/],qty:[/^ton kho$/],price:[/gia nhap/,/gia (xuat )?gvn|gvnq/,/^gia/],note:[/ghi chu/,/^note$/],sku:[/sku gearvn/]};
+const ALLRE=Object.values(FIELD).flat();
+const detect=rows=>{
+  const col={},rowOf={},lim=Math.min(rows.length,7);
+  for(const f in FIELD){outer:for(const re of FIELD[f])for(let r=0;r<lim;r++){const row=rows[r]||[];for(let c=0;c<row.length;c++){const t=hnorm(row[c]);if(t&&t.length<40&&re.test(t)){col[f]=c;rowOf[f]=r;break outer;}}}}
+  const core=['name','hcm','hn','code','price','qty'].filter(f=>f in rowOf).map(f=>rowOf[f]);
+  const end=core.length?Math.max(...core):0;let date='';
+  for(let r=0;r<=Math.min(end+1,rows.length-1);r++)for(const v of rows[r]||[]){const m=hnorm(v).match(/^(?:ton[^0-9]*)?(\d{1,2})\/(\d{1,2})(?:\/(\d{2,4}))?$/);if(m&&!date)date=m[1].padStart(2,'0')+'/'+m[2].padStart(2,'0')+(m[3]?'/'+m[3]:'');}
+  return {col,start:end+1,end,date,ok:'name' in col};
+};
+const pq=s=>{s=String(s??'').trim();if(!s)return{v:null};const t=hnorm(s);if(/^-+$/.test(t)||t==='het'||t==='het hang')return{v:0};if(t==='ok'||t==='co'||t==='co hang')return{v:null,ok:true};const d=s.replace(/[\s,.]/g,'');if(/^-?\d+$/.test(d))return{v:+d};return{v:null,t:s};};
+const pp=s=>{const d=String(s??'').replace(/[\s,.đ₫]/g,'');return /^\d+$/.test(d)?+d:null;};
+const hasL=s=>/[a-zà-ỹ]/i.test(s);
+const parseSource=(src,rows)=>{
+  const D=detect(rows),items=[];if(!D.ok)return{items,date:D.date,bad:true};
+  const first=String((rows[D.end]||[])[0]??'').trim();let group=first&&hasL(first)&&!ALLRE.some(re=>re.test(hnorm(first)))?first:'';
+  for(let r=D.start;r<rows.length;r++){
+    const row=rows[r]||[],get=f=>D.col[f]==null?'':String(row[D.col[f]]??'').trim();
+    let name=get('name');const code=get('code'),mvt=get('mvt'),sku=get('sku'),hs=get('hcm'),ns=get('hn'),price=get('price'),note=get('note');
+    const qs=D.col.qty!=null&&D.col.qty!==D.col.hcm&&D.col.qty!==D.col.hn?get('qty'):'';
+    const has=code||mvt||price||hs||ns||qs||(sku&&sku!=='0');
+    if(!name&&/\d/.test(code))name=code;
+    if(!name){const t=row.map(x=>String(x??'').trim()).find(x=>x&&hasL(x)&&!x.startsWith('#'));if(t&&t.length<60&&!has)group=t;continue;}
+    if(!has&&name.length<45&&name===name.toUpperCase()&&hasL(name)){group=name;continue;}
+    if(FIELD.name.some(re=>re.test(hnorm(name))))continue;
+    const hcm=pq(hs),hn=pq(ns),qty=pq(qs);
+    const total=hcm.v!=null||hn.v!=null?(hcm.v||0)+(hn.v||0):qty.v;
+    const ok=!!(hcm.ok||hn.ok||qty.ok);
+    const state=total>0||ok?(total>0&&total<=LOW&&!ok?'low':'in'):total===0?'out':'na';
+    const pr=pp(price);
+    items.push({src,group,name,code,mvt,sku:sku==='0'?'':sku,hcm,hn,qty,total,ok,state,price:pr==null?null:pr*(src.mul&&pr<100000?src.mul:1),note:[note,hcm.t,hn.t,qty.t,pr==null&&price?'giá: '+price:''].filter(Boolean).join(' · '),gvn:[]});
+  }
+  return {items,date:D.date};
+};
+const parseGvn=rows=>{
+  const h=(rows[0]||[]).map(hnorm),ix=k=>h.indexOf(k);
+  const c={date:ix('date created'),brand:ix('brand'),sku:ix('sku'),name:ix('ten san pham'),mancc:ix('ma ncc'),retail:ix('gia ban le'),cost:ix('gia nhap'),npp:ix('npp'),status:ix('tinh trang')};
+  const g=(r,k)=>c[k]<0?'':String(r[c[k]]??'').trim(),out=[];
+  for(let i=1;i<rows.length;i++){const r=rows[i]||[];const sku=g(r,'sku');if(!sku)continue;out.push({sku,brand:g(r,'brand'),name:g(r,'name'),mancc:g(r,'mancc'),cost:pp(g(r,'cost')),retail:pp(g(r,'retail')),npp:g(r,'npp'),status:g(r,'status')});}
+  return out;
+};
+const STOP=new Set('chuot ban phim tai nghe may tinh gaming khong day co mouse keyboard headset di lot cho mau va the loai wireless gear choang dau de'.split(' '));
+const toks=s=>new Set(nk(s).split(' ').filter(t=>t&&!STOP.has(t)));
+const jac=(a,b)=>{let i=0;for(const t of a)if(b.has(t))i++;return i/(a.size+b.size-i||1);};
+const xcodes=n=>[(n.match(/^([a-z]{0,4}\d{4,}[a-z0-9-]*)\s*_/i)||[])[1],(n.match(/_\s*([a-z0-9-]{4,})\s*$/i)||[])[1]].filter(Boolean);
+const brandOk=(a,b)=>{a=hnorm(a);b=hnorm(b);return !!a&&!!b&&(a===b||a.includes(b)||b.includes(a));};
+const link=(gvn,items)=>{
+  const I={code:new Map(),sku:new Map(),name:new Map()},add=(m,k,it)=>{if(!k)return;if(!m.has(k))m.set(k,[]);m.get(k).push(it);};
+  for(const it of items){it.gvn=[];[it.code,it.mvt,...xcodes(it.name)].forEach(c=>{const k=ck(c);if(k.length>=4)add(I.code,k,it);});if(it.sku)add(I.sku,ck(it.sku),it);add(I.name,nk(it.name),it);it.tok=toks(it.name);}
+  for(const g of gvn){
+    const res=new Map(),put=(arr,t)=>(arr||[]).forEach(it=>{if(!res.has(it))res.set(it,t);});
+    if(g.mancc){const k=ck(g.mancc);if(k.length>=4)put(I.code.get(k),'mã');put(I.name.get(nk(g.mancc)),'tên');}
+    g.m=[...res].map(([it,t])=>({it,t}));
+    g.live=hnorm(g.status)==='con hang';
+    if(g.live)g.m.forEach(x=>x.it.gvn.push(g.name||g.sku));
+    g.inScope=g.live&&(g.m.length>0||NCCS.some(x=>hnorm(g.npp).includes(hnorm(x))));
+  }
+};
+/*LOGIC-END*/
+if(typeof window==='undefined'){module.exports={hnorm,detect,pq,parseSource,parseGvn,link,SOURCES};return;}
+const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=v=>v==null?'—':v.toLocaleString('vi-VN');
+const money=v=>v==null?'':v.toLocaleString('vi-VN')+'đ';
+const STL={in:'Còn hàng',low:'Sắp hết',out:'Hết hàng',na:'Chưa có số',nomatch:'Chưa khớp mã'};
+const S={view:'sku',q:'',ncc:'',brand:'',sort:'al',st:'',src:'',limit:200};
+const data={};SOURCES.concat(GVN).forEach(s=>data[s.id]={state:'loading'});
+let gvn=[],items=[],mcp=null;
+const url=s=>`https://docs.google.com/spreadsheets/d/${s.sid}/edit#gid=${s.gid}`;
+const range=s=>"'"+s.tab.replace(/'/g,"''")+"'!"+s.cols;
+const vals=res=>{let p=res&&res.payload;if(typeof p==='string'){try{p=JSON.parse(p)}catch(e){}}if(!p&&res&&res.content&&res.content[0]&&res.content[0].text){try{p=JSON.parse(res.content[0].text)}catch(e){}}return (p&&(p.values||(p.content&&p.content.values)))||[];};
+const ERR={needs_reauth:'Google Sheets cần kết nối lại (claude.ai → Settings → Connectors).',server_not_connected:'Chưa kết nối Google Sheets (claude.ai → Settings → Connectors).',selection_required:'Chọn tài khoản Google Sheets trong hộp thoại của Claude.',approval_required:'Cần cho phép trang đọc Google Sheets.',not_in_manifest:'Trang chưa được cho phép dùng Google Sheets.',blocked_by_policy:'Tổ chức đang chặn Google Sheets cho trang này.',tool_error:'Không đọc được sheet (đổi tên tab hoặc không có quyền xem?).'};
+const recompute=()=>{
+  gvn=data.gvn.rows?parseGvn(data.gvn.rows):[];items=[];
+  for(const s of SOURCES){const d=data[s.id];if(d.rows){const p=parseSource(s,d.rows);d.items=p.items;d.date=p.date;d.bad=p.bad;items.push(...p.items);}}
+  link(gvn,items);render();
+};
+let tmr=0;const later=()=>{clearTimeout(tmr);tmr=setTimeout(recompute,120);};
+const onEv=id=>ev=>{const d=data[id];if(ev.type==='data'){d.rows=vals(ev.result);d.state='ok';d.at=ev.result.cache?ev.result.cache.storedAt:Date.now();d.err='';}else{const c=ev.error&&ev.error.code;d.err=ERR[c]||((ev.error&&ev.error.message)||'Lỗi tải dữ liệu');d.code=c;if(['needs_reauth','server_not_connected','blocked_by_policy','not_in_manifest','approval_required','selection_required'].includes(c)){d.rows=null;}d.state=d.rows?'stale':'err';}later();};
+const watch=()=>SOURCES.concat(GVN).forEach(s=>mcp.watchTool('Google Sheets','get_values',{spreadsheetId:s.sid,range:range(s)},onEv(s.id),{cache:{staleTime:600000,gcTime:604800000}}));
+const gate=()=>{
+  const all=SOURCES.concat(GVN).map(s=>data[s.id]);const codes=new Set(all.map(d=>d.code).filter(Boolean));
+  if(gas&&S.needPin){if($('pinf')&&!S.pinDirty)return;S.pinDirty=false;$('gate').innerHTML=`<form class="gate" id="pinf"><label for="pin" style="font-weight:600">Nhập mã PIN để xem tồn kho</label><span style="display:flex;gap:8px;flex-wrap:wrap"><input id="pin" type="password" inputmode="numeric" autocomplete="off" maxlength="12" style="min-height:40px;font-size:16px;padding:0 12px;border:1px solid var(--line);border-radius:8px;width:9em"><button class="btn" type="submit">Xem</button></span>${S.pinMsg?`<span class="err" style="width:100%">${esc(S.pinMsg)}</span>`:''}</form>`;$('pinf').onsubmit=e=>{e.preventDefault();const v=$('pin').value.trim();if(!v)return;setPin(v);S.needPin=false;SOURCES.concat(GVN).forEach(s=>data[s.id].state='loading');render();loadGas(false);};return;}
+  if(!mcp&&!gas){$('gate').innerHTML=`<div class="gate"><span>Trang này đọc Google Sheet qua kết nối Google Sheets của bạn. Hãy mở trang trong Claude (claude.ai) với Google Sheets đã kết nối.</span></div>`;return;}
+  if(codes.has('approval_required')||codes.has('not_in_manifest')){$('gate').innerHTML=`<div class="gate"><span>Trang cần bạn cho phép đọc các Google Sheet tồn kho.</span><button class="btn" id="allow">Cho phép đọc Google Sheets</button></div>`;$('allow').onclick=async()=>{try{await mcp.callTool('Google Sheets','get_values',{spreadsheetId:GVN.sid,range:range(GVN)});await mcp.invalidate('Google Sheets').catch(()=>{});}catch(e){$('gate').innerHTML=`<div class="gate"><span class="err">${esc(ERR[e.code]||e.message)}</span></div>`;}};return;}
+  const page=all.every(d=>d.state==='err')&&all[0].err;$('gate').innerHTML=page?`<div class="gate"><span class="err">${esc(all[0].err)}</span><button class="btn" id="rl">Tải lại</button></div>`:'';if($('rl'))$('rl').onclick=()=>gas?loadGas(true):location.reload();
+};
+const API=window.PERI_API||'';const gas=!!(window.google&&google.script&&google.script.run)||!!API;
+const callData=(force,pin,ok,fail)=>{if(API){fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({force:!!force,pin:pin})}).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}).then(ok).catch(fail);}else{google.script.run.withSuccessHandler(ok).withFailureHandler(fail).getData(!!force,pin);}};
+const PINK='peri_pin';const getPin=()=>{try{return localStorage.getItem(PINK)||''}catch(e){return S.pin||''}};const setPin=v=>{S.pin=v;try{v?localStorage.setItem(PINK,v):localStorage.removeItem(PINK)}catch(e){}};
+const askPin=msg=>{S.needPin=true;S.pinDirty=true;S.pinMsg=msg||'';SOURCES.concat(GVN).forEach(s=>{data[s.id].state='err';data[s.id].err='';});render();setTimeout(()=>{const i=$('pin');if(i)i.focus();},50);};
+const loadGas=force=>{if(!getPin()){askPin('');return;}S.needPin=false;SOURCES.concat(GVN).forEach(s=>{if(!data[s.id].rows)data[s.id].state='loading';});$('upd').textContent='Đang tải dữ liệu…';
+  callData(force,getPin(),res=>{if(res&&res.pinError){setPin('');askPin(res.locked?'Nhập sai quá nhiều lần. Thử lại sau 10 phút.':'Mã PIN không đúng.');return;}SOURCES.concat(GVN).forEach(s=>{const d=data[s.id],r=res&&res[s.id];if(r&&r.rows){d.rows=r.rows;d.state='ok';d.err='';d.at=r.at||res.at;}else{d.err=(r&&r.error)||'Không đọc được sheet';d.state=d.rows?'stale':'err';}});recompute();},
+  e=>{SOURCES.concat(GVN).forEach(s=>{const d=data[s.id];d.err='Lỗi tải: '+((e&&e.message)||e);d.state=d.rows?'stale':'err';});recompute();});};
+const counts=arr=>{const c={in:0,low:0,out:0,na:0,nomatch:0};arr.forEach(x=>c[x.state]++);return c;};
+const renderSrc=()=>{
+  $('src').innerHTML=SOURCES.map(s=>{const d=data[s.id],it=d.items||[],c=counts(it),n=it.length||1;
+    const bar=d.items?`<div class="bar">${['in','low','out','na'].map(k=>c[k]?`<i class="i-${k}" style="width:${c[k]/n*100}%" title="${STL[k]}: ${c[k]}"></i>`:'').join('')}</div><small><span>${c.in+c.low} còn · ${c.out} hết${c.na?` · ${c.na} chưa có số`:''}</span></small>`:'';
+    const st=d.state==='loading'?'<small>Đang tải…</small>':d.err?`<span class="err">${esc(d.err)}</span>`:d.bad?'<span class="err">Không nhận ra cột của tab này.</span>':'';
+    return `<div class="sc${S.src===s.id?' on':''}" data-src="${s.id}" role="button" tabindex="0"><b>${esc(s.ncc)} · ${esc(s.brand)}</b><small><span>${d.date?'Sheet ghi '+esc(d.date):(d.items?'Sheet không ghi ngày':'')}</span><a href="${url(s)}" target="_blank" rel="noopener">Mở sheet</a></small>${bar}${st}</div>`;}).join('');
+};
+const fillSel=(id,label,vals,cur)=>{$(id).innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option${v===cur?' selected':''}>${esc(v)}</option>`).join('');};
+const qmatch=(q,...f)=>!q||f.some(x=>hnorm(x).includes(q));
+const rowsSku=()=>{
+  const q=hnorm(S.q);let r=[];
+  for(const g of gvn){if(!g.inScope)continue;
+    if(g.m.length)g.m.forEach(({it})=>r.push({g,it,name:g.name,ncc:it.src.ncc,total:it.total,state:it.state}));
+    else r.push({g,it:null,name:g.name,ncc:g.npp,total:null,state:'nomatch'});}
+  if(S.brand)r=r.filter(x=>hnorm(x.g.brand)===hnorm(S.brand));
+  if(S.ncc)r=r.filter(x=>hnorm(x.ncc).includes(hnorm(S.ncc)));
+  if(S.src)r=r.filter(x=>x.it&&x.it.src.id===S.src);
+  const base=r;
+  if(S.st)r=r.filter(x=>x.state===S.st);
+  r=r.filter(x=>qmatch(q,x.g.name,x.g.sku,x.g.mancc,x.g.brand,x.ncc,x.it&&x.it.code,x.it&&x.it.name));
+  return {base,r};
+};
+const rowsNcc=()=>{
+  const q=hnorm(S.q);let r=items;
+  if(S.ncc)r=r.filter(i=>i.src.ncc===S.ncc);if(S.brand)r=r.filter(i=>hnorm(i.src.brand)===hnorm(S.brand));if(S.src)r=r.filter(i=>i.src.id===S.src);
+  const base=r;
+  if(S.st==='alert')r=r.filter(i=>i.state==='out'&&i.gvn.length);else if(S.st==='nomatch')r=r.filter(i=>!i.gvn.length);else if(S.st)r=r.filter(i=>i.state===S.st);
+  r=r.filter(i=>qmatch(q,i.name,i.code,i.mvt,i.group,...i.gvn));
+  return {base,r};
+};
+const ORD={out:0,low:1,na:2,in:3,nomatch:4};
+const sortBy=(r,isSku)=>{const t=x=>x.total==null?-1:x.total;const nm=x=>hnorm(x.name);
+  const f={al:(a,b)=>ORD[a.state]-ORD[b.state]||nm(a).localeCompare(nm(b)),desc:(a,b)=>t(b)-t(a),asc:(a,b)=>(a.total==null?1e9:a.total)-(b.total==null?1e9:b.total),az:(a,b)=>nm(a).localeCompare(nm(b))}[S.sort];return r.slice().sort(f);};
+const qv=(it,k)=>k==='hcm'&&it.hcm.v==null&&it.hn.v==null?it.qty.v:it[k].v;
+const qs=(it,k)=>it[k].ok?'OK':fmt(qv(it,k));
+const pill=s=>`<span class="pill p-${s}">${STL[s]}</span>`;
+const q2=v=>v==null?'':`<span class="q${v.v===0?' zero':''}">${v.ok?'OK':fmt(v.v)}</span>`;
+const kpi=(base,isSku)=>{const c=counts(base);
+  const list=isSku?[['','Sản phẩm GVN còn hàng',new Set(base.map(x=>x.g)).size],['in','Còn hàng ở NCC',c.in],['low',`Sắp hết (≤${LOW})`,c.low],['out','Hết hàng ở NCC',c.out],['nomatch','Chưa khớp mã NCC',c.nomatch],['na','Chưa có số tồn',c.na]]
+   :[['','Dòng tồn kho NCC',base.length],['in','Còn hàng',c.in],['low',`Sắp hết (≤${LOW})`,c.low],['out','Hết hàng',c.out],['alert','Hết hàng, GVN đang bán',base.filter(i=>i.state==='out'&&i.gvn.length).length],['nomatch','GVN không bán',base.filter(i=>!i.gvn.length).length],['na','Chưa có số tồn',c.na]];
+  $('kpi').innerHTML=list.map(([k,l,v])=>`<button data-st="${k}" class="${S.st===k?'on ':''}${k==='out'||k==='alert'?'alert':''}"><strong>${fmt(v)}</strong><span>${l}</span></button>`).join('');};
+const render=()=>{
+  gate();renderSrc();
+  const ld=SOURCES.concat(GVN).filter(s=>data[s.id].at);const at=ld.length?Math.min(...ld.map(s=>data[s.id].at)):0;
+  const loading=SOURCES.concat(GVN).filter(s=>data[s.id].state==='loading').length;
+  $('upd').textContent=S.needPin?'Cần mã PIN':loading?`Đang tải ${loading} sheet…`:at?'Dữ liệu lúc '+new Date(at).toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'})+' '+new Date(at).toLocaleDateString('vi-VN'):'';
+  fillSel('fn','Tất cả NCC',NCCS,S.ncc);
+  fillSel('fb','Tất cả hãng',[...new Set((S.view==='sku'?gvn.filter(g=>g.inScope).map(g=>g.brand):SOURCES.map(s=>s.brand)).filter(Boolean).map(b=>b.trim()))].sort((a,b)=>a.localeCompare(b)),S.brand);
+    $('t-sku').classList.toggle('on',S.view==='sku');$('t-ncc').classList.toggle('on',S.view==='ncc');
+  const isSku=S.view==='sku',{base,r}=isSku?rowsSku():rowsNcc();kpi(base,isSku);
+  const rows=sortBy(r,isSku),shown=rows.slice(0,S.limit);
+  const srcName=S.src?SOURCES.find(s=>s.id===S.src):null;
+  $('note').innerHTML=`${fmt(rows.length)} dòng${srcName?` · nguồn: ${esc(srcName.ncc+' · '+srcName.brand)} <a href="#" id="clrsrc">bỏ lọc</a>`:''}${isSku?' · Sản phẩm “Còn hàng” trong sheet Báo Giá SP Peri, khớp với tồn NCC qua cột “MÃ NCC”.':''}`;
+  if(isSku){
+    $('th').innerHTML='<tr><th>Tên sản phẩm (GVN)</th><th>Nhà cung cấp</th><th class="n">HCM</th><th class="n">HN</th><th>Trạng thái</th></tr>';
+    $('tb').innerHTML=shown.map(({g,it,ncc,state})=>`<tr class="${state==='out'?'al':''}"><td class="w"><div class="nm">${esc(g.name||g.sku)}</div></td><td data-l="Nhà cung cấp"><b>${esc(ncc||'—')}</b></td><td class="n${it&&qv(it,'hcm')===0?' zero':''}" data-l="HCM">${it?qs(it,'hcm'):'—'}</td><td class="n${it&&qv(it,'hn')===0?' zero':''}" data-l="HN">${it?qs(it,'hn'):'—'}</td><td data-l="Trạng thái">${pill(state)}</td></tr>`).join('');
+  }else{
+    $('th').innerHTML='<tr><th>Sản phẩm NCC</th><th>Mã</th><th class="n">HCM</th><th class="n">HN</th><th class="n">Giá NCC</th><th>Trạng thái</th><th>Sản phẩm GVN</th></tr>';
+    $('tb').innerHTML=shown.map(i=>`<tr><td class="w"><div class="nm">${esc(i.name)}</div><div class="meta">${esc(i.src.ncc)} · ${esc(i.src.brand)}${i.group?' · '+esc(i.group):''}${i.note?' · '+esc(i.note):''}</div></td><td data-l="Mã"><span class="meta">${esc([i.code,i.mvt].filter(Boolean).join(' · ')||'—')}</span></td><td class="n" data-l="HCM">${i.hcm.v==null&&i.hn.v==null&&i.qty.v!=null?fmt(i.qty.v):(q2(i.hcm)||'—')}</td><td class="n" data-l="HN">${q2(i.hn)||'—'}</td><td class="n" data-l="Giá NCC">${i.price?money(i.price):'—'}</td><td data-l="Trạng thái">${pill(i.state)}</td><td data-l="Sản phẩm GVN"><span class="meta" style="overflow-wrap:anywhere">${i.gvn.length?esc(i.gvn.join(', ')):'—'}</span></td></tr>`).join('');
+  }
+  if(!rows.length)$('tb').innerHTML=`<tr><td colspan="7" class="empty">${loading?'Đang tải dữ liệu từ Google Sheet…':'Không có dòng nào khớp bộ lọc.'}</td></tr>`;
+  $('more').innerHTML=rows.length>S.limit?`<button class="btn" id="mo">Xem thêm ${fmt(Math.min(200,rows.length-S.limit))} dòng (còn ${fmt(rows.length-S.limit)})</button>`:'';
+  if($('mo'))$('mo').onclick=()=>{S.limit+=200;render();};
+  if($('clrsrc'))$('clrsrc').onclick=e=>{e.preventDefault();S.src='';render();};
+  S.rows=rows;
+};
+const set=(k,v)=>{S[k]=v;S.limit=200;render();};
+$('q').oninput=e=>set('q',e.target.value);$('fn').onchange=e=>set('ncc',e.target.value);$('fb').onchange=e=>set('brand',e.target.value);$('so').onchange=e=>set('sort',e.target.value);
+const view=v=>{S.view=v;S.st='';S.brand='';S.limit=200;try{if(location.hash!=='#'+v)history.replaceState(null,'','#'+v);}catch(e){}render();};
+$('t-sku').onclick=()=>view('sku');$('t-ncc').onclick=()=>view('ncc');
+window.addEventListener('hashchange',()=>{const h=location.hash.slice(1);if(h==='sku'||h==='ncc')view(h);});
+$('kpi').onclick=e=>{const b=e.target.closest('button');if(b)set('st',S.st===b.dataset.st?'':b.dataset.st);};
+$('src').onclick=e=>{if(e.target.closest('a'))return;const c=e.target.closest('.sc');if(c){S.src=S.src===c.dataset.src?'':c.dataset.src;if(S.src&&S.view==='sku'&&!gvn.some(g=>g.inScope&&g.m.some(x=>x.it.src.id===S.src)))S.view='ncc';S.limit=200;render();}};
+$('src').onkeydown=e=>{if(e.key==='Enter')$('src').onclick(e);};
+$('refresh').onclick=async()=>{if(gas){if(S.needPin)return;loadGas(true);return;}if(!mcp)return;SOURCES.concat(GVN).forEach(s=>data[s.id].state=data[s.id].rows?'ok':'loading');$('upd').textContent='Đang làm mới…';try{await mcp.invalidate('Google Sheets');}catch(e){}};
+$('copy').onclick=async()=>{const isSku=S.view==='sku',r=S.rows||[];
+  const head=isSku?['Tên sản phẩm (GVN)','SKU','Nhà cung cấp','HCM','HN','Trạng thái']:['NCC','Hãng','Nhóm','Tên','Mã','HCM','HN','Giá NCC','Trạng thái','Sản phẩm GVN'];
+  const v=x=>x==null?'':x;const lines=r.map(x=>isSku?[x.g.name,x.g.sku,x.ncc,x.it?(x.it.hcm.ok?'OK':v(qv(x.it,'hcm'))):'',x.it?(x.it.hn.ok?'OK':v(x.it.hn.v)):'',STL[x.state]]:[x.src.ncc,x.src.brand,x.group,x.name,x.code||x.mvt,x.hcm.ok?'OK':v(x.hcm.v??x.qty.v),x.hn.ok?'OK':v(x.hn.v),v(x.price),STL[x.state],x.gvn.join('; ')]);
+  const txt=[head,...lines].map(l=>l.map(c=>String(c).replace(/[\t\n]/g,' ')).join('\t')).join('\n');
+  try{await navigator.clipboard.writeText(txt);$('copy').textContent='Đã copy '+r.length+' dòng';}catch(e){$('copy').textContent='Trình duyệt chặn copy';}setTimeout(()=>$('copy').textContent='Copy bảng',2500);};
+const h0=location.hash.slice(1);if(h0==='ncc')S.view='ncc';
+render();
+if(gas){loadGas(false);}
+else if(window.claude&&window.claude.use){window.claude.use('mcp').then(m=>{mcp=m;if(!mcp){SOURCES.concat(GVN).forEach(s=>data[s.id].state='err');render();return;}watch();render();}).catch(()=>{render();});}
+else{SOURCES.concat(GVN).forEach(s=>data[s.id].state='err');render();}
+})();
+</script>
+</body>
+</html>
