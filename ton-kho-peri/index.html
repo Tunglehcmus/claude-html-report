@@ -262,11 +262,11 @@ const kwMatch=(g,items,gk,skip)=>{const gb=hnorm(g.brand).replace(/[^a-z0-9]/g,'
   const gt=new Set(kwToks(g.name)),req=[...gt].filter(t=>!KW_SOFT.has(t));if(req.length<2)return[];const gCol=[...gt].some(t=>KW_COL.has(t));
   let pass=[];for(const it of items){if(it.nogvn)continue;if(skip&&skip.has(it.src.ncc))continue;if(it._bn==null)it._bn=hnorm(it.src.brand).replace(/[^a-z0-9]/g,'');if(!gb||!it._bn||!(gb===it._bn||gb.includes(it._bn)||it._bn.includes(gb)))continue;
     if(!it._kt){it._kt=new Set(kwToks(it.name));it._ks=[...new Set(kwToks(it.name.replace(/\([^)]*\)?/g,' ')))];}
-    if(req.every(t=>it._kt.has(t)))pass.push(it);}
+    if(req.every(t=>it._kt.has(t))&&(gt.has('wl')||!it._kt.has('wl')))pass.push(it);}
   if(!gCol){const cols=it=>[...it._kt].filter(t=>KW_COL.has(t)&&t!=='black');const plain=pass.filter(it=>!cols(it).length);
     pass=plain.length?plain:pass.filter(it=>cols(it).every(c=>!gk||!gk.has(kwKey([...gt,c]))));}
-  const best={};for(const it of pass){const st=it._ks.filter(t=>gCol||!KW_COL.has(t)),sc=st.filter(t=>gt.has(t)).length/(st.length||1),k=it.src.ncc,b=best[k]||(best[k]={s:-1,a:[]});
-    if(sc>b.s+1e-9){b.s=sc;b.a=[it];}else if(Math.abs(sc-b.s)<1e-9)b.a.push(it);}
+  const best={};for(const it of pass){const st=it._ks.filter(t=>(gCol||!KW_COL.has(t))&&!KW_SOFT.has(t)),sc=st.filter(t=>gt.has(t)).length/(st.length||1),k=it.src.ncc,b=best[k]||(best[k]={s:-1,a:[]});
+    if(sc<0.5)continue;if(sc>b.s+1e-9){b.s=sc;b.a=[it];}else if(Math.abs(sc-b.s)<1e-9)b.a.push(it);}
   return Object.values(best).filter(b=>b.a.length<=3).flatMap(b=>b.a);};
 const link=(gvn,items)=>{
   const I={code:new Map(),sku:new Map(),name:new Map(),gmap:new Map(),gsku:new Map(),model:new Map()},add=(m,k,it)=>{if(!k)return;if(!m.has(k))m.set(k,[]);m.get(k).push(it);};
