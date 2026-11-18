@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<script>try{var t=localStorage.getItem("peri_theme");if(t==="light"||t==="dark")document.documentElement.dataset.theme=t}catch(e){}</script>
 <title>Tồn kho NCC Peripherals</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Fredoka:wght@500;600&display=swap" rel="stylesheet">
@@ -18,14 +19,15 @@
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Geist,system-ui,sans-serif;overflow-x:clip}
 .wrap{max-width:1320px;margin:0 auto;padding-inline:max(3vw,16px)}
-header{background:#fff;color:#121214;border-bottom:1px solid #e4e4e9;overflow:hidden}
+header{background:light-dark(#fff,#16171c);color:var(--ink);border-bottom:1px solid var(--line);overflow:hidden}
 header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:8px 64px;padding-block:14px}
 .htxt{display:flex;flex-direction:column;gap:14px;flex:0 1 auto;position:relative;padding-left:101px;padding-top:24px}
 .ladder{position:absolute;left:10px;bottom:-53px;height:270px;width:auto;pointer-events:none;z-index:1}
 .hero{flex:0 1 380px;display:flex;justify-content:center}.hero img{display:block;width:100%;max-width:380px;height:auto}
 @media(max-width:600px){.ladder{display:none}.htxt{padding-left:0;padding-top:0}header .wrap{flex-direction:column-reverse;align-items:stretch}.hero img{max-width:300px;margin-inline:auto}}
 h1{margin:0;font-size:clamp(28px,4vw,40px);line-height:1.05;letter-spacing:-.02em;font-weight:600}
-header p{margin:4px 0 0;color:#62636b;font-size:14px}
+header p{margin:4px 0 0;color:var(--mute);font-size:14px}
+header .btn.theme{background:transparent;color:var(--ink);border:1px solid var(--line);display:inline-flex;align-items:center;gap:6px}header .btn.theme:hover{background:var(--soft);border-color:var(--ink)}
 .hbtn{display:flex;align-items:center;gap:12px;font-size:13px}
 button,select,input{font:inherit;color:inherit}
 .btn{min-height:40px;padding:0 16px;border-radius:8px;border:1px solid var(--line);background:var(--bg);cursor:pointer;font-weight:500}
@@ -163,12 +165,13 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 .psnow i{position:absolute;top:-40px;left:var(--l);width:var(--s);height:var(--s);background:var(--img) center/contain no-repeat;opacity:var(--o);filter:drop-shadow(0 2px 3px rgba(20,22,58,.15));animation:ps-fall var(--d) linear var(--w) infinite;will-change:transform}
 @keyframes ps-fall{0%{transform:translate3d(0,0,0) rotate(0)}25%{transform:translate3d(var(--x),27vh,0) rotate(var(--r))}50%{transform:translate3d(0,54vh,0) rotate(0)}75%{transform:translate3d(calc(var(--x)*-1),81vh,0) rotate(calc(var(--r)*-1))}100%{transform:translate3d(0,calc(100vh + 50px),0) rotate(0)}}
 @media(prefers-reduced-motion:reduce){.psnow{display:none}}
+
 </style>
 </head>
 <body>
 <header><div class="wrap">
   <div class="htxt"><img class="ladder" src="https://tunglehcmus.github.io/claude-html-report/ton-kho-peri/noel-thang.webp" width="258" height="400" alt=""><div class="htitle"><h1>Tồn kho NCC · Peripherals</h1><p>Mã GEARVN đang kinh doanh đối chiếu tồn kho HCM / HN của nhà cung cấp.<br>Số liệu chỉ cập nhật khi bấm "Làm mới".</p></div>
-  <div class="hbtn"><button class="btn" id="refresh">Làm mới</button><span id="upd">Đang tải…</span></div></div>
+  <div class="hbtn"><button class="btn" id="refresh">Làm mới</button><button class="btn theme" id="theme" type="button"></button><span id="upd">Đang tải…</span></div></div>
   <div class="hero"><img src="https://tunglehcmus.github.io/claude-html-report/ton-kho-peri/noel.webp" width="689" height="442" alt=""></div>
 </div></header>
 <main class="wrap">
@@ -465,5 +468,6 @@ else{SOURCES.concat(GVN).forEach(s=>data[s.id].state='err');render();}
 })();
 </script>
 <script>(()=>{const B='https://tunglehcmus.github.io/claude-html-report/ton-kho-peri/',I=['fall-snow','fall-wreath','fall-snow','fall-hat','fall-candy','fall-snow','fall-ginger'].map(f=>`url(${B}${f}.webp)`);const b=document.createElement('div');b.className='psnow';b.setAttribute('aria-hidden','true');const n=innerWidth<600?14:30;let h='';for(let i=0;i<n;i++){h+=`<i style="--img:${I[i%I.length]};--l:${(Math.random()*97).toFixed(1)}%;--s:${((18+Math.random()*14)*(i%I.length===4?1.4:1)).toFixed(0)}px;--o:${(.75+Math.random()*.25).toFixed(2)};--d:${(11+Math.random()*10).toFixed(1)}s;--w:-${(Math.random()*21).toFixed(1)}s;--x:${(Math.random()*60-30).toFixed(0)}px;--r:${(Math.random()*50-25).toFixed(0)}deg"></i>`;}b.innerHTML=h;document.body.appendChild(b);})();</script>
+<script>(()=>{const r=document.documentElement,b=document.getElementById('theme'),mq=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):{matches:false};const cur=()=>r.dataset.theme||(mq.matches?'dark':'light');const lab=()=>{const d=cur()==='dark';b.innerHTML=d?'☀️ Sáng':'🌙 Tối';b.title=d?'Chuyển sang giao diện sáng':'Chuyển sang giao diện tối';b.setAttribute('aria-label',b.title);};b.onclick=()=>{const n=cur()==='dark'?'light':'dark';r.dataset.theme=n;try{localStorage.setItem('peri_theme',n)}catch(e){}lab();};mq.addEventListener&&mq.addEventListener('change',lab);lab();})();</script>
 </body>
 </html>
