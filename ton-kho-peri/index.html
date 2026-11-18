@@ -20,9 +20,10 @@ body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Geist,system-u
 .wrap{max-width:1320px;margin:0 auto;padding-inline:max(3vw,16px)}
 header{background:#fff;color:#121214;border-bottom:1px solid #e4e4e9}
 header .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:8px 64px;padding-block:14px}
-.htxt{display:flex;flex-direction:column;gap:14px;flex:0 1 auto}
+.htxt{display:flex;flex-direction:column;gap:14px;flex:0 1 auto;padding-left:104px}
+.htitle{position:relative}.ladder{position:absolute;right:calc(100% - 6px);top:-11px;height:170px;width:auto;pointer-events:none;z-index:1}
 .hero{flex:0 1 380px;display:flex;justify-content:center}.hero img{display:block;width:100%;max-width:380px;height:auto}
-@media(max-width:600px){header .wrap{flex-direction:column-reverse;align-items:stretch}.hero img{max-width:300px;margin-inline:auto}}
+@media(max-width:600px){.ladder{display:none}.htxt{padding-left:0}header .wrap{flex-direction:column-reverse;align-items:stretch}.hero img{max-width:300px;margin-inline:auto}}
 h1{margin:0;font-size:clamp(28px,4vw,40px);line-height:1.05;letter-spacing:-.02em;font-weight:600}
 header p{margin:4px 0 0;color:#62636b;font-size:14px}
 .hbtn{display:flex;align-items:center;gap:12px;font-size:13px}
@@ -135,7 +136,7 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 </head>
 <body>
 <header><div class="wrap">
-  <div class="htxt"><div><h1>Tồn kho NCC · Peripherals</h1><p>Mã GEARVN đang kinh doanh đối chiếu tồn kho HCM / HN của nhà cung cấp.<br>Số liệu chỉ cập nhật khi bấm "Làm mới".</p></div>
+  <div class="htxt"><div class="htitle"><img class="ladder" src="https://tunglehcmus.github.io/claude-html-report/ton-kho-peri/noel-thang.webp" width="258" height="400" alt=""><h1>Tồn kho NCC · Peripherals</h1><p>Mã GEARVN đang kinh doanh đối chiếu tồn kho HCM / HN của nhà cung cấp.<br>Số liệu chỉ cập nhật khi bấm "Làm mới".</p></div>
   <div class="hbtn"><button class="btn" id="refresh">Làm mới</button><span id="upd">Đang tải…</span></div></div>
   <div class="hero"><img src="https://tunglehcmus.github.io/claude-html-report/ton-kho-peri/noel.webp" width="689" height="442" alt=""></div>
 </div></header>
