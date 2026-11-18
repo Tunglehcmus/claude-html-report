@@ -158,6 +158,11 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 @keyframes x-hop{0%,60%,100%{transform:translateY(0) scaleY(1)}20%{transform:translateY(-14px) scaleY(1.04)}45%{transform:translateY(0) scaleY(.9)}}
 @media(max-width:600px){.xmas{display:none}}
 @media(prefers-reduced-motion:reduce){.xmas *{animation:none!important}}
+
+.psnow{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}
+.psnow i{position:absolute;top:-40px;left:var(--l);width:var(--s);height:var(--s);background:var(--img) center/contain no-repeat;opacity:var(--o);filter:drop-shadow(0 2px 3px rgba(20,22,58,.15));animation:ps-fall var(--d) linear var(--w) infinite;will-change:transform}
+@keyframes ps-fall{0%{transform:translate3d(0,0,0) rotate(0)}25%{transform:translate3d(var(--x),27vh,0) rotate(var(--r))}50%{transform:translate3d(0,54vh,0) rotate(0)}75%{transform:translate3d(calc(var(--x)*-1),81vh,0) rotate(calc(var(--r)*-1))}100%{transform:translate3d(0,calc(100vh + 50px),0) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.psnow{display:none}}
 </style>
 </head>
 <body>
@@ -459,5 +464,6 @@ else if(window.claude&&window.claude.use){window.claude.use('mcp').then(m=>{mcp=
 else{SOURCES.concat(GVN).forEach(s=>data[s.id].state='err');render();}
 })();
 </script>
+<script>(()=>{const B='https://tunglehcmus.github.io/claude-html-report/ton-kho-peri/',I=['fall-snow','fall-wreath','fall-snow','fall-hat','fall-candy','fall-snow','fall-ginger'].map(f=>`url(${B}${f}.webp)`);const b=document.createElement('div');b.className='psnow';b.setAttribute('aria-hidden','true');const n=innerWidth<600?14:30;let h='';for(let i=0;i<n;i++){h+=`<i style="--img:${I[i%I.length]};--l:${(Math.random()*97).toFixed(1)}%;--s:${((18+Math.random()*14)*(i%I.length===4?1.4:1)).toFixed(0)}px;--o:${(.75+Math.random()*.25).toFixed(2)};--d:${(11+Math.random()*10).toFixed(1)}s;--w:-${(Math.random()*21).toFixed(1)}s;--x:${(Math.random()*60-30).toFixed(0)}px;--r:${(Math.random()*50-25).toFixed(0)}deg"></i>`;}b.innerHTML=h;document.body.appendChild(b);})();</script>
 </body>
 </html>
