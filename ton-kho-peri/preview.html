@@ -14,7 +14,7 @@
    COLOUR white ground, near-black ink, GEARVN red field and accent, amber for low stock
    TYPE Geist 600 titles + Geist text, tabular figures in columns
    LAYOUT red title strip, source strip, figures row, toolbar, table; stacks under 600px */
-:root{color-scheme:light dark;--bg:light-dark(#fff,#0e0e10);--ink:light-dark(#121214,#ececee);--mute:light-dark(#62636b,#9c9ca6);--line:light-dark(#e4e4e9,#28282e);--soft:light-dark(#f5f5f7,#17171b);--red:light-dark(#d70018,#ff4157);--amber:light-dark(#a8530a,#f5a524);--strip:#d70018}
+:root{color-scheme:light dark;--bg:light-dark(#fff,#0c1430);--ink:light-dark(#121214,#eef1ff);--mute:light-dark(#62636b,#aab3d8);--line:light-dark(#e4e4e9,#2a3668);--soft:light-dark(#f5f5f7,#17214b);--red:light-dark(#d70018,#ff4157);--amber:light-dark(#a8530a,#f5a524);--strip:#d70018}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Geist,system-ui,sans-serif;overflow-x:clip}
@@ -165,6 +165,13 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 .psnow i{position:absolute;top:-40px;left:var(--l);width:var(--s);height:var(--s);background:var(--img) center/contain no-repeat;opacity:var(--o);filter:drop-shadow(0 2px 3px rgba(20,22,58,.15));animation:ps-fall var(--d) linear var(--w) infinite;will-change:transform}
 @keyframes ps-fall{0%{transform:translate3d(0,0,0) rotate(0)}25%{transform:translate3d(var(--x),27vh,0) rotate(var(--r))}50%{transform:translate3d(0,54vh,0) rotate(0)}75%{transform:translate3d(calc(var(--x)*-1),81vh,0) rotate(calc(var(--r)*-1))}100%{transform:translate3d(0,calc(100vh + 50px),0) rotate(0)}}
 @media(prefers-reduced-motion:reduce){.psnow{display:none}}
+
+/* Dark mode: đêm Giáng sinh. Mọi lớp trang trí dùng light-dark() nên ở chế độ sáng đều trong suốt. */
+body{background-image:radial-gradient(circle,light-dark(#0000,#ffffffc8) 0 1px,#0000 1.6px),radial-gradient(circle,light-dark(#0000,#ffffff80) 0 .8px,#0000 1.3px),radial-gradient(circle,light-dark(#0000,#fff3c890) 0 1.3px,#0000 2px),radial-gradient(70% 45% at 12% 0%,light-dark(#0000,#3fd0b014),#0000 70%),radial-gradient(60% 50% at 90% 100%,light-dark(#0000,#7b5cff12),#0000 70%);background-size:97px 97px,163px 163px,241px 241px,100% 100%,100% 100%;background-position:13px 41px,71px 9px,150px 120px,0 0,0 0;background-attachment:fixed}
+header{position:relative;background-image:radial-gradient(circle at calc(100% - 70px) 46px,light-dark(#0000,#fff7df) 0 22px,light-dark(#0000,#fff1c466) 23px,light-dark(#0000,#ffe9a81a) 60px,#0000 120px),radial-gradient(circle,light-dark(#0000,#ffffffb0) 0 1px,#0000 1.6px),radial-gradient(circle,light-dark(#0000,#ffffff70) 0 .8px,#0000 1.3px),linear-gradient(180deg,light-dark(#0000,#081030),light-dark(#0000,#1a2a5e));background-size:auto,89px 89px,151px 151px,auto;background-position:0 0,7px 23px,60px 70px,0 0;border-bottom-color:light-dark(#e4e4e9,#0000)}
+header::after{content:"";position:absolute;left:0;right:0;bottom:0;height:22px;background:light-dark(#0000,#e4ecff);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cpath d='M0 14 Q40 4 90 11 T190 9 T290 12 T400 8 V24 H0Z'/%3E%3C/svg%3E") bottom/100% 100% no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 24' preserveAspectRatio='none'%3E%3Cpath d='M0 14 Q40 4 90 11 T190 9 T290 12 T400 8 V24 H0Z'/%3E%3C/svg%3E") bottom/100% 100% no-repeat;pointer-events:none;z-index:0}
+header .wrap{position:relative;z-index:1}
+.xmas{box-shadow:0 0 0 1px light-dark(#0000,#ffffff1f)}
 </style>
 </head>
 <body>
