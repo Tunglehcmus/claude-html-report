@@ -388,7 +388,9 @@ const loadGas=force=>{if(!getPin()){askPin('');return;}S.needPin=false;SOURCES.c
 const counts=arr=>{const c={in:0,low:0,out:0,na:0,nomatch:0};arr.forEach(x=>c[x.state]++);return c;};
 const STK='https://tunglehcmus.github.io/claude-html-report/ton-kho-peri/stk/';
 const STICKERS={happy:[11,8,4,12,3,14,6],meh:[7,1,13,2],sad:[5,9],sleep:[10]};
-const sticker=(mood,n)=>{const set=STICKERS[mood];return `<img class="stk" src="${STK}m${set[n%set.length]}.webp" alt="" loading="lazy">`;};
+const stkImg=k=>`<img class="stk" src="${STK}m${k}.webp" alt="" loading="lazy">`;
+const STK_DEF=[11,7,5,8,4,1,13,12,3,2,14,6,9];
+const STK_MEM=(()=>{try{return JSON.parse(localStorage.getItem('peri_stk')||'{}')||{}}catch(e){return{}}})();
 const XMAS_SNOW=(()=>{let h='';for(let i=0;i<30;i++){const s=(2+Math.random()*4).toFixed(1);h+=`<i style="left:${(Math.random()*100).toFixed(1)}%;--s:${s}px;--o:${(.5+Math.random()*.5).toFixed(2)};--d:${(5+Math.random()*6).toFixed(1)}s;--w:-${(Math.random()*10).toFixed(1)}s;--x:${(Math.random()*30-15).toFixed(0)}px"></i>`;}return h;})();
 const XMAS_HTML=`<div class="xmas" id="xmas">
   <div class="x-snow" aria-hidden="true">${XMAS_SNOW}</div>
@@ -411,12 +413,14 @@ const d=new Date(),m=xmasNext();x.querySelector('.x-msg small').textContent='�
 const xmasFit=()=>{const x=document.getElementById('xmas'),g=x&&x.parentElement;if(!g)return;const n=[...g.children].filter(e=>e!==x&&e.offsetParent!==null).length,c=getComputedStyle(g).gridTemplateColumns.split(' ').length,r=c-(n%c);x.style.gridColumn=r===c?'1 / -1':'span '+r;};
 addEventListener('resize',()=>xmasFit());
 const renderSrc=()=>{
-  const seen={};$('src').innerHTML=SOURCES.map((s,ix)=>{const d=data[s.id],it=d.items||[],c=counts(it),n=it.length||1;
+  const seen={};let memChg=false;$('src').innerHTML=SOURCES.map((s,ix)=>{const d=data[s.id],it=d.items||[],c=counts(it),n=it.length||1;
     const known=c.in+c.low+c.out,outR=known?c.out/known:0;
     const mood=!d.items||!known?'sleep':outR<.2?'happy':outR<.45?'meh':'sad';
     const bar=d.items?`<div class="big">${c.in+c.low}<span>còn</span></div><div class="bar">${['in','low','out','na'].map(k=>c[k]?`<i class="i-${k}" style="width:${c[k]/n*100}%" title="${STL[k]}: ${c[k]}"></i>`:'').join('')}</div><small class="sum">${c.out} hết${c.low?` · ${c.low} sắp hết`:''}${c.na?` · ${c.na} chưa có số`:''}</small>`:'';
+    let k;if(d.items){const set=STICKERS[mood],n=(seen[mood]=(seen[mood]||0)+1)-1;k=set[n%set.length];if(STK_MEM[s.id]!==k){STK_MEM[s.id]=k;memChg=true;}}else k=STK_MEM[s.id]||STK_DEF[ix%STK_DEF.length];
     const st=d.state==='loading'?'<small>Đang tải…</small>':d.err?`<span class="err">${esc(d.err)}</span>`:d.bad?'<span class="err">Không nhận ra cột của tab này.</span>':'';
-    return `<div class="sc k${ix%4}${S.src===s.id?' on':''}" data-src="${s.id}" role="button" tabindex="0"><div class="top"><b>${esc(s.ncc)} · ${esc(s.brand)}</b>${url(s)?`<a href="${url(s)}" target="_blank" rel="noopener">Mở sheet</a>`:''}</div><small>${d.date?'Sheet ghi '+esc(d.date):(d.items?'Sheet không ghi ngày':'')}</small>${bar}${st}${sticker(mood,(seen[mood]=(seen[mood]||0)+1)-1)}</div>`;}).join('')+XMAS_HTML;xmasFit();
+    return `<div class="sc k${ix%4}${S.src===s.id?' on':''}" data-src="${s.id}" role="button" tabindex="0"><div class="top"><b>${esc(s.ncc)} · ${esc(s.brand)}</b>${url(s)?`<a href="${url(s)}" target="_blank" rel="noopener">Mở sheet</a>`:''}</div><small>${d.date?'Sheet ghi '+esc(d.date):(d.items?'Sheet không ghi ngày':'')}</small>${bar}${st}${stkImg(k)}</div>`;}).join('')+XMAS_HTML;xmasFit();
+  if(memChg)try{localStorage.setItem('peri_stk',JSON.stringify(STK_MEM))}catch(e){}
 };
 const fillSel=(id,label,vals,cur)=>{$(id).innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option${v===cur?' selected':''}>${esc(v)}</option>`).join('');};
 const qmatch=(q,...f)=>!q||f.some(x=>hnorm(x).includes(q));
