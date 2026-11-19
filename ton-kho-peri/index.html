@@ -420,7 +420,7 @@ const renderSrc=()=>{
     const bar=d.items?`<div class="big">${c.in+c.low}<span>còn</span></div><div class="bar">${['in','low','out','na'].map(k=>c[k]?`<i class="i-${k}" style="width:${c[k]/n*100}%" title="${STL[k]}: ${c[k]}"></i>`:'').join('')}</div><small class="sum">${c.out} hết${c.low?` · ${c.low} sắp hết`:''}${c.na?` · ${c.na} chưa có số`:''}</small>`:'';
     let k;if(d.items){const set=STICKERS[mood],n=(seen[mood]=(seen[mood]||0)+1)-1;k=set[n%set.length];if(STK_MEM[s.id]!==k){STK_MEM[s.id]=k;memChg=true;}}else k=STK_MEM[s.id]||STK_DEF[ix%STK_DEF.length];
     const st=d.state==='loading'?'<small>Đang tải…</small>':d.err?`<span class="err">${esc(d.err)}</span>`:d.bad?'<span class="err">Không nhận ra cột của tab này.</span>':'';
-    return `<div class="sc k${ix%4}${S.src===s.id?' on':''}" data-src="${s.id}" role="button" tabindex="0"><div class="top"><b>${esc(s.ncc)} · ${esc(s.brand)}</b>${url(s)?`<a href="${url(s)}" target="_blank" rel="noopener">Mở sheet</a>`:''}</div><small>${d.date?'Sheet ghi '+esc(d.date):(d.items?'Sheet không ghi ngày':'')}</small>${bar}${st}${stkImg(k)}</div>`;}).join('')+XMAS_HTML;xmasFit();
+    return `<div class="sc k${ix%4}${S.src===s.id?' on':''}" data-src="${s.id}" role="button" tabindex="0"><div class="top"><b>${esc(s.ncc)} · ${esc(s.brand)}</b>${url(s)?`<a href="${url(s)}" target="_blank" rel="noopener">Mở sheet</a>`:''}</div>${bar}${st}${stkImg(k)}</div>`;}).join('')+XMAS_HTML;xmasFit();
   if(memChg)try{localStorage.setItem('peri_stk',JSON.stringify(STK_MEM))}catch(e){}
 };
 const fillSel=(id,label,vals,cur)=>{$(id).innerHTML=`<option value="">${label}</option>`+vals.map(v=>`<option${v===cur?' selected':''}>${esc(v)}</option>`).join('');};
