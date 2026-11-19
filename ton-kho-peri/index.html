@@ -102,6 +102,7 @@ tr.al td:first-child{box-shadow:inset 3px 0 var(--red)}
 .chip{font-size:0.7812rem;color:var(--mute);font-variant-numeric:tabular-nums;white-space:nowrap}.chip strong{color:var(--ink);font-weight:600;font-size:0.875rem;margin-left:0.5rem}.chip strong.zero{color:var(--red)}
 .pc .nr .pill{margin-left:auto;justify-self:end}
 .pc .nl{margin-top:auto}.pc>.nr{margin-top:auto}.pc .nl .nr{grid-template-columns:6.4em 1fr auto}
+.pc .pr{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-top:auto;padding-top:.5rem;border-top:1px dashed color-mix(in srgb,var(--pt) 30%,transparent)}.pc .pr+.nl{margin-top:0}.pc .pr .chip{color:var(--pm);text-shadow:0 0 2px var(--pbg),0 0 4px var(--pbg),0 0 8px var(--pbg)}.pc .pr .chip strong{color:var(--pt);font-size:0.9375rem;font-weight:700}
 .cards .empty{grid-column:1/-1}
 .pc{--pt:#0f1130;--pm:rgba(15,17,48,.86);color:var(--pt);border:0;box-shadow:0 1px 3px rgba(20,22,58,.12)}
 .pc h3,.pc .tag{text-shadow:0 0 2px var(--pbg),0 0 4px var(--pbg),0 0 8px var(--pbg),0 0 14px var(--pbg)}
@@ -302,9 +303,9 @@ const parseSource=(src,rows)=>{
 };
 const parseGvn=rows=>{
   const h=(rows[0]||[]).map(hnorm),ix=k=>h.indexOf(k);
-  const c={date:ix('date created'),brand:ix('brand'),sku:ix('sku'),name:ix('ten san pham'),mancc:ix('ma ncc'),retail:ix('gia ban le'),cost:ix('gia nhap'),npp:ix('npp'),status:ix('tinh trang')};
+  const c={date:ix('date created'),brand:ix('brand'),sku:ix('sku'),name:ix('ten san pham'),mancc:ix('ma ncc'),retail:ix('gia ban le'),cost:ix('gia nhap'),promo:ix('gia chuong trinh'),npp:ix('npp'),status:ix('tinh trang')};
   const g=(r,k)=>c[k]<0?'':String(r[c[k]]??'').trim(),out=[];
-  for(let i=1;i<rows.length;i++){const r=rows[i]||[];const sku=g(r,'sku');if(!sku)continue;out.push({sku,brand:g(r,'brand'),name:g(r,'name'),mancc:g(r,'mancc'),cost:pp(g(r,'cost')),retail:pp(g(r,'retail')),npp:g(r,'npp'),status:g(r,'status')});}
+  for(let i=1;i<rows.length;i++){const r=rows[i]||[];const sku=g(r,'sku');if(!sku)continue;out.push({sku,brand:g(r,'brand'),name:g(r,'name'),mancc:g(r,'mancc'),cost:pp(g(r,'cost')),promo:pp(g(r,'promo')),retail:pp(g(r,'retail')),npp:g(r,'npp'),status:g(r,'status')});}
   return out;
 };
 const STOP=new Set('chuot ban phim tai nghe may tinh gaming khong day co mouse keyboard headset di lot cho mau va the loai wireless gear choang dau de'.split(' '));
@@ -479,7 +480,7 @@ const render=()=>{
   const chip=(l,v,z)=>`<span class="chip">${l}<strong class="${z?'zero':''}">${v}</strong></span>`;
   if(isSku){
     $('cards').innerHTML=groups.slice(0,S.limit).map(({g,rs})=>{const best=rs.reduce((a,x)=>RANK[x.state]<RANK[a]?x.state:a,'nomatch');
-      return `<article class="pc s-${best} bp${bp(g.brand||(rs.find(x=>x.it)||{it:{src:{}}}).it.src.brand)}"><h3>${esc(g.name||g.sku)}</h3>${(()=>{const nm=[...new Set(rs.map(x=>x.it&&x.it.name).filter(Boolean))];return nm.length?`<div class="tag">${nm.map(esc).join('<br>')}</div>`:'';})()}<div class="nl">${rs.map(({it,ncc,state})=>`<div class="nr"><b>${esc(ncc||'Chưa khớp NCC')}</b><span class="qs">${it?chip('HCM',qs(it,'hcm'),qv(it,'hcm')===0)+chip('HN',qs(it,'hn'),qv(it,'hn')===0):''}</span>${pill(state)}</div>`).join('')}</div></article>`;}).join('');
+      return `<article class="pc s-${best} bp${bp(g.brand||(rs.find(x=>x.it)||{it:{src:{}}}).it.src.brand)}"><h3>${esc(g.name||g.sku)}</h3>${(()=>{const nm=[...new Set(rs.map(x=>x.it&&x.it.name).filter(Boolean))];return nm.length?`<div class="tag">${nm.map(esc).join('<br>')}</div>`:'';})()}<div class="pr">${chip('Nhập:',g.cost!=null?money(g.cost):'—')}${chip('Bán:',g.promo!=null?money(g.promo):'—')}</div><div class="nl">${rs.map(({it,ncc,state})=>`<div class="nr"><b>${esc(ncc||'Chưa khớp NCC')}</b><span class="qs">${it?chip('HCM',qs(it,'hcm'),qv(it,'hcm')===0)+chip('HN',qs(it,'hn'),qv(it,'hn')===0):''}</span>${pill(state)}</div>`).join('')}</div></article>`;}).join('');
   }else{
     $('cards').innerHTML=rows.slice(0,S.limit).map(i=>{const h=i.hcm.v==null&&i.hn.v==null&&i.qty.v!=null?fmt(i.qty.v):(i.hcm.ok?'OK':i.hcm.v==null?'—':fmt(i.hcm.v)),n=i.hn.ok?'OK':i.hn.v==null?'—':fmt(i.hn.v);
       return `<article class="pc s-${i.state} bp${bp(i.src.brand)}"><h3>${esc(i.name)}</h3>${i.gvnAll.length?`<div class="gv">${i.gvnAll.map(g=>`GVN: ${esc(g.name||g.sku)}${g.live?'':` <i>(${esc(g.status||'không có tình trạng')})</i>`}`).join('<br>')}</div>`:'<div><span class="nb">Chưa kinh doanh</span></div>'}<div class="tag">${esc(i.src.ncc)} · ${esc(i.src.brand)}${i.group?' · '+esc(i.group):''}${i.note?' · '+esc(i.note):''}</div><div class="tag">Mã: ${esc([i.code,i.mvt].filter(Boolean).join(' · ')||'—')}</div><div class="nr">${chip('HCM',h,h==='0')}${chip('HN',n,n==='0')}${i.price?chip('Giá',money(i.price)):''}${pill(i.state)}</div></article>`;}).join('');
